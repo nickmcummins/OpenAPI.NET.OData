@@ -27,8 +27,8 @@ namespace Microsoft.OpenApi.OData.PathItem
         protected override void SetOperations(OpenApiPathItem item)
         {
             // Retrieve a singleton.
-            NavigationRestrictions navigation = Context.Model.GetNavigationRestrictions(Singleton);
-            if (navigation == null || navigation.IsNavigable)
+            ReadRestrictions read = Context.Model.GetReadRestrictions(Singleton);
+            if (read == null || read.IsReadable)
             {
                 AddOperation(item, OperationType.Get);
             }

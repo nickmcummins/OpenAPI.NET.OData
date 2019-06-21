@@ -39,6 +39,11 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.True(update.IsUpdatable);
             Assert.Null(update.Updatable);
             Assert.Null(update.NonUpdatableNavigationProperties);
+            Assert.Null(update.Permission);
+            Assert.Null(update.MaxLevels);
+            Assert.Null(update.QueryOptions);
+            Assert.Null(update.CustomHeaders);
+            Assert.Null(update.CustomQueryOptions);
         }
 
         [Theory]
@@ -105,6 +110,109 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
                         <NavigationPropertyPath>RelatedEvents</NavigationPropertyPath>
                       </Collection>
                     </PropertyValue>
+                    <PropertyValue Property=""MaxLevels"" Int=""8"" />
+                    <PropertyValue Property=""Permission"">
+                      <Record Type=""Org.OData.Capabilities.V1.PermissionType"">
+                        <PropertyValue Property=""Scheme"">
+                          <Record Type=""Org.OData.Authorization.V1.SecurityScheme"">
+                            <PropertyValue Property=""Authorization"" String=""authorizationName"" />
+                            <PropertyValue Property=""RequiredScopes"">
+                              <Collection>
+                                <String>RequiredScopes1</String>
+                                <String>RequiredScopes2</String>
+                              </Collection>
+                            </PropertyValue>
+                          </Record>
+                        </PropertyValue>
+                        <PropertyValue Property=""Scopes"">
+                          <Collection>
+                            <Record Type=""Org.OData.Capabilities.V1.ScopeType"">
+                              <PropertyValue Property=""Scope"" String=""scopeName1"" />
+                              <PropertyValue Property=""RestrictedProperties"" String=""p1,p2"" />
+                            </Record>
+                            <Record Type=""Org.OData.Capabilities.V1.ScopeType"">
+                              <PropertyValue Property=""Scope"" String=""scopeName2"" />
+                              <PropertyValue Property=""RestrictedProperties"" String=""p3,p4"" />
+                            </Record>
+                          </Collection>
+                        </PropertyValue>
+                      </Record>
+                    </PropertyValue>
+                    <PropertyValue Property=""QueryOptions"">
+                      <Record>
+                        <PropertyValue Property=""ExpandSupported"" Bool=""true"" />
+                        <PropertyValue Property=""SelectSupported"" Bool=""true"" />
+                        <PropertyValue Property=""ComputeSupported"" Bool=""true"" />
+                        <PropertyValue Property=""FilterSupported"" Bool=""true"" />
+                        <PropertyValue Property=""SearchSupported"" Bool=""true"" />
+                        <PropertyValue Property=""SortSupported"" Bool=""false"" />
+                        <PropertyValue Property=""SortSupported"" Bool=""false"" />
+                      </Record>
+                    </PropertyValue>
+                    <PropertyValue Property=""CustomHeaders"">
+                      <Collection>
+                        <Record>
+                          <PropertyValue Property=""Name"" String=""HeadName1"" />
+                          <PropertyValue Property=""Description"" String=""Description1"" />
+                          <PropertyValue Property=""ComputeSupported"" String=""http://any1"" />
+                          <PropertyValue Property=""Required"" Bool=""true"" />
+                          <PropertyValue Property=""ExampleValues"">
+                            <Collection>
+                              <Record>
+                                <PropertyValue Property=""Description"" String=""Description23"" />
+                                <PropertyValue Property=""Value"" String=""value1"" />
+                              </Record>
+                            </Collection>
+                          </PropertyValue>
+                        </Record>
+                        <Record>
+                          <PropertyValue Property=""Name"" String=""HeadName2"" />
+                          <PropertyValue Property=""Description"" String=""Description2"" />
+                          <PropertyValue Property=""ComputeSupported"" String=""http://any2"" />
+                          <PropertyValue Property=""Required"" Bool=""false"" />
+                          <PropertyValue Property=""ExampleValues"">
+                            <Collection>
+                              <Record>
+                                <PropertyValue Property=""Description"" String=""Description23"" />
+                                <PropertyValue Property=""Value"" String=""value2"" />
+                              </Record>
+                            </Collection>
+                          </PropertyValue>
+                        </Record>
+                      </Collection>
+                    </PropertyValue>
+                    <PropertyValue Property=""CustomQueryOptions"">
+                      <Collection>
+                        <Record>
+                          <PropertyValue Property=""Name"" String=""HeadName1"" />
+                          <PropertyValue Property=""Description"" String=""Description1"" />
+                          <PropertyValue Property=""ComputeSupported"" String=""http://any3"" />
+                          <PropertyValue Property=""Required"" Bool=""true"" />
+                          <PropertyValue Property=""ExampleValues"">
+                            <Collection>
+                              <Record>
+                                <PropertyValue Property=""Description"" String=""Description23"" />
+                                <PropertyValue Property=""Value"" String=""value3"" />
+                              </Record>
+                            </Collection>
+                          </PropertyValue>
+                        </Record>
+                        <Record>
+                          <PropertyValue Property=""Name"" String=""HeadName2"" />
+                          <PropertyValue Property=""Description"" String=""Description2"" />
+                          <PropertyValue Property=""ComputeSupported"" String=""http://any4"" />
+                          <PropertyValue Property=""Required"" Bool=""false"" />
+                          <PropertyValue Property=""ExampleValues"">
+                            <Collection>
+                              <Record>
+                                <PropertyValue Property=""Description"" String=""Description23"" />
+                                <PropertyValue Property=""Value"" String=""value4"" />
+                              </Record>
+                            </Collection>
+                          </PropertyValue>
+                        </Record>
+                      </Collection>
+                    </PropertyValue>
                   </Record>
                 </Annotation>";
 
@@ -133,6 +241,23 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.True(update.IsNonUpdatableNavigationProperty("abc"));
             Assert.True(update.IsNonUpdatableNavigationProperty("RelatedEvents"));
             Assert.False(update.IsNonUpdatableNavigationProperty("Others"));
+
+            // MaxLevels
+            Assert.NotNull(update.MaxLevels);
+            Assert.Equal(8, update.MaxLevels);
+
+            // QueryOptions
+            Assert.NotNull(update.QueryOptions);
+            Assert.True(update.QueryOptions.ComputeSupported);
+            Assert.False(update.QueryOptions.SortSupported);
+
+            // CustomHeaders
+            Assert.NotNull(update.CustomHeaders);
+            Assert.Equal(2, update.CustomHeaders.Count);
+
+            // CustomQueryOptions
+            Assert.NotNull(update.CustomQueryOptions);
+            Assert.Equal(2, update.CustomQueryOptions.Count);
         }
     }
 }

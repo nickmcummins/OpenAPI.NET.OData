@@ -8,6 +8,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Authorizations;
 using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Capabilities;
+using System.Linq;
 
 namespace Microsoft.OpenApi.OData.Generator
 {
@@ -43,6 +45,38 @@ namespace Microsoft.OpenApi.OData.Generator
                                 }
                             }
                         ] = new List<string>(securityScheme.RequiredScopes ?? new List<string>())
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create the list of <see cref="OpenApiSecurityRequirement"/> object.
+        /// </summary>
+        /// <param name="context">The OData to Open API context.</param>
+        /// <param name="securitySchemes">The securitySchemes.</param>
+        /// <returns>The created <see cref="OpenApiSecurityRequirement"/> collection.</returns>
+        public static IEnumerable<OpenApiSecurityRequirement> CreateSecurityRequirements(this ODataContext context,
+            IList<PermissionType> permissions)
+        {
+            Utils.CheckArgumentNull(context, nameof(context));
+
+            if (permissions != null)
+            {
+                foreach (PermissionType permission in permissions)
+                {
+                    yield return new OpenApiSecurityRequirement
+                    {
+                        [
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = permission.Scheme.Authorization
+                                }
+                            }
+                        ] = new List<string>(permission.Scopes?.Select(c => c.Scope) ?? new List<string>())
                     };
                 }
             }

@@ -5,6 +5,7 @@
 
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.PathItem
@@ -39,7 +40,13 @@ namespace Microsoft.OpenApi.OData.PathItem
                 // resource path of the function import prepended with a forward slash, and whose value is a Path
                 // Item Object containing the keyword get with an Operation Object as value that describes
                 // how to invoke the function import.
-                AddOperation(item, OperationType.Get);
+
+                // so far, <Term Name="ReadRestrictions" Type="Capabilities.ReadRestrictionsType" AppliesTo="EntitySet Singleton FunctionImport">
+                ReadRestrictions read = Context.Model.GetReadRestrictions(EdmOperationImport);
+                if (read == null || read.IsReadable)
+                {
+                    AddOperation(item, OperationType.Get);
+                }
             }
         }
 

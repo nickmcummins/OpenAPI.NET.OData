@@ -49,12 +49,18 @@ namespace Microsoft.OpenApi.OData.PathItem
                 target = NavigationSource as IEdmSingleton;
             }
 
+            NavigationRestrictions navigation = Context.Model.GetNavigationRestrictions(target);
+            if (navigation != null && navigation.Navigability != null && navigation.Navigability.Value == NavigationType.None)
+            {
+                // This check should be done when retrieve the path, but, here is for verification.
+                return;
+            }
+
             string navigationPropertyPath = String.Join("/",
-                Path.Segments.OfType<ODataNavigationPropertySegment>().Select(e => e.NavigationProperty.Name));
+                Path.Segments.Where(s => !(s is ODataKeySegment || s is ODataNavigationSourceSegment)).Select(e => e.Name));
 
             // contaiment: Get / (Post - Collection | Patch - Single)
             // non-containment: only Get
-            NavigationRestrictions navigation = Context.Model.GetNavigationRestrictions(target);
             if (navigation == null || !navigation.IsRestrictedProperty(navigationPropertyPath))
             {
                 AddOperation(item, OperationType.Get);

@@ -15,7 +15,7 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
 {
     public class EntityPathItemHandlerTests
     {
-        private EntityPathItemHandler _pathItemHandler = new EntityPathItemHandler();
+        private EntityPathItemHandler _pathItemHandler = new MyEntityPathItemHandler();
 
         [Fact]
         public void CreatePathItemThrowsForNullContext()
@@ -49,7 +49,7 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
 
             // Assert
             var exception = Assert.Throws<InvalidOperationException>(test);
-            Assert.Equal(String.Format(SRResource.InvalidPathKindForPathItemHandler, "EntityPathItemHandler", path.Kind), exception.Message);
+            Assert.Equal(String.Format(SRResource.InvalidPathKindForPathItemHandler, _pathItemHandler.GetType().Name, path.Kind), exception.Message);
         }
 
         [Fact]
@@ -78,27 +78,39 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         [Theory]
         [InlineData(true, new OperationType[] { OperationType.Get, OperationType.Patch, OperationType.Delete })]
         [InlineData(false, new OperationType[] { OperationType.Patch, OperationType.Delete })]
-        public void CreateEntityPathItemWorksForIndexableByKeyRestrictionsCapablities(bool indexableByKey, OperationType[] expected)
+        public void CreateEntityPathItemWorksForReadByKeyRestrictionsCapablities(bool readable, OperationType[] expected)
         {
             // Arrange
             string annotation = String.Format(@"
-<Annotation Term=""Org.OData.Capabilities.V1.IndexableByKey"" Bool=""{0}"" />", indexableByKey);
-
-            IEdmModel model = EntitySetPathItemHandlerTests.GetEdmModel(annotation);
-            ODataContext context = new ODataContext(model);
-            IEdmEntitySet entitySet = model.EntityContainer.FindEntitySet("Customers");
-            Assert.NotNull(entitySet); // guard
-            ODataPath path = new ODataPath(new ODataNavigationSourceSegment(entitySet), new ODataKeySegment(entitySet.EntityType()));
-
-            // Act
-            var pathItem = _pathItemHandler.CreatePathItem(context, path);
+<Annotation Term=""Org.OData.Capabilities.V1.ReadRestrictions"">
+  <Record>
+    <PropertyValue Property=""ReadByKeyRestrictions"" >
+      <Record>
+        <PropertyValue Property=""Readable"" Bool=""{0}"" />
+      </Record>
+    </PropertyValue>
+  </Record>
+</Annotation>", readable);
 
             // Assert
-            Assert.NotNull(pathItem);
+            VerifyPathItemOperations(annotation, expected);
+        }
 
-            Assert.NotNull(pathItem.Operations);
-            Assert.NotEmpty(pathItem.Operations);
-            Assert.Equal(expected, pathItem.Operations.Select(e => e.Key));
+        [Theory]
+        [InlineData(true, new OperationType[] { OperationType.Get, OperationType.Patch, OperationType.Delete })]
+        [InlineData(false, new OperationType[] { OperationType.Patch, OperationType.Delete })]
+        public void CreateEntityPathItemWorksForReadRestrictionsCapablities(bool readable, OperationType[] expected)
+        {
+            // Arrange
+            string annotation = String.Format(@"
+<Annotation Term=""Org.OData.Capabilities.V1.ReadRestrictions"">
+  <Record>
+    <PropertyValue Property=""Readable"" Bool=""{0}"" />
+  </Record>
+</Annotation>", readable);
+
+            // Assert
+            VerifyPathItemOperations(annotation, expected);
         }
 
         [Theory]
@@ -114,6 +126,30 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
   </Record>
 </Annotation>", updatable);
 
+            // Assert
+            VerifyPathItemOperations(annotation, expected);
+        }
+
+        [Theory]
+        [InlineData(true, new OperationType[] { OperationType.Get, OperationType.Patch, OperationType.Delete })]
+        [InlineData(false, new OperationType[] { OperationType.Get, OperationType.Patch })]
+        public void CreateEntityPathItemWorksForDeleteRestrictionsCapablities(bool deletable, OperationType[] expected)
+        {
+            // Arrange
+            string annotation = String.Format(@"
+<Annotation Term=""Org.OData.Capabilities.V1.DeleteRestrictions"">
+  <Record>
+    <PropertyValue Property=""Deletable"" Bool=""{0}"" />
+  </Record>
+</Annotation>", deletable);
+
+            // Assert
+            VerifyPathItemOperations(annotation, expected);
+        }
+
+        private void VerifyPathItemOperations(string annotation, OperationType[] expected)
+        {
+            // Arrange
             IEdmModel model = EntitySetPathItemHandlerTests.GetEdmModel(annotation);
             ODataContext context = new ODataContext(model);
             IEdmEntitySet entitySet = model.EntityContainer.FindEntitySet("Customers");
@@ -130,35 +166,13 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
             Assert.NotEmpty(pathItem.Operations);
             Assert.Equal(expected, pathItem.Operations.Select(e => e.Key));
         }
+    }
 
-        [Theory]
-        [InlineData(true, new OperationType[] { OperationType.Get, OperationType.Patch, OperationType.Delete })]
-        [InlineData(false, new OperationType[] { OperationType.Get, OperationType.Patch })]
-        public void CreateEntityPathItemWorksForDeleteRestrictionsCapablities(bool deletable, OperationType[] expected)
+    internal class MyEntityPathItemHandler : EntityPathItemHandler
+    {
+        protected override void AddOperation(OpenApiPathItem item, OperationType operationType)
         {
-            // Arrange
-            string annotation = String.Format(@"
-<Annotation Term=""Org.OData.Capabilities.V1.DeleteRestrictions"">
-  <Record>
-    <PropertyValue Property=""Deletable"" Bool=""{0}"" />
-  </Record>
-</Annotation>", deletable);
-
-            IEdmModel model = EntitySetPathItemHandlerTests.GetEdmModel(annotation);
-            ODataContext context = new ODataContext(model);
-            IEdmEntitySet entitySet = model.EntityContainer.FindEntitySet("Customers");
-            Assert.NotNull(entitySet); // guard
-            ODataPath path = new ODataPath(new ODataNavigationSourceSegment(entitySet), new ODataKeySegment(entitySet.EntityType()));
-
-            // Act
-            var pathItem = _pathItemHandler.CreatePathItem(context, path);
-
-            // Assert
-            Assert.NotNull(pathItem);
-
-            Assert.NotNull(pathItem.Operations);
-            Assert.NotEmpty(pathItem.Operations);
-            Assert.Equal(expected, pathItem.Operations.Select(e => e.Key));
+            item.AddOperation(operationType, new OpenApiOperation());
         }
     }
 }

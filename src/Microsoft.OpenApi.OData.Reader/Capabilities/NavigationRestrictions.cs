@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
@@ -121,6 +122,26 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// Restrictions for retrieving entities.
         /// </summary>
         public ReadRestrictions ReadRestrictions { get; set; }
+
+        public virtual void Init(IEdmRecordExpression record)
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+
+            // NavigationProperty
+            NavigationProperty = record.GetPropertyPath("NavigationProperty"); // maybe call "GetNavigationPropertyPath
+
+            // Navigability
+            Navigability = record.GetEnum<NavigationType>("Navigability");
+
+            // FilterFunctions
+            FilterFunctions = record.GetCollection("FilterFunctions");
+
+            // FilterRestrictions
+            FilterRestrictions = record.GetRecord<FilterRestrictions>("FilterRestrictions", (r, t) => r.Init(t));
+
+            // SearchRestrictions
+            SearchRestrictions = record.GetRecord<SearchRestrictions>("SearchRestrictions", (r, t) => r.Init(t));
+        }
     }
 
     /// <summary>
@@ -176,7 +197,7 @@ namespace Microsoft.OpenApi.OData.Capabilities
             Navigability = record.GetEnum<NavigationType>("Navigability");
 
             // RestrictedProperties
-            RestrictedProperties = GetRestrictedProperties(record);
+            RestrictedProperties = record.GetCollection<NavigationPropertyRestriction>("RestrictedProperties", (r, t) => r.Init(t));
 
             return true;
         }

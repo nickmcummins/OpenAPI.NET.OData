@@ -12,7 +12,7 @@ using Microsoft.OpenApi.OData.Edm;
 namespace Microsoft.OpenApi.OData.Capabilities
 {
     /// <summary>
-    /// Org.OData.Capabilities.V1.UpdateRestrictionsType
+    /// Org.OData.Capabilities.V1.UpdateRestrictions
     /// </summary>
     internal class UpdateRestrictions : CapabilitiesRestrictions
     {
@@ -36,7 +36,7 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// Gets the maximum number of navigation properties that can be traversed when addressing the collection or entity to update.
         /// A value of -1 indicates there is no restriction.
         /// </summary>
-        public int MaxLevels { get; private set; } = -1;
+        public long? MaxLevels { get; private set; }
 
         /// <summary>
         /// Gets/sets the required scopes to perform update.
@@ -76,6 +76,10 @@ namespace Microsoft.OpenApi.OData.Capabilities
                 false;
         }
 
+        /// <summary>
+        /// Initialize the capabilities with the vocabulary annotation.
+        /// </summary>
+        /// <param name="annotation">The input vocabulary annotation.</param>
         protected override bool Initialize(IEdmVocabularyAnnotation annotation)
         {
             if (annotation == null ||
@@ -92,6 +96,21 @@ namespace Microsoft.OpenApi.OData.Capabilities
 
             // NonUpdatableNavigationProperties
             NonUpdatableNavigationProperties = record.GetCollectionPropertyPath("NonUpdatableNavigationProperties");
+
+            // MaxLevels
+            MaxLevels = record.GetInteger("MaxLevels");
+
+            // Permission
+            Permission = record.GetRecord<PermissionType>("Permission", (t, r) => t.Init(r));
+
+            // QueryOptions
+            QueryOptions = record.GetRecord<ModificationQueryOptionsType>("QueryOptions", (t, r) => t.Init(r));
+
+            // CustomHeaders
+            CustomHeaders = record.GetCollection<CustomParameter>("CustomHeaders", (t, r) => t.Init(r));
+
+            // CustomHeaders
+            CustomQueryOptions = record.GetCollection<CustomParameter>("CustomQueryOptions", (t, r) => t.Init(r));
 
             return true;
         }

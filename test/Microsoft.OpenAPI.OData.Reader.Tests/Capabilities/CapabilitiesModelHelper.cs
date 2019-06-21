@@ -109,6 +109,7 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
         <EntitySet Name=""Events"" EntityType=""NS.Event"" >
           <NavigationPropertyBinding Path=""RelatedCalendar"" Target=""Calendars"" />
         </EntitySet>
+        <Singleton Name=""Me"" Type=""NS.Calendar"" />
       </EntityContainer>
       {3}
     </Schema>

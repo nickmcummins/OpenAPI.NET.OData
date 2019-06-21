@@ -26,4 +26,9 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// <returns>True/False</returns>
         bool Load(IEdmModel model, IEdmVocabularyAnnotatable target);
     }
+
+    internal interface IRecord
+    {
+        void Init(IEdmRecordExpression expression);
+    }
 }

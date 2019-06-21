@@ -51,7 +51,6 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
                     new EdmPropertyConstructor("Scheme", securityScheme),
                     new EdmPropertyConstructor("Scopes", new EdmCollectionExpression(scope1, scope2)));
 
-
             IEdmComplexType complex = model.FindType("Org.OData.Capabilities.V1.InsertRestrictionsType") as IEdmComplexType;
 
             IEdmCollectionExpression nonInsertableProperties = new EdmCollectionExpression
@@ -110,7 +109,6 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
 
             annotation.SetSerializationLocation(model, EdmVocabularyAnnotationSerializationLocation.Inline);
             model.SetVocabularyAnnotation(annotation);
-
 
             // Assert
             string csdl = EdmModelHelper.GetCsdl(model);

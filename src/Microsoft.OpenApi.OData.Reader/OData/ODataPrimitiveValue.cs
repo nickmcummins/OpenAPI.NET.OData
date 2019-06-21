@@ -19,5 +19,10 @@ namespace Microsoft.OpenApi.OData
         /// Gets the underlying CLR object wrapped by this <see cref="ODataPrimitiveValue"/>.
         /// </summary>
         public object Value { get; private set; }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

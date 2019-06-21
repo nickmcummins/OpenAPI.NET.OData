@@ -4,11 +4,10 @@
 // ------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.OData.Authorizations;
 using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
@@ -36,26 +35,10 @@ namespace Microsoft.OpenApi.OData.Capabilities
             Utils.CheckArgumentNull(record, nameof(record));
 
             // Scheme
-            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == "Scheme");
-            if (property != null && property.Value != null && property.Value.ExpressionKind == EdmExpressionKind.Record)
-            {
-                Scheme = new SecurityScheme();
-                Scheme.Init((IEdmRecordExpression)property.Value);
-            }
+            Scheme = record.GetRecord<SecurityScheme>("Scheme", (r, s) => r.Init(s));
 
             // Scopes
-            property = record.Properties.FirstOrDefault(e => e.Name == "Scopes");
-            if (property != null && property.Value != null && property.Value.ExpressionKind == EdmExpressionKind.Collection)
-            {
-                IEdmCollectionExpression value = property.Value as IEdmCollectionExpression;
-                if (value != null && value.Elements != null)
-                {/*
-                    foreach (var element in value.Elements)
-                    {
-                        properties.Add(path.Path);
-                    }*/
-                }
-            }
+            Scopes = record.GetCollection<ScopeType>("Scopes", (r, s) => r.Init(s));
         }
     }
 }

@@ -4,8 +4,10 @@
 // ------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Generator;
 
@@ -75,6 +77,40 @@ namespace Microsoft.OpenApi.OData.Operation
             };
 
             base.SetResponses(operation);
+        }
+
+        /// <inheritdoc/>
+        protected override void SetSecurity(OpenApiOperation operation)
+        {
+            UpdateRestrictions update = Context.Model.GetUpdateRestrictions(Singleton);
+            if (update == null || update.Permission == null)
+            {
+                return;
+            }
+
+            // the Permission should be collection, however current ODL supports the single permission.
+            // Will update after ODL change.
+            operation.Security = Context.CreateSecurityRequirements(new[] { update.Permission }).ToList();
+        }
+
+        /// <inheritdoc/>
+        protected override void AppendCustomParameters(OpenApiOperation operation)
+        {
+            UpdateRestrictions update = Context.Model.GetUpdateRestrictions(Singleton);
+            if (update == null)
+            {
+                return;
+            }
+
+            if (update.CustomHeaders != null)
+            {
+                AppendCustomParameters(operation.Parameters, update.CustomHeaders, ParameterLocation.Header);
+            }
+
+            if (update.CustomQueryOptions != null)
+            {
+                AppendCustomParameters(operation.Parameters, update.CustomQueryOptions, ParameterLocation.Query);
+            }
         }
     }
 }

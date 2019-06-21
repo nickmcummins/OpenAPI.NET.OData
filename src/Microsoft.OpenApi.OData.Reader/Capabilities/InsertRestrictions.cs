@@ -79,6 +79,10 @@ namespace Microsoft.OpenApi.OData.Capabilities
                 false;
         }
 
+        /// <summary>
+        /// Initialize the capabilities with the vocabulary annotation.
+        /// </summary>
+        /// <param name="annotation">The input vocabulary annotation.</param>
         protected override bool Initialize(IEdmVocabularyAnnotation annotation)
         {
             if (annotation == null ||

@@ -6,11 +6,18 @@
 using System.Collections.Generic;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
     internal abstract class ReadRestrictionsBase : CapabilitiesRestrictions
     {
+        /// <summary>
+        /// The Term type name.
+        /// </summary>
+        public override CapabilitesTermKind Kind => CapabilitesTermKind.ReadRestrictions;
+
         /// <summary>
         /// Get the Entities can be retrieved.
         /// </summary>
@@ -36,6 +43,23 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// </summary>
         /// <returns>True/false.</returns>
         public bool IsReadable => Readable == null || Readable.Value;
+
+        public virtual void Init(IEdmRecordExpression record)
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+
+            // Readable
+            Readable = record.GetBoolean("Readable");
+
+            // Permission
+            Permission = record.GetRecord<PermissionType>("Permission", (r, t) => r.Init(t));
+
+            // CustomHeaders
+            CustomHeaders = record.GetCollection<CustomParameter>("CustomHeaders", (r, t) => r.Init(t));
+
+            // CustomQueryOptions
+            CustomQueryOptions = record.GetCollection<CustomParameter>("CustomQueryOptions", (r, t) => r.Init(t));
+        }
     }
 
     /// <summary>
@@ -43,11 +67,6 @@ namespace Microsoft.OpenApi.OData.Capabilities
     /// </summary>
     internal class ReadByKeyRestrictions : ReadRestrictionsBase
     {
-        /// <summary>
-        /// The Term type name.
-        /// </summary>
-        public override CapabilitesTermKind Kind => CapabilitesTermKind.ReadRestrictions;
-
         protected override bool Initialize(IEdmVocabularyAnnotation annotation)
         {
             throw new System.NotImplementedException();
@@ -59,11 +78,6 @@ namespace Microsoft.OpenApi.OData.Capabilities
     /// </summary>
     internal class ReadRestrictions : ReadRestrictionsBase
     {
-        /// <summary>
-        /// The Term type name.
-        /// </summary>
-        public override CapabilitesTermKind Kind => CapabilitesTermKind.ReadRestrictions;
-
         public ReadByKeyRestrictions ReadByKeyRestrictions { get; set; }
 
         protected override bool Initialize(IEdmVocabularyAnnotation annotation)
@@ -77,6 +91,11 @@ namespace Microsoft.OpenApi.OData.Capabilities
 
             IEdmRecordExpression record = (IEdmRecordExpression)annotation.Value;
 
+            // Load base
+            base.Init(record);
+
+            // ReadByKeyRestrictions
+            ReadByKeyRestrictions = record.GetRecord<ReadByKeyRestrictions>("ReadByKeyRestrictions", (r, t) => r.Init(t));
 
             return true;
         }

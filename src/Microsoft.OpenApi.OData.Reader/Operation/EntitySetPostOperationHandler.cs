@@ -108,7 +108,7 @@ namespace Microsoft.OpenApi.OData.Operation
         protected override void SetSecurity(OpenApiOperation operation)
         {
             InsertRestrictions insert = Context.Model.GetInsertRestrictions(EntitySet);
-            if (insert == null && insert.Permission == null)
+            if (insert == null || insert.Permission == null)
             {
                 return;
             }

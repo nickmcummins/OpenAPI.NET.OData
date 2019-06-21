@@ -29,7 +29,6 @@ namespace Microsoft.OpenApi.OData.PathItem
             ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
             if (read == null || read.IsReadable)
             {
-                // If we don't have Read by key read restriction, we should check the set read restrction.
                 AddOperation(item, OperationType.Get);
             }
 

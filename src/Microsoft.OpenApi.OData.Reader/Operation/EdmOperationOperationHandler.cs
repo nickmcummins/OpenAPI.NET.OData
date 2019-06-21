@@ -49,8 +49,6 @@ namespace Microsoft.OpenApi.OData.Operation
             EdmOperation = operationSegment.Operation;
 
             HasTypeCast = path.Segments.Any(s => s is ODataTypeCastSegment);
-
-            Request = Context.FindRequest(EdmOperation, OperationType.ToString());
         }
 
         /// <inheritdoc/>

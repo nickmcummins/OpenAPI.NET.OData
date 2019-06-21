@@ -164,7 +164,7 @@ namespace Microsoft.OpenApi.OData.Operation
         protected override void SetSecurity(OpenApiOperation operation)
         {
             ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
-            if (read == null && read.Permission == null)
+            if (read == null || read.Permission == null)
             {
                 return;
             }
