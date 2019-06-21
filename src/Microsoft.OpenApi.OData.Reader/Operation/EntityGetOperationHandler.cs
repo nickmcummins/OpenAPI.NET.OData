@@ -8,6 +8,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.OData.Generator;
+using Microsoft.OpenApi.OData.Capabilities;
+using System.Linq;
 
 namespace Microsoft.OpenApi.OData.Operation
 {
@@ -91,6 +93,55 @@ namespace Microsoft.OpenApi.OData.Operation
             operation.Responses.Add(Constants.StatusCodeDefault, Constants.StatusCodeDefault.GetResponse());
 
             base.SetResponses(operation);
+        }
+
+        protected override void SetSecurity(OpenApiOperation operation)
+        {
+            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            if (read == null)
+            {
+                return;
+            }
+
+            ReadRestrictionsBase readBase = read;
+            if (read.ReadByKeyRestrictions != null)
+            {
+                readBase = read.ReadByKeyRestrictions;
+            }
+
+            if (readBase == null && readBase.Permission == null)
+            {
+                return;
+            }
+
+            // the Permission should be collection, however current ODL supports the single permission.
+            // Will update after ODL change.
+            operation.Security = Context.CreateSecurityRequirements(new[] { readBase.Permission.Scheme }).ToList();
+        }
+
+        protected override void AppendCustomParameters(OpenApiOperation operation)
+        {
+            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            if (read == null)
+            {
+                return;
+            }
+
+            ReadRestrictionsBase readBase = read;
+            if (read.ReadByKeyRestrictions != null)
+            {
+                readBase = read.ReadByKeyRestrictions;
+            }
+
+            if (readBase.CustomQueryOptions != null)
+            {
+                AppendCustomParameters(operation.Parameters, readBase.CustomQueryOptions, ParameterLocation.Query);
+            }
+
+            if (readBase.CustomHeaders != null)
+            {
+                AppendCustomParameters(operation.Parameters, readBase.CustomHeaders, ParameterLocation.Header);
+            }
         }
     }
 }

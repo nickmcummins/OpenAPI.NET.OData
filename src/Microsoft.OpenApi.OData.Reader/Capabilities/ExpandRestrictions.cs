@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
@@ -61,7 +62,7 @@ namespace Microsoft.OpenApi.OData.Capabilities
             }
 
             IEdmRecordExpression record = (IEdmRecordExpression)annotation.Value;
-
+             
             // Expandable
             Expandable = record.GetBoolean("Expandable");
 

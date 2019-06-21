@@ -4,6 +4,10 @@
 // ------------------------------------------------------------
 
 using System.Collections.Generic;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Core;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
@@ -30,11 +34,35 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// <summary>
         /// Gets/sets the reuired of the custom parameter. true: parameter is required, false or not specified: parameter is optional.
         /// </summary>
-        public bool Required { get; set; }
+        public bool? Required { get; set; }
 
         /// <summary>
         /// Gets the list of scopes that can provide access to the resource.
         /// </summary>s
-        public IList<PrimitiveExampleValue> Scopes { get; set; }
+        public IList<PrimitiveExampleValue> ExampleValues { get; set; }
+
+        /// <summary>
+        /// Init the <see cref="CustomParameter"/>.
+        /// </summary>
+        /// <param name="record">The input record.</param>
+        public void Init(IEdmRecordExpression record)
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+
+            // Name
+            Name = record.GetString("Name");
+
+            // Description
+            Description = record.GetString("Description");
+
+            // DocumentationURL
+            DocumentationURL = record.GetString("DocumentationURL");
+
+            // Required
+            Required = record.GetBoolean("Required");
+
+            // ExampleValues
+            ExampleValues = record.GetCollection<PrimitiveExampleValue>("ExampleValues", (r, s) => r.Init(s));
+        }
     }
 }

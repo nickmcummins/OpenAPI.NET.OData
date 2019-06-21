@@ -300,5 +300,54 @@ namespace Microsoft.OpenApi.OData.Operation
                 parameters.Add(parameter);
             }
         }
+
+        /// <summary>
+        /// Sets the custom parameters.
+        /// </summary>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="customParameters">The custom parameters.</param>
+        /// <param name="location">The parameter location.</param>
+        protected static void AppendCustomParameters(IList<OpenApiParameter> parameters, IList<Microsoft.OpenApi.OData.Capabilities.CustomParameter> customParameters, ParameterLocation location)
+        {
+            foreach (var param in customParameters)
+            {
+                OpenApiParameter parameter = new OpenApiParameter
+                {
+                    In = location,
+                    Name = param.Name,
+                    Description = param.Description,
+                    Schema = new OpenApiSchema
+                    {
+                        Type = "string"
+                    },
+                    Required = param.Required ?? false
+                };
+
+                if (param.DocumentationURL != null)
+                {
+                    parameter.Example = new OpenApiString(param.DocumentationURL ?? "N/A");
+                }
+
+                if (param.ExampleValues != null)
+                {
+                    parameter.Examples = new Dictionary<string, OpenApiExample>();
+                    int index = 1;
+                    foreach (var example in param.ExampleValues)
+                    {
+                        OpenApiExample ex = new OpenApiExample
+                        {
+                            Description = example.Description
+                        };
+
+                        // maybe call convert to Uri literal
+                        ex.Value = new OpenApiString(example.Value.ToString());
+
+                        parameter.Examples.Add("example-" + index++, ex);
+                    }
+                }
+
+                parameters.Add(parameter);
+            }
+        }
     }
 }

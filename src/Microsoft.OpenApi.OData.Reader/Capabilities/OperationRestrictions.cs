@@ -3,22 +3,15 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
+using System.Collections;
 using System.Collections.Generic;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
-    /// <summary>
-    /// Org.OData.Capabilities.V1.OperationRestrictions
-    /// </summary>
-    internal class OperationRestrictions : CapabilitiesRestrictions
+    internal class OperationRestriction
     {
-        /// <summary>
-        /// The Term type name.
-        /// </summary>
-        public override CapabilitesTermKind Kind => CapabilitesTermKind.OperationRestrictions;
-
         /// <summary>
         /// Gets the List of required scopes to invoke an action or function.
         /// </summary>
@@ -33,6 +26,19 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// Gets the Supported or required custom query options.
         /// </summary>
         public IList<CustomParameter> CustomQueryOptions { get; private set; }
+    }
+
+    /// <summary>
+    /// Org.OData.Capabilities.V1.OperationRestrictions
+    /// </summary>
+    internal class OperationRestrictions : CapabilitiesRestrictions
+    {
+        /// <summary>
+        /// The Term type name.
+        /// </summary>
+        public override CapabilitesTermKind Kind => CapabilitesTermKind.OperationRestrictions;
+
+        public IList<OperationRestriction> Restrictions { get; set; }
 
         protected override bool Initialize(IEdmVocabularyAnnotation annotation)
         {

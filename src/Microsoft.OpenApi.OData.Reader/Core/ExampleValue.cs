@@ -3,16 +3,32 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-namespace Microsoft.OpenApi.OData.Capabilities
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Edm;
+
+namespace Microsoft.OpenApi.OData.Core
 {
     /// <summary>
-    /// Complex type: Org.OData.Capabilities.V1.ExampleValue.
+    /// Complex type: Org.OData.Core.V1.ExampleValue.
     /// </summary>
     internal class ExampleValue
     {
         /// <summary>
         /// Gets the description of the example value.
         /// </summary>
-        public string Desciption { get; private set; }
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// Init the <see cref="ExampleValue"/>
+        /// </summary>
+        /// <param name="record">The input record.</param>
+        public virtual void Init(IEdmRecordExpression record)
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+
+            // Description
+            Description = record.GetString("Description");
+        }
     }
 }

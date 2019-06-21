@@ -3,12 +3,12 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-namespace Microsoft.OpenApi.OData.Core
+namespace Microsoft.OpenApi.OData
 {
     /// <summary>
-    /// Complex type: Org.OData.Core.V1.ComplexExampleValue.
+    /// Represents an OData complex value.
     /// </summary>
-    internal class ComplexExampleValue : ResourceExampleValue
+    internal class ODataComplexValue : ODataResourceValue
     {
     }
 }

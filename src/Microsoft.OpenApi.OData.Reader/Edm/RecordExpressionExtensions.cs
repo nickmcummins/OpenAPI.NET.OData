@@ -18,6 +18,33 @@ namespace Microsoft.OpenApi.OData.Edm
     internal static class RecordExpressionExtensions
     {
         /// <summary>
+        /// Get the integer value from the record using the given property name.
+        /// </summary>
+        /// <param name="record">The record expression.</param>
+        /// <param name="propertyName">The property name.</param>
+        /// <returns>The integer value or null.</returns>
+        public static long? GetInteger(this IEdmRecordExpression record, string propertyName)
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+            Utils.CheckArgumentNull(propertyName, nameof(propertyName));
+
+            if (record.Properties != null)
+            {
+                IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == propertyName);
+                if (property != null)
+                {
+                    IEdmIntegerConstantExpression value = property.Value as IEdmIntegerConstantExpression;
+                    if (value != null)
+                    {
+                        return value.Value;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the string value of a property in the given record expression.
         /// </summary>
         /// <param name="record">The given record.</param>
@@ -152,9 +179,9 @@ namespace Microsoft.OpenApi.OData.Edm
                     if (value != null && value.Elements != null)
                     {
                         IList<string> properties = new List<string>();
-                        foreach (var a in value.Elements.Select(e => e as IEdmPathExpression))
+                        foreach (var path in value.Elements.Select(e => e as IEdmPathExpression))
                         {
-                            properties.Add(a.Path);
+                            properties.Add(path.Path);
                         }
 
                         if (properties.Any())
@@ -176,8 +203,37 @@ namespace Microsoft.OpenApi.OData.Edm
         /// <param name="propertyName">The property name.</param>
         /// <param name="elementAction">The element action.</param>
         /// <returns>The collection or null.</returns>
-        public static IList<T> GetCollection<T>(this IEdmRecordExpression record, string propertyName, Action<T, IEdmExpression> elementAction)
-            where T: new()
+        public static T GetRecord<T>(this IEdmRecordExpression record, string propertyName, Action<T, IEdmRecordExpression> elementAction)
+            where T : class, new()
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+            Utils.CheckArgumentNull(propertyName, nameof(propertyName));
+
+            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == propertyName);
+            if (property != null)
+            {
+                IEdmRecordExpression recordValue = property.Value as IEdmRecordExpression;
+                if (recordValue != null)
+                {
+                    T a = new T();
+                    elementAction(a, recordValue);
+                    return a;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///  Get the collection of <typeparamref name="T"/> from the record using the given property name.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="record">The record expression.</param>
+        /// <param name="propertyName">The property name.</param>
+        /// <param name="elementAction">The element action.</param>
+        /// <returns>The collection or null.</returns>
+        public static IList<T> GetCollection<T>(this IEdmRecordExpression record, string propertyName, Action<T, IEdmRecordExpression> elementAction)
+            where T: class, new()
         {
             Utils.CheckArgumentNull(record, nameof(record));
             Utils.CheckArgumentNull(propertyName, nameof(propertyName));
@@ -189,7 +245,7 @@ namespace Microsoft.OpenApi.OData.Edm
                 if (collection != null && collection.Elements != null)
                 {
                     IList<T> items = new List<T>();
-                    foreach (var item in collection.Elements)
+                    foreach (IEdmRecordExpression item in collection.Elements.OfType<IEdmRecordExpression>())
                     {
                         T a = new T();
                         elementAction(a, item);

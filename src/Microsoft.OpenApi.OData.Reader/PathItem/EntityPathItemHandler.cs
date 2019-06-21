@@ -20,9 +20,12 @@ namespace Microsoft.OpenApi.OData.PathItem
         /// <inheritdoc/>
         protected override void SetOperations(OpenApiPathItem item)
         {
-            IndexableByKey index = Context.Model.GetIndexableByKey(EntitySet);
-            if (index == null || index.IsSupported)
+            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            if (read == null ||
+                (read.ReadByKeyRestrictions == null && read.IsReadable) ||
+                (read.ReadByKeyRestrictions.IsReadable))
             {
+                // If we don't have Read by key read restriction, we should check the set read restrction.
                 AddOperation(item, OperationType.Get);
             }
 

@@ -3,7 +3,9 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
+using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
@@ -12,20 +14,6 @@ namespace Microsoft.OpenApi.OData.Capabilities
     /// </summary>
     internal class ScopeType
     {
-        /// <summary>
-        /// Initializes a new instance of <see cref="ScopeType"/> class.
-        /// </summary>
-        /// <param name="scope">The non-nullable scope name.</param>
-        /// <param name="restrictedProperties">
-        /// The non-nullable of the comma-separated string value of all properties
-        /// that will be included or excluded when using the scope
-        /// </param>
-        public ScopeType(string scope, string restrictedProperties)
-        {
-            Scope = scope ?? throw Error.ArgumentNull(nameof(scope));
-            RestrictedProperties = restrictedProperties ?? throw Error.ArgumentNull(nameof(scope));
-        }
-
         /// <summary>
         /// Gets the names of the scope.
         /// </summary>
@@ -37,5 +25,20 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// Possible string value identifiers when specifying properties are '*', _PropertyName_, '-'_PropertyName_.
         /// </summary>
         public string RestrictedProperties { get; private set; }
+
+        /// <summary>
+        /// Init the <see cref="ScopeType"/>.
+        /// </summary>
+        /// <param name="record">The input record.</param>
+        public void Init(IEdmRecordExpression record)
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+
+            // Scope
+            Scope = record.GetString("Scope");
+
+            // RestrictedProperties
+            RestrictedProperties = record.GetString("RestrictedProperties");
+        }
     }
 }

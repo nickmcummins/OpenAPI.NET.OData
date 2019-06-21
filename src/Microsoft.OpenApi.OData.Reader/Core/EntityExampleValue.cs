@@ -3,16 +3,12 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-namespace Microsoft.OpenApi.OData.Capabilities
+namespace Microsoft.OpenApi.OData.Core
 {
     /// <summary>
-    /// Complex type: Org.OData.Capabilities.V1.EntityExampleValue.
+    /// Complex type: Org.OData.Core.V1.EntityExampleValue.
     /// </summary>
-    internal class EntityExampleValue : ExampleValue
+    internal class EntityExampleValue : ResourceExampleValue
     {
-        /// <summary>
-        /// Gets the Example value for the custom parameter
-        /// </summary>
-        public object Value { get; private set; }
     }
 }

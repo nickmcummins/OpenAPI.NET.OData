@@ -9,7 +9,7 @@ using Microsoft.OData.Edm.Vocabularies;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
-    internal abstract class ReadRestrictionsBase
+    internal abstract class ReadRestrictionsBase : CapabilitiesRestrictions
     {
         /// <summary>
         /// Get the Entities can be retrieved.
@@ -30,53 +30,41 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// Gets the Supported or required custom query options.
         /// </summary>
         public IList<CustomParameter> CustomQueryOptions { get; private set; }
-    }
 
-    /// <summary>
-    /// Restrictions for retrieving an entity by key
-    /// </summary>
-    internal class ReadByKeyRestrictionsType : ReadRestrictionsBase
-    {
-
-    }
-
-    /// <summary>
-    /// Restrictions for retrieving an entity by key
-    /// </summary>
-    internal class ReadRestrictionsType : ReadRestrictionsBase
-    {
         /// <summary>
-        /// Gets the Restrictions for retrieving an entity by key.
-        /// Only valid when applied to a collection. If a property of `ReadByKeyRestrictions`
-        /// is not specified, the corresponding property value of `ReadRestrictions` applies.
+        /// Test the target supports update.
         /// </summary>
-        public ReadByKeyRestrictionsType ReadByKeyRestrictions { get; private set; }
+        /// <returns>True/false.</returns>
+        public bool IsReadable => Readable == null || Readable.Value;
     }
 
     /// <summary>
-    /// Org.OData.Capabilities.V1.ReadRestrictions
+    /// Restrictions for retrieving an entity by key
     /// </summary>
-    internal class ReadRestrictions : CapabilitiesRestrictions
+    internal class ReadByKeyRestrictions : ReadRestrictionsBase
     {
         /// <summary>
         /// The Term type name.
         /// </summary>
         public override CapabilitesTermKind Kind => CapabilitesTermKind.ReadRestrictions;
 
-        /// <summary>
-        /// Gets the List of required scopes to invoke an action or function.
-        /// </summary>
-        public PermissionType Permission { get; private set; }
+        protected override bool Initialize(IEdmVocabularyAnnotation annotation)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
+    /// <summary>
+    /// Org.OData.Capabilities.V1.ReadRestrictions
+    /// </summary>
+    internal class ReadRestrictions : ReadRestrictionsBase
+    {
         /// <summary>
-        /// Gets the Supported or required custom headers.
+        /// The Term type name.
         /// </summary>
-        public IList<CustomParameter> CustomHeaders { get; private set; }
+        public override CapabilitesTermKind Kind => CapabilitesTermKind.ReadRestrictions;
 
-        /// <summary>
-        /// Gets the Supported or required custom query options.
-        /// </summary>
-        public IList<CustomParameter> CustomQueryOptions { get; private set; }
+        public ReadByKeyRestrictions ReadByKeyRestrictions { get; set; }
 
         protected override bool Initialize(IEdmVocabularyAnnotation annotation)
         {

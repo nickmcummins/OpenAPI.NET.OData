@@ -4,6 +4,9 @@
 // ------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.OData.Authorizations;
 using Microsoft.OpenApi.OData.Common;
 
@@ -15,17 +18,6 @@ namespace Microsoft.OpenApi.OData.Capabilities
     internal class PermissionType
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="PermissionType"/> class.
-        /// </summary>
-        /// <param name="scheme">The Auth flow scheme name.</param>
-        /// <param name="scopes">List of scopes that can provide access to the resource.</param>
-        public PermissionType(SecurityScheme scheme, IEnumerable<ScopeType> scopes)
-        {
-            Scheme = scheme ?? throw Error.ArgumentNull(nameof(scheme));
-            Scopes = scopes ?? throw Error.ArgumentNull(nameof(scopes));
-        }
-
-        /// <summary>
         /// Gets the auth flow scheme name.
         /// </summary>
         public SecurityScheme Scheme { get; private set; }
@@ -34,5 +26,36 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// Gets the list of scopes that can provide access to the resource.
         /// </summary>
         public IEnumerable<ScopeType> Scopes { get; private set; }
+
+        /// <summary>
+        /// Init the <see cref="PermissionType"/>.
+        /// </summary>
+        /// <param name="record">The input record.</param>
+        public void Init(IEdmRecordExpression record)
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+
+            // Scheme
+            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == "Scheme");
+            if (property != null && property.Value != null && property.Value.ExpressionKind == EdmExpressionKind.Record)
+            {
+                Scheme = new SecurityScheme();
+                Scheme.Init((IEdmRecordExpression)property.Value);
+            }
+
+            // Scopes
+            property = record.Properties.FirstOrDefault(e => e.Name == "Scopes");
+            if (property != null && property.Value != null && property.Value.ExpressionKind == EdmExpressionKind.Collection)
+            {
+                IEdmCollectionExpression value = property.Value as IEdmCollectionExpression;
+                if (value != null && value.Elements != null)
+                {/*
+                    foreach (var element in value.Elements)
+                    {
+                        properties.Add(path.Path);
+                    }*/
+                }
+            }
+        }
     }
 }

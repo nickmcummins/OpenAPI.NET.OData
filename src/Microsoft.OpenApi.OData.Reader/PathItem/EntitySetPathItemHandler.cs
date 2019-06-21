@@ -26,9 +26,10 @@ namespace Microsoft.OpenApi.OData.PathItem
         /// <inheritdoc/>
         protected override void SetOperations(OpenApiPathItem item)
         {
-            NavigationRestrictions navigation = Context.Model.GetNavigationRestrictions(EntitySet);
-            if (navigation == null || navigation.IsNavigable)
+            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            if (read == null || read.IsReadable)
             {
+                // If we don't have Read by key read restriction, we should check the set read restrction.
                 AddOperation(item, OperationType.Get);
             }
 

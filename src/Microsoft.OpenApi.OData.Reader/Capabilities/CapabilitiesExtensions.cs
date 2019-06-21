@@ -78,6 +78,17 @@ namespace Microsoft.OpenApi.OData.Capabilities
         }
 
         /// <summary>
+        /// Gets Org.OData.Capabilities.V1.ReadRestrictions.
+        /// </summary>
+        /// <param name="model">The Edm model.</param>
+        /// <param name="target">The target.</param>
+        /// <returns>The Org.OData.Capabilities.V1.DeleteRestrictions or null.</returns>
+        public static ReadRestrictions GetReadRestrictions(this IEdmModel model, IEdmVocabularyAnnotatable target)
+        {
+            return model.GetCapabilities(target, CapabilitesTermKind.ReadRestrictions) as ReadRestrictions;
+        }
+
+        /// <summary>
         /// Gets Org.OData.Capabilities.V1.UpdateRestrictions.
         /// </summary>
         /// <param name="model">The Edm model.</param>
@@ -188,8 +199,8 @@ namespace Microsoft.OpenApi.OData.Capabilities
             Debug.Assert(model != null);
             Debug.Assert(target != null);
 
-            ICapablitiesRestrictions capabilitiesRestrictions = null;
-            switch(kind)
+            ICapablitiesRestrictions capabilitiesRestrictions;
+            switch (kind)
             {
                 case CapabilitesTermKind.DeleteRestrictions: // DeleteRestrictions
                     capabilitiesRestrictions = new DeleteRestrictions();
@@ -241,6 +252,10 @@ namespace Microsoft.OpenApi.OData.Capabilities
 
                 case CapabilitesTermKind.KeyAsSegmentSupported: // KeyAsSegmentSupported
                     capabilitiesRestrictions = new KeyAsSegmentSupported();
+                    break;
+
+                case CapabilitesTermKind.ReadRestrictions: // ReadRestrictions
+                    capabilitiesRestrictions = new ReadRestrictions();
                     break;
 
                 case CapabilitesTermKind.IndexableByKey: // IndexableByKey

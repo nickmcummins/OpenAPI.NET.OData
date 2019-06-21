@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
@@ -38,7 +39,7 @@ namespace Microsoft.OpenApi.OData.Capabilities
         /// <summary>
         /// Gets the maximum number of navigation properties that can be traversed.
         /// </summary>
-        public int? MaxLevels { get; private set; }
+        public long? MaxLevels { get; private set; }
 
         /// <summary>
         /// Gets the required scopes to perform the insert.
@@ -94,6 +95,21 @@ namespace Microsoft.OpenApi.OData.Capabilities
 
             // NonInsertableNavigationProperties
             NonInsertableNavigationProperties = record.GetCollectionPropertyPath("NonInsertableNavigationProperties");
+
+            // MaxLevels
+            MaxLevels = record.GetInteger("MaxLevels");
+
+            // Permission
+            Permission = record.GetRecord<PermissionType>("Permission", (t, r) => t.Init(r));
+
+            // QueryOptions
+            QueryOptions = record.GetRecord<ModificationQueryOptionsType>("QueryOptions", (t, r) => t.Init(r));
+
+            // CustomHeaders
+            CustomHeaders = record.GetCollection<CustomParameter>("CustomHeaders", (t, r) => t.Init(r));
+
+            // CustomHeaders
+            CustomQueryOptions = record.GetCollection<CustomParameter>("CustomQueryOptions", (t, r) => t.Init(r));
 
             return true;
         }

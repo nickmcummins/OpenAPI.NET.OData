@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Capabilities
 {
@@ -41,14 +42,14 @@ namespace Microsoft.OpenApi.OData.Capabilities
         public PermissionType Permission { get; private set; }
 
         /// <summary>
-        /// Gets the Support for query options with insert requests.
+        /// Gets the Supported or required custom headers.
         /// </summary>
-        public ModificationQueryOptionsType QueryOptions { get; private set; }
+        public IList<CustomParameter> CustomHeaders { get; private set; }
 
         /// <summary>
         /// Gets the Supported or required custom headers.
         /// </summary>
-        public IList<CustomParameter> CustomHeaders { get; private set; }
+        public IList<CustomParameter> CustomQueryOptions { get; private set; }
 
         /// <summary>
         /// Test the target supports delete.
@@ -81,6 +82,9 @@ namespace Microsoft.OpenApi.OData.Capabilities
 
             // Deletable
             Deletable = record.GetBoolean("Deletable");
+
+            // MaxLevels
+            MaxLevels = (int?)record.GetInteger("MaxLevels");
 
             // NonDeletableNavigationProperties
             NonDeletableNavigationProperties = record.GetCollectionPropertyPath("NonDeletableNavigationProperties");
