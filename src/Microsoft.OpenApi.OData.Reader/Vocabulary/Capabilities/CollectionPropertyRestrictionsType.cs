@@ -70,7 +70,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         /// </summary>
         public bool? Deletable { get; private set; }
 
-        public void Initialize(IEdmRecordExpression record)
+        public virtual void Initialize(IEdmRecordExpression record)
         {
             Utils.CheckArgumentNull(record, nameof(record));
 

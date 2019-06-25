@@ -5,7 +5,6 @@
 
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
-using Microsoft.OpenApi.OData.Common;
 
 namespace Microsoft.OpenApi.OData.Vocabulary.Core
 {
@@ -25,8 +24,6 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Core
         /// <param name="record">The input record.</param>
         public override void Initialize(IEdmRecordExpression record)
         {
-            Utils.CheckArgumentNull(record, nameof(record));
-
             // Load ExampleValue
             base.Initialize(record);
 

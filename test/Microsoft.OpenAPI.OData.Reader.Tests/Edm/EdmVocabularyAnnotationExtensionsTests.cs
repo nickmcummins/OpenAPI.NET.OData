@@ -9,7 +9,6 @@ using System.Xml.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Validation;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 

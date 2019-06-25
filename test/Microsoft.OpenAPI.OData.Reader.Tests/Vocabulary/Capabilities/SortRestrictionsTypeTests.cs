@@ -15,16 +15,6 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class SortRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsSortRestrictionsEnumMember()
-        {
-            // Arrange & Act
-            SortRestrictionsType sort = new SortRestrictionsType();
-
-            // Assert
-           // Assert.Equal(CapabilitesTermKind.SortRestrictions, sort.Kind);
-        }
-
-        [Fact]
         public void UnknownAnnotatableTargetReturnsDefaultSortRestrictionsValues()
         {
             // Arrange & Act

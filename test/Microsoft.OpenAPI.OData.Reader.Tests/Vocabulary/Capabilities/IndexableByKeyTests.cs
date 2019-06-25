@@ -5,7 +5,6 @@
 
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
-using Microsoft.OpenApi.OData.Capabilities;
 using Xunit;
 
 namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests

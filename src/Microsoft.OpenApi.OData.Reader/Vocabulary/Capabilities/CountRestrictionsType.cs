@@ -3,10 +3,8 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
@@ -62,6 +60,10 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
                 false;
         }
 
+        /// <summary>
+        /// Init the <see cref="CountRestrictionsType"/>.
+        /// </summary>
+        /// <param name="record">The input record.</param>
         public virtual void Initialize(IEdmRecordExpression record)
         {
             Utils.CheckArgumentNull(record, nameof(record));
@@ -74,11 +76,6 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 
             // NonCountableNavigationProperties
             NonCountableNavigationProperties = record.GetCollectionPropertyPath("NonCountableNavigationProperties");
-        }
-
-        internal bool GetRecord<T>(IEdmEntitySet calendars)
-        {
-            throw new NotImplementedException();
         }
     }
 }

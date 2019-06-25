@@ -3,7 +3,7 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-namespace Microsoft.OpenApi.OData.Capabilities
+namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
     /// <summary>
     /// The Enum kind for Capabiliites annotation
