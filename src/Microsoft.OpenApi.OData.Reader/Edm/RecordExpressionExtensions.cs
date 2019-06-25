@@ -4,11 +4,13 @@
 // ------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Vocabulary;
 
 namespace Microsoft.OpenApi.OData.Edm
 {
@@ -133,6 +135,64 @@ namespace Microsoft.OpenApi.OData.Edm
         }
 
         /// <summary>
+        ///  Get the collection of <typeparamref name="T"/> from the record using the given property name.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="record">The record expression.</param>
+        /// <param name="propertyName">The property name.</param>
+        /// <param name="elementAction">The element action.</param>
+        /// <returns>The collection or null.</returns>
+        public static T GetRecord<T>(this IEdmRecordExpression record, string propertyName, Action<T, IEdmRecordExpression> elementAction)
+            where T : class, new()
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+            Utils.CheckArgumentNull(propertyName, nameof(propertyName));
+
+            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == propertyName);
+            if (property != null)
+            {
+                IEdmRecordExpression recordValue = property.Value as IEdmRecordExpression;
+                if (recordValue != null)
+                {
+                    T a = new T();
+                    elementAction(a, recordValue);
+                    return a;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///  Get the collection of <typeparamref name="T"/> from the record using the given property name.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="record">The record expression.</param>
+        /// <param name="propertyName">The property name.</param>
+        /// <param name="elementAction">The element action.</param>
+        /// <returns>The collection or null.</returns>
+        public static T GetRecord<T>(this IEdmRecordExpression record, string propertyName)
+            where T : IRecord, new()
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+            Utils.CheckArgumentNull(propertyName, nameof(propertyName));
+
+            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == propertyName);
+            if (property != null)
+            {
+                IEdmRecordExpression recordValue = property.Value as IEdmRecordExpression;
+                if (recordValue != null)
+                {
+                    T a = new T();
+                    a.Initialize(recordValue);
+                    return a;
+                }
+            }
+
+            return default;
+        }
+
+        /// <summary>
         /// Get the property path from the record using the given property name.
         /// </summary>
         /// <param name="record">The record expression.</param>
@@ -195,34 +255,7 @@ namespace Microsoft.OpenApi.OData.Edm
             return null;
         }
 
-        /// <summary>
-        ///  Get the collection of <typeparamref name="T"/> from the record using the given property name.
-        /// </summary>
-        /// <typeparam name="T">The element type.</typeparam>
-        /// <param name="record">The record expression.</param>
-        /// <param name="propertyName">The property name.</param>
-        /// <param name="elementAction">The element action.</param>
-        /// <returns>The collection or null.</returns>
-        public static T GetRecord<T>(this IEdmRecordExpression record, string propertyName, Action<T, IEdmRecordExpression> elementAction)
-            where T : class, new()
-        {
-            Utils.CheckArgumentNull(record, nameof(record));
-            Utils.CheckArgumentNull(propertyName, nameof(propertyName));
 
-            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == propertyName);
-            if (property != null)
-            {
-                IEdmRecordExpression recordValue = property.Value as IEdmRecordExpression;
-                if (recordValue != null)
-                {
-                    T a = new T();
-                    elementAction(a, recordValue);
-                    return a;
-                }
-            }
-
-            return null;
-        }
 
         /// <summary>
         ///  Get the collection of <typeparamref name="T"/> from the record using the given property name.
@@ -306,6 +339,41 @@ namespace Microsoft.OpenApi.OData.Edm
                     {
                         IEdmStringConstantExpression itemRecord = item as IEdmStringConstantExpression;
                         items.Add(itemRecord.Value);
+                    }
+
+                    return items;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///  Get the collection of <typeparamref name="T"/> from the record using the given property name.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="record">The record expression.</param>
+        /// <param name="propertyName">The property name.</param>
+        /// <param name="elementAction">The element action.</param>
+        /// <returns>The collection or null.</returns>
+        public static IList<T> GetCollection<T>(this IEdmRecordExpression record, string propertyName)
+            where T : IRecord, new()
+        {
+            Utils.CheckArgumentNull(record, nameof(record));
+            Utils.CheckArgumentNull(propertyName, nameof(propertyName));
+
+            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == propertyName);
+            if (property != null)
+            {
+                IEdmCollectionExpression collection = property.Value as IEdmCollectionExpression;
+                if (collection != null && collection.Elements != null)
+                {
+                    IList<T> items = new List<T>();
+                    foreach (IEdmRecordExpression item in collection.Elements.OfType<IEdmRecordExpression>())
+                    {
+                        T a = new T();
+                        a.Initialize(item);
+                        items.Add(a);
                     }
 
                     return items;

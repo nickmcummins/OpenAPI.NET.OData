@@ -118,14 +118,14 @@ namespace Microsoft.OpenApi.OData.Operation
                 return;
             }
 
-            if (read.CustomQueryOptions != null)
-            {
-                AppendCustomParameters(operation.Parameters, read.CustomQueryOptions, ParameterLocation.Query);
-            }
-
             if (read.CustomHeaders != null)
             {
                 AppendCustomParameters(operation.Parameters, read.CustomHeaders, ParameterLocation.Header);
+            }
+
+            if (read.CustomQueryOptions != null)
+            {
+                AppendCustomParameters(operation.Parameters, read.CustomQueryOptions, ParameterLocation.Query);
             }
         }
     }
