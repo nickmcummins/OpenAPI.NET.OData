@@ -12,8 +12,9 @@ using Microsoft.OpenApi.OData.Edm;
 namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
     /// <summary>
-    /// Org.OData.Capabilities.V1.FilterRestrictions
+    /// Complex Type: Org.OData.Capabilities.V1.FilterRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.FilterRestrictions")]
     internal class FilterRestrictionsType : IRecord
     {
         /// <summary>

@@ -5,8 +5,8 @@
 
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 
 namespace Microsoft.OpenApi.OData.PathItem
 {
@@ -27,14 +27,14 @@ namespace Microsoft.OpenApi.OData.PathItem
         protected override void SetOperations(OpenApiPathItem item)
         {
             // Retrieve a singleton.
-            ReadRestrictions read = Context.Model.GetReadRestrictions(Singleton);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(Singleton, CapabilitiesConstants.ReadRestrictions);
             if (read == null || read.IsReadable)
             {
                 AddOperation(item, OperationType.Get);
             }
 
             // Update a singleton
-            UpdateRestrictions update = Context.Model.GetUpdateRestrictions(Singleton);
+            UpdateRestrictionsType update = Context.Model.GetRecord<UpdateRestrictionsType>(Singleton, CapabilitiesConstants.UpdateRestrictions);
             if (update == null || update.IsUpdatable)
             {
                 AddOperation(item, OperationType.Patch);

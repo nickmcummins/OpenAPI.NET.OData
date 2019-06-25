@@ -8,11 +8,11 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.Any;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 
 namespace Microsoft.OpenApi.OData.PathItem
 {
@@ -49,7 +49,7 @@ namespace Microsoft.OpenApi.OData.PathItem
                 target = NavigationSource as IEdmSingleton;
             }
 
-            NavigationRestrictions navigation = Context.Model.GetNavigationRestrictions(target);
+            NavigationRestrictionsType navigation = Context.Model.GetRecord<NavigationRestrictionsType>(target, CapabilitiesConstants.NavigationRestrictions);
             if (navigation != null && navigation.Navigability != null && navigation.Navigability.Value == NavigationType.None)
             {
                 // This check should be done when retrieve the path, but, here is for verification.
@@ -73,7 +73,7 @@ namespace Microsoft.OpenApi.OData.PathItem
                     if (LastSegmentIsKeySegment)
                     {
                         // Need to check this scenario is valid or not?
-                        UpdateRestrictions update = Context.Model.GetUpdateRestrictions(target);
+                        UpdateRestrictionsType update = Context.Model.GetRecord<UpdateRestrictionsType>(target, CapabilitiesConstants.UpdateRestrictions);
                         if (update == null || !update.IsNonUpdatableNavigationProperty(navigationPropertyPath))
                         {
                             AddOperation(item, OperationType.Patch);
@@ -81,7 +81,7 @@ namespace Microsoft.OpenApi.OData.PathItem
                     }
                     else
                     {
-                        InsertRestrictions insert = Context.Model.GetInsertRestrictions(target);
+                        InsertRestrictionsType insert = Context.Model.GetRecord<InsertRestrictionsType>(target, CapabilitiesConstants.InsertRestrictions);
                         if (insert == null || !insert.IsNonInsertableNavigationProperty(navigationPropertyPath))
                         {
                             AddOperation(item, OperationType.Post);
@@ -90,7 +90,7 @@ namespace Microsoft.OpenApi.OData.PathItem
                 }
                 else
                 {
-                    UpdateRestrictions update = Context.Model.GetUpdateRestrictions(target);
+                    UpdateRestrictionsType update = Context.Model.GetRecord<UpdateRestrictionsType>(target, CapabilitiesConstants.UpdateRestrictions);
                     if (update == null || !update.IsNonUpdatableNavigationProperty(navigationPropertyPath))
                     {
                         AddOperation(item, OperationType.Patch);

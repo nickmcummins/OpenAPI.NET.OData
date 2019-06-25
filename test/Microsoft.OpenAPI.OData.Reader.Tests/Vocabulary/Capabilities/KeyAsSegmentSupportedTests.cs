@@ -5,40 +5,15 @@
 
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OData.Edm.Vocabularies;
 using Xunit;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
 
-namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
+namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
     public class KeyAsSegmentSupportedTests
     {
-        [Fact]
-        public void KindPropertyReturnsKeyAsSegmentSupportedEnumMember()
-        {
-            // Arrange & Act
-            KeyAsSegmentSupported keyAsSegment = new KeyAsSegmentSupported();
-
-            // Assert
-            Assert.Equal(CapabilitesTermKind.KeyAsSegmentSupported, keyAsSegment.Kind);
-        }
-
-        [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultTopSupportedValues()
-        {
-            // Arrange
-            KeyAsSegmentSupported keyAsSegment = new KeyAsSegmentSupported();
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
-
-            //  Act
-            bool result = keyAsSegment.Load(EdmCoreModel.Instance, entityType);
-
-            // Assert
-            Assert.False(result);
-            Assert.True(keyAsSegment.IsSupported);
-            Assert.Null(keyAsSegment.Supported);
-        }
-
         [Theory]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline, true)]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline, false)]
@@ -51,13 +26,11 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(model); // guard
 
             // Act
-            KeyAsSegmentSupported KeyAsSegmentSupported = new KeyAsSegmentSupported();
-            bool result = KeyAsSegmentSupported.Load(model, model.EntityContainer);
+            bool? result = model.GetBoolean(model.EntityContainer, CapabilitiesConstants.KeyAsSegmentSupported);
 
             // Assert
-            Assert.True(result);
-            Assert.NotNull(KeyAsSegmentSupported.Supported);
-            Assert.Equal(support, KeyAsSegmentSupported.Supported.Value);
+            Assert.NotNull(result);
+            Assert.Equal(support, result.Value);
         }
 
         private static IEdmModel GetEdmModel(EdmVocabularyAnnotationSerializationLocation location, bool supported)

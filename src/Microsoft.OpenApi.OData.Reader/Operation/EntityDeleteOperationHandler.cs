@@ -3,12 +3,13 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
+using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Generator;
-using System.Linq;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 
 namespace Microsoft.OpenApi.OData.Operation
 {
@@ -69,7 +70,7 @@ namespace Microsoft.OpenApi.OData.Operation
 
         protected override void SetSecurity(OpenApiOperation operation)
         {
-            DeleteRestrictions delete = Context.Model.GetDeleteRestrictions(EntitySet);
+            DeleteRestrictionsType delete = Context.Model.GetRecord<DeleteRestrictionsType>(EntitySet, CapabilitiesConstants.DeleteRestrictions);
             if (delete == null || delete.Permission == null)
             {
                 return;
@@ -82,20 +83,20 @@ namespace Microsoft.OpenApi.OData.Operation
 
         protected override void AppendCustomParameters(OpenApiOperation operation)
         {
-            DeleteRestrictions delete = Context.Model.GetDeleteRestrictions(EntitySet);
+            DeleteRestrictionsType delete = Context.Model.GetRecord< DeleteRestrictionsType>(EntitySet, CapabilitiesConstants.DeleteRestrictions);
             if (delete == null)
             {
                 return;
             }
 
-            if (delete.CustomQueryOptions != null)
-            {
-                AppendCustomParameters(operation.Parameters, delete.CustomQueryOptions, ParameterLocation.Query);
-            }
-
             if (delete.CustomHeaders != null)
             {
                 AppendCustomParameters(operation.Parameters, delete.CustomHeaders, ParameterLocation.Header);
+            }
+
+            if (delete.CustomQueryOptions != null)
+            {
+                AppendCustomParameters(operation.Parameters, delete.CustomQueryOptions, ParameterLocation.Query);
             }
         }
     }

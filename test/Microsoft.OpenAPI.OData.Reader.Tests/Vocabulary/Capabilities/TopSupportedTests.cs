@@ -11,38 +11,39 @@ using Xunit;
 
 namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
 {
-    public class SkipSupportedTests
+#if false
+    public class TopSupportedTests
     {
         [Fact]
-        public void KindPropertyReturnsSkipSupportedEnumMember()
+        public void KindPropertyReturnsTopSupportedEnumMember()
         {
             // Arrange & Act
-            SkipSupported skip = new SkipSupported();
+            TopSupported top = new TopSupported();
 
             // Assert
-            Assert.Equal(CapabilitesTermKind.SkipSupported, skip.Kind);
+            Assert.Equal(CapabilitesTermKind.TopSupported, top.Kind);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultSkipSupportedValues()
+        public void UnknownAnnotatableTargetReturnsDefaultTopSupportedValues()
         {
             // Arrange
-            SkipSupported skip = new SkipSupported();
+            TopSupported top = new TopSupported();
             EdmEntityType entityType = new EdmEntityType("NS", "Entity");
 
             //  Act
-            bool result = skip.Load(EdmCoreModel.Instance, entityType);
+            bool result = top.Load(EdmCoreModel.Instance, entityType);
 
             // Assert
             Assert.False(result);
-            Assert.True(skip.IsSupported);
-            Assert.Null(skip.Supported);
+            Assert.True(top.IsSupported);
+            Assert.Null(top.Supported);
         }
 
         [Theory]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline)]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.OutOfLine)]
-        public void TargetOnEntityTypeReturnsCorrectSkipSupportedValue(EdmVocabularyAnnotationSerializationLocation location)
+        public void TargetOnEntityTypeReturnsCorrectTopSupportedValue(EdmVocabularyAnnotationSerializationLocation location)
         {
             // Arrange
             const string template = @"
@@ -57,20 +58,20 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendar); // guard
 
             // Act
-            SkipSupported skip = new SkipSupported();
-            bool result = skip.Load(model, calendar);
+            TopSupported top = new TopSupported();
+            bool result = top.Load(model, calendar);
 
             // Assert
             Assert.True(result);
-            Assert.False(skip.IsSupported);
-            Assert.NotNull(skip.Supported);
-            Assert.False(skip.Supported.Value);
+            Assert.False(top.IsSupported);
+            Assert.NotNull(top.Supported);
+            Assert.False(top.Supported.Value);
         }
 
         [Theory]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline)]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.OutOfLine)]
-        public void TargetOnEntitySetReturnsCorrectSkipSupportedValue(EdmVocabularyAnnotationSerializationLocation location)
+        public void TargetOnEntitySetReturnsCorrectTopSupportedValue(EdmVocabularyAnnotationSerializationLocation location)
         {
             // Arrange
             const string template = @"
@@ -85,28 +86,30 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            SkipSupported skip = new SkipSupported();
-            bool result = skip.Load(model, calendars);
+            TopSupported top = new TopSupported();
+            bool result = top.Load(model, calendars);
 
             // Assert
             Assert.True(result);
-            Assert.NotNull(skip.Supported);
-            Assert.False(skip.Supported.Value);
+            Assert.False(top.IsSupported);
+            Assert.NotNull(top.Supported);
+            Assert.False(top.Supported.Value);
         }
 
         private static IEdmModel GetEdmModel(string template, EdmVocabularyAnnotationSerializationLocation location)
         {
-            string countAnnotation = @"<Annotation Term=""Org.OData.Capabilities.V1.SkipSupported"" Bool=""false"" />";
+            string topAnnotation = @"<Annotation Term=""Org.OData.Capabilities.V1.TopSupported"" Bool=""false"" />";
 
             if (location == EdmVocabularyAnnotationSerializationLocation.OutOfLine)
             {
-                countAnnotation = string.Format(template, countAnnotation);
-                return CapabilitiesModelHelper.GetEdmModelOutline(countAnnotation);
+                topAnnotation = string.Format(template, topAnnotation);
+                return CapabilitiesModelHelper.GetEdmModelOutline(topAnnotation);
             }
             else
             {
-                return CapabilitiesModelHelper.GetEdmModelTypeInline(countAnnotation);
+                return CapabilitiesModelHelper.GetEdmModelTypeInline(topAnnotation);
             }
         }
     }
+#endif
 }

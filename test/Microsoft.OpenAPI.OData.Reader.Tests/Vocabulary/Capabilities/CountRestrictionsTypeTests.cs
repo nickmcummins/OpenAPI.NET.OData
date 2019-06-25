@@ -6,39 +6,44 @@
 using System;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
-using Microsoft.OpenApi.OData.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 
-namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
+namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
-    public class CountRestrictionsTests
+    public class CountRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsCountRestrictionEnumMember()
+        public void CountRestrictionsTypeAsTermQualifiedName()
         {
             // Arrange & Act
-            CountRestrictions count = new CountRestrictions();
+            
+        }
+
+        [Fact]
+        public void PropertiesAsNullForDefaultCountRestrictionsType()
+        {
+            // Arrange & Act
+            CountRestrictionsType count = new CountRestrictionsType();
 
             // Assert
-            Assert.Equal(CapabilitesTermKind.CountRestrictions, count.Kind);
+            Assert.Null(count.Countable);
+            Assert.Null(count.NonCountableProperties);
+            Assert.Null(count.NonCountableNavigationProperties);
         }
 
         [Fact]
         public void UnknownAnnotatableTargetReturnsDefaultPropertyValues()
         {
             // Arrange & Act
-            CountRestrictions count = new CountRestrictions();
             EdmEntityType entityType = new EdmEntityType("NS", "Entity");
 
             //  Act
-            bool result = count.Load(EdmCoreModel.Instance, entityType);
+            CountRestrictionsType count = EdmCoreModel.Instance.GetRecord<CountRestrictionsType>(entityType);
 
             // Assert
-            Assert.False(result);
-            Assert.True(count.IsCountable);
-            Assert.Null(count.Countable);
-            Assert.Null(count.NonCountableProperties);
-            Assert.Null(count.NonCountableNavigationProperties);
+            Assert.Null(count);
         }
 
         [Theory]
@@ -59,11 +64,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            CountRestrictions count = new CountRestrictions();
-            bool  result = count.Load(model, calendars);
+            CountRestrictionsType count = model.GetRecord<CountRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
             VerifyCountRestrictions(count);
         }
 
@@ -85,11 +88,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            CountRestrictions count = new CountRestrictions();
-            bool result = count.Load(model, calendars);
+            CountRestrictionsType count = model.GetRecord<CountRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
             VerifyCountRestrictions(count);
         }
 
@@ -125,7 +126,7 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             }
         }
 
-        private static void VerifyCountRestrictions(CountRestrictions count)
+        private static void VerifyCountRestrictions(CountRestrictionsType count)
         {
             Assert.NotNull(count);
 

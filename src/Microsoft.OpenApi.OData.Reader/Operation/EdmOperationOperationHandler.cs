@@ -10,10 +10,10 @@ using System.Text;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Generator;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 
 namespace Microsoft.OpenApi.OData.Operation
 {
@@ -154,14 +154,14 @@ namespace Microsoft.OpenApi.OData.Operation
         /// <inheritdoc/>
         protected override void SetSecurity(OpenApiOperation operation)
         {
-            OperationRestrictions restriction = Context.Model.GetOperationRestrictions(EdmOperation);
-            if (restriction == null || restriction.Restrictions == null || !restriction.Restrictions.Any())
+            IEnumerable<OperationRestriction> restrictions = Context.Model.GetCollection<OperationRestriction>(EdmOperation, CapabilitiesConstants.OperationRestrictions);
+            if (restrictions == null || !restrictions.Any())
             {
                 return;
             }
 
-            // TODO: how to use the collection
-            OperationRestriction operationRestriction = restriction.Restrictions.First();
+            // TODO: how to use the collection?
+            OperationRestriction operationRestriction = restrictions.First();
 
             // the Permission should be collection, however current ODL supports the single permission.
             // Will update after ODL change.
@@ -171,14 +171,14 @@ namespace Microsoft.OpenApi.OData.Operation
         /// <inheritdoc/>
         protected override void AppendCustomParameters(OpenApiOperation operation)
         {
-            OperationRestrictions restriction = Context.Model.GetOperationRestrictions(EdmOperation);
-            if (restriction == null || restriction.Restrictions == null || !restriction.Restrictions.Any())
+            IEnumerable<OperationRestriction> restrictions = Context.Model.GetCollection<OperationRestriction>(EdmOperation, CapabilitiesConstants.OperationRestrictions);
+            if (restrictions == null || !restrictions.Any())
             {
                 return;
             }
 
-            // TODO: how to use the collection
-            OperationRestriction operationRestriction = restriction.Restrictions.First();
+            // TODO: how to use the collection?
+            OperationRestriction operationRestriction = restrictions.First();
 
             if (operationRestriction.CustomHeaders != null)
             {

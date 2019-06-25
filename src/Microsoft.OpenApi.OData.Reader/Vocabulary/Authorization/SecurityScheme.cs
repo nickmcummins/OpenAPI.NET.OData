@@ -13,6 +13,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Authorization
     /// <summary>
     /// Complex type: Org.OData.Authorization.V1.SecurityScheme
     /// </summary>
+    [Term("Org.OData.Authorization.V1.SecuritySchemes")]
     internal class SecurityScheme : IRecord
     {
         /// <summary>

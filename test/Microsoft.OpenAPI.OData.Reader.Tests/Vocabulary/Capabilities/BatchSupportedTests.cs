@@ -11,6 +11,7 @@ using Xunit;
 
 namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
 {
+#if false
     public class BatchSupportedTests
     {
         [Fact]
@@ -76,4 +77,5 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             return model;
         }
     }
+#endif
 }

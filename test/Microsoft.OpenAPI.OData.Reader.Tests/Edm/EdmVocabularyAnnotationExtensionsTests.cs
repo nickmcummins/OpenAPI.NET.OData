@@ -10,6 +10,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Validation;
 using Microsoft.OpenApi.OData.Capabilities;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 
 namespace Microsoft.OpenApi.OData.Edm.Tests
@@ -91,8 +92,8 @@ namespace Microsoft.OpenApi.OData.Edm.Tests
             Assert.NotNull(model); // guard
 
             // Act
-            CountRestrictions count1 = model.GetRecord<CountRestrictions>(model.EntityContainer, qualifiedName);
-            CountRestrictions count2 = model.GetRecord<CountRestrictions>(model.EntityContainer, qualifiedName);
+            CountRestrictionsType count1 = model.GetRecord<CountRestrictionsType>(model.EntityContainer, qualifiedName);
+            CountRestrictionsType count2 = model.GetRecord<CountRestrictionsType>(model.EntityContainer, qualifiedName);
 
             // Assert
             Assert.NotNull(count1);
@@ -186,8 +187,8 @@ namespace Microsoft.OpenApi.OData.Edm.Tests
             Assert.NotNull(model); // guard
 
             // Act
-            IEnumerable<CountRestrictions> counts1 = model.GetCollection<CountRestrictions>(model.EntityContainer, qualifiedName);
-            IEnumerable<CountRestrictions> counts2 = model.GetCollection<CountRestrictions>(model.EntityContainer, qualifiedName);
+            IEnumerable<CountRestrictionsType> counts1 = model.GetCollection<CountRestrictionsType>(model.EntityContainer, qualifiedName);
+            IEnumerable<CountRestrictionsType> counts2 = model.GetCollection<CountRestrictionsType>(model.EntityContainer, qualifiedName);
 
             // Assert
             Assert.NotNull(counts1);
@@ -197,7 +198,7 @@ namespace Microsoft.OpenApi.OData.Edm.Tests
             Assert.Equal(2, counts1.Count());
 
             // #1
-            CountRestrictions count = counts1.First();
+            CountRestrictionsType count = counts1.First();
 
             // Countable
             Assert.NotNull(count.Countable);

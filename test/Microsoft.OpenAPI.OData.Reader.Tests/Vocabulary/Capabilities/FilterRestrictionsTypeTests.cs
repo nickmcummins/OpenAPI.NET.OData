@@ -3,48 +3,44 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-using System;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
-using Microsoft.OpenApi.OData.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 
-namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
+namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
-    public class DeleteRestrictionsTests
+    public class FilterRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsDeleteRestrictionsEnumMember()
+        public void KindPropertyReturnsFilterRestrictionsEnumMember()
         {
             // Arrange & Act
-            DeleteRestrictions delete = new DeleteRestrictions();
+            FilterRestrictionsType filter = new FilterRestrictionsType();
 
             // Assert
-            Assert.Equal(CapabilitesTermKind.DeleteRestrictions, delete.Kind);
+            // Assert.Equal(CapabilitesTermKind.FilterRestrictions, filter.Kind);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultDeleteRestrictionsValues()
+        public void UnknownAnnotatableTargetReturnsDefaultFilterRestrictionsValues()
         {
             // Arrange
-            DeleteRestrictions delete = new DeleteRestrictions();
             EdmEntityType entityType = new EdmEntityType("NS", "Entity");
 
             //  Act
-            bool result = delete.Load(EdmCoreModel.Instance, entityType);
+            FilterRestrictionsType filter = EdmCoreModel.Instance.GetRecord<FilterRestrictionsType>(entityType);
 
             // Assert
-            Assert.False(result);
-            Assert.True(delete.IsDeletable);
-            Assert.Null(delete.Deletable);
-            Assert.Null(delete.NonDeletableNavigationProperties);
+            Assert.Null(filter);
         }
 
         [Theory]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline)]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.OutOfLine)]
-        public void TargetOnEntityTypeReturnsCorrectDeleteRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
+        public void TargetOnEntityTypeReturnsCorrectfilterRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
         {
             // Arrange
             const string template = @"
@@ -59,18 +55,16 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            DeleteRestrictions delete = new DeleteRestrictions();
-            bool result = delete.Load(model, calendars);
+            FilterRestrictionsType filter = model.GetRecord<FilterRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
-            VerifyDeleteRestrictions(delete);
+            VerifyFilterRestrictions(filter);
         }
 
         [Theory]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline)]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.OutOfLine)]
-        public void TargetOnEntitySetReturnsCorrectDeleteRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
+        public void TargetOnEntitySetReturnsCorrectFilterRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
         {
             // Arrange
             const string template = @"
@@ -85,24 +79,27 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            DeleteRestrictions delete = new DeleteRestrictions();
-            bool result = delete.Load(model, calendars);
+            FilterRestrictionsType filter = model.GetRecord<FilterRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
-            VerifyDeleteRestrictions(delete);
+            VerifyFilterRestrictions(filter);
         }
 
         private static IEdmModel GetEdmModel(string template, EdmVocabularyAnnotationSerializationLocation location)
         {
             string countAnnotation = @"
-                <Annotation Term=""Org.OData.Capabilities.V1.DeleteRestrictions"" >
+                <Annotation Term=""Org.OData.Capabilities.V1.FilterRestrictions"" >
                   <Record>
-                    <PropertyValue Property=""Deletable"" Bool=""false"" />
-                    <PropertyValue Property=""NonDeletableNavigationProperties"" >
+                    <PropertyValue Property=""Filterable"" Bool=""false"" />
+                    <PropertyValue Property=""RequiresFilter"" Bool=""false"" />
+                    <PropertyValue Property=""RequiredProperties"" >
                       <Collection>
-                        <NavigationPropertyPath>abc</NavigationPropertyPath>
-                        <NavigationPropertyPath>RelatedEvents</NavigationPropertyPath>
+                        <PropertyPath>Id</PropertyPath>
+                      </Collection>
+                    </PropertyValue>
+                    <PropertyValue Property=""NonFilterableProperties"" >
+                      <Collection>
+                        <PropertyPath>Emails</PropertyPath>
                       </Collection>
                     </PropertyValue>
                   </Record>
@@ -119,18 +116,29 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             }
         }
 
-        private static void VerifyDeleteRestrictions(DeleteRestrictions delete)
+        private static void VerifyFilterRestrictions(FilterRestrictionsType filter)
         {
-            Assert.NotNull(delete);
+            Assert.NotNull(filter);
 
-            Assert.NotNull(delete.Deletable);
-            Assert.False(delete.Deletable.Value);
+            Assert.NotNull(filter.Filterable);
+            Assert.False(filter.Filterable.Value);
 
-            Assert.NotNull(delete.NonDeletableNavigationProperties);
-            Assert.Equal(2, delete.NonDeletableNavigationProperties.Count);
-            Assert.Equal("abc|RelatedEvents", String.Join("|", delete.NonDeletableNavigationProperties));
+            Assert.NotNull(filter.RequiresFilter);
+            Assert.False(filter.RequiresFilter.Value);
 
-            Assert.True(delete.IsNonDeletableNavigationProperty("RelatedEvents"));
+            Assert.NotNull(filter.RequiredProperties);
+            Assert.Single(filter.RequiredProperties);
+            Assert.Equal("Id", filter.RequiredProperties.First());
+
+            Assert.NotNull(filter.NonFilterableProperties);
+            Assert.Single(filter.NonFilterableProperties);
+            Assert.Equal("Emails", filter.NonFilterableProperties.First());
+
+            Assert.True(filter.IsRequiredProperty("Id"));
+            Assert.False(filter.IsRequiredProperty("ID"));
+
+            Assert.True(filter.IsNonFilterableProperty("Emails"));
+            Assert.False(filter.IsNonFilterableProperty("ID"));
         }
     }
 }

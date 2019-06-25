@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Generator;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 
 namespace Microsoft.OpenApi.OData.Operation
 {
@@ -163,7 +164,7 @@ namespace Microsoft.OpenApi.OData.Operation
 
         protected override void SetSecurity(OpenApiOperation operation)
         {
-            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet, CapabilitiesConstants.ReadRestrictions);
             if (read == null || read.Permission == null)
             {
                 return;
@@ -176,20 +177,20 @@ namespace Microsoft.OpenApi.OData.Operation
 
         protected override void AppendCustomParameters(OpenApiOperation operation)
         {
-            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet, CapabilitiesConstants.ReadRestrictions);
             if (read == null)
             {
                 return;
             }
 
-            if (read.CustomQueryOptions != null)
-            {
-                AppendCustomParameters(operation.Parameters, read.CustomQueryOptions, ParameterLocation.Query);
-            }
-
             if (read.CustomHeaders != null)
             {
                 AppendCustomParameters(operation.Parameters, read.CustomHeaders, ParameterLocation.Header);
+            }
+
+            if (read.CustomQueryOptions != null)
+            {
+                AppendCustomParameters(operation.Parameters, read.CustomQueryOptions, ParameterLocation.Query);
             }
         }
     }

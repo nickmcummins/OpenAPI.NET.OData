@@ -6,40 +6,35 @@
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
-using Microsoft.OpenApi.OData.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 
-namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
+namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
-    public class SortRestrictionsTests
+    public class SortRestrictionsTypeTests
     {
         [Fact]
         public void KindPropertyReturnsSortRestrictionsEnumMember()
         {
             // Arrange & Act
-            SortRestrictions sort = new SortRestrictions();
+            SortRestrictionsType sort = new SortRestrictionsType();
 
             // Assert
-            Assert.Equal(CapabilitesTermKind.SortRestrictions, sort.Kind);
+           // Assert.Equal(CapabilitesTermKind.SortRestrictions, sort.Kind);
         }
 
         [Fact]
         public void UnknownAnnotatableTargetReturnsDefaultSortRestrictionsValues()
         {
             // Arrange & Act
-            SortRestrictions sort = new SortRestrictions();
             EdmEntityType entityType = new EdmEntityType("NS", "Entity");
 
             //  Act
-            bool result = sort.Load(EdmCoreModel.Instance, entityType);
+            SortRestrictionsType sort = EdmCoreModel.Instance.GetRecord<SortRestrictionsType>(entityType);
 
             // Assert
-            Assert.False(result);
-            Assert.True(sort.IsSortable);
-            Assert.Null(sort.Sortable);
-            Assert.Null(sort.AscendingOnlyProperties);
-            Assert.Null(sort.DescendingOnlyProperties);
-            Assert.Null(sort.NonSortableProperties);
+            Assert.Null(sort);
         }
 
         [Theory]
@@ -60,11 +55,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendar); // guard
 
             // Act
-            SortRestrictions sort = new SortRestrictions();
-            bool result = sort.Load(model, calendar);
+            SortRestrictionsType sort = model.GetRecord<SortRestrictionsType>(calendar);
 
             // Assert
-            Assert.True(result);
             VerifySortRestrictions(sort);
         }
 
@@ -86,11 +79,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            SortRestrictions sort = new SortRestrictions();
-            bool result = sort.Load(model, calendars);
+            SortRestrictionsType sort = model.GetRecord<SortRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
             VerifySortRestrictions(sort);
         }
 
@@ -129,7 +120,7 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             }
         }
 
-        private static void VerifySortRestrictions(SortRestrictions sort)
+        private static void VerifySortRestrictions(SortRestrictionsType sort)
         {
             Assert.NotNull(sort);
 

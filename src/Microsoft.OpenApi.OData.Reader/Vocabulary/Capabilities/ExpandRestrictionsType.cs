@@ -14,6 +14,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Org.OData.Capabilities.V1.ExpandRestrictions
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.DeleteRestrictions")]
     internal class ExpandRestrictionsType : IRecord
     {
         /// <summary>

@@ -142,35 +142,6 @@ namespace Microsoft.OpenApi.OData.Edm
         /// <param name="propertyName">The property name.</param>
         /// <param name="elementAction">The element action.</param>
         /// <returns>The collection or null.</returns>
-        public static T GetRecord<T>(this IEdmRecordExpression record, string propertyName, Action<T, IEdmRecordExpression> elementAction)
-            where T : class, new()
-        {
-            Utils.CheckArgumentNull(record, nameof(record));
-            Utils.CheckArgumentNull(propertyName, nameof(propertyName));
-
-            IEdmPropertyConstructor property = record.Properties.FirstOrDefault(e => e.Name == propertyName);
-            if (property != null)
-            {
-                IEdmRecordExpression recordValue = property.Value as IEdmRecordExpression;
-                if (recordValue != null)
-                {
-                    T a = new T();
-                    elementAction(a, recordValue);
-                    return a;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        ///  Get the collection of <typeparamref name="T"/> from the record using the given property name.
-        /// </summary>
-        /// <typeparam name="T">The element type.</typeparam>
-        /// <param name="record">The record expression.</param>
-        /// <param name="propertyName">The property name.</param>
-        /// <param name="elementAction">The element action.</param>
-        /// <returns>The collection or null.</returns>
         public static T GetRecord<T>(this IEdmRecordExpression record, string propertyName)
             where T : IRecord, new()
         {

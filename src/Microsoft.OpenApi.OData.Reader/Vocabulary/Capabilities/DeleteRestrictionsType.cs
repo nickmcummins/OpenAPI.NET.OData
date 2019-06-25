@@ -14,6 +14,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.DeleteRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.DeleteRestrictions")]
     internal class DeleteRestrictionsType : IRecord
     {
         /// <summary>

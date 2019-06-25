@@ -14,6 +14,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.UpdateRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.UpdateRestrictions")]
     internal class UpdateRestrictionsType : IRecord
     {
         /// <summary>

@@ -5,38 +5,35 @@
 
 using System.Linq;
 using Microsoft.OData.Edm;
-using Microsoft.OpenApi.OData.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 
-namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
+namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
-    public class SearchRestrictionsTests
+    public class SearchRestrictionsTypeTests
     {
         [Fact]
         public void KindPropertyReturnsSearchRestrictionsEnumMember()
         {
             // Arrange & Act
-            SearchRestrictions search = new SearchRestrictions();
+            SearchRestrictionsType search = new SearchRestrictionsType();
 
             // Assert
-            Assert.Equal(CapabilitesTermKind.SearchRestrictions, search.Kind);
+           // Assert.Equal(CapabilitesTermKind.SearchRestrictions, search.Kind);
         }
 
         [Fact]
         public void UnknownAnnotatableTargetReturnsDefaultPropertyValues()
         {
             // Arrange
-            SearchRestrictions search = new SearchRestrictions();
             EdmEntityType entityType = new EdmEntityType("NS", "Entity");
 
             //  Act
-            bool result = search.Load(EdmCoreModel.Instance, entityType);
+            SearchRestrictionsType search = EdmCoreModel.Instance.GetRecord<SearchRestrictionsType>(entityType);
 
             // Assert
-            Assert.False(result);
-            Assert.True(search.IsSearchable);
-            Assert.Null(search.Searchable);
-            Assert.Null(search.UnsupportedExpressions);
+            Assert.Null(search);
         }
 
         [Fact]
@@ -59,11 +56,10 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             IEdmEntityType calendar = model.SchemaElements.OfType<IEdmEntityType>().First(c => c.Name == "Calendar");
 
             // Act
-            SearchRestrictions search = new SearchRestrictions();
-            bool result = search.Load(model, calendar);
+            SearchRestrictionsType search = model.GetRecord<SearchRestrictionsType>(calendar);
 
             // Assert
-            Assert.True(result);
+            Assert.NotNull(search);
             Assert.False(search.Searchable);
             Assert.NotNull(search.UnsupportedExpressions);
             Assert.Equal(SearchExpressions.phrase, search.UnsupportedExpressions.Value);
@@ -92,11 +88,10 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
 
             // Act
-            SearchRestrictions search = new SearchRestrictions();
-            bool result = search.Load(model, calendars);
+            SearchRestrictionsType search = model.GetRecord<SearchRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
+            Assert.NotNull(search);
             Assert.False(search.Searchable);
             Assert.NotNull(search.UnsupportedExpressions);
             Assert.Equal(SearchExpressions.group, search.UnsupportedExpressions.Value);
@@ -125,11 +120,10 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             IEdmEntityType calendar = model.SchemaElements.OfType<IEdmEntityType>().First(c => c.Name == "Calendar");
 
             // Act
-            SearchRestrictions search = new SearchRestrictions();
-            bool result = search.Load(model, calendar);
+            SearchRestrictionsType search = model.GetRecord<SearchRestrictionsType>(calendar);
 
             // Assert
-            Assert.True(result);
+            Assert.NotNull(search);
             Assert.False(search.Searchable);
             Assert.Null(search.UnsupportedExpressions);
         }
@@ -154,11 +148,10 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
 
             // Act
-            SearchRestrictions search = new SearchRestrictions();
-            bool result = search.Load(model, calendars);
+            SearchRestrictionsType search = model.GetRecord<SearchRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
+            Assert.NotNull(search);
             Assert.False(search.Searchable);
             Assert.Null(search.UnsupportedExpressions);
         }
@@ -183,11 +176,10 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             IEdmEntityType calendar = model.SchemaElements.OfType<IEdmEntityType>().First(c => c.Name == "Calendar");
 
             // Act
-            SearchRestrictions search = new SearchRestrictions();
-            bool result = search.Load(model, calendar);
+            SearchRestrictionsType search = model.GetRecord<SearchRestrictionsType>(calendar);
 
             // Assert
-            Assert.True(result);
+            Assert.NotNull(search);
             Assert.False(search.Searchable);
             Assert.NotNull(search.UnsupportedExpressions);
             Assert.Equal(SearchExpressions.AND | SearchExpressions.OR, search.UnsupportedExpressions.Value);
@@ -213,11 +205,10 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
 
             // Act
-            SearchRestrictions search = new SearchRestrictions();
-            bool result = search.Load(model, calendars);
+            SearchRestrictionsType search = model.GetRecord<SearchRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
+            Assert.NotNull(search);
             Assert.False(search.Searchable);
             Assert.NotNull(search.UnsupportedExpressions);
             Assert.Equal(SearchExpressions.AND | SearchExpressions.OR, search.UnsupportedExpressions.Value);

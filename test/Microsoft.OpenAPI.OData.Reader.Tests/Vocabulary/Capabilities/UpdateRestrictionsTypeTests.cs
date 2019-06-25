@@ -7,43 +7,35 @@ using System;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
-using Microsoft.OpenApi.OData.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 
-namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
+namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
-    public class UpdateRestrictionsTests
+    public class UpdateRestrictionsTypeTests
     {
         [Fact]
         public void KindPropertyReturnsUpdateRestrictionsEnumMember()
         {
             // Arrange & Act
-            UpdateRestrictions update = new UpdateRestrictions();
+            UpdateRestrictionsType update = new UpdateRestrictionsType();
 
             // Assert
-            Assert.Equal(CapabilitesTermKind.UpdateRestrictions, update.Kind);
+           // Assert.Equal(CapabilitesTermKind.UpdateRestrictions, update.Kind);
         }
 
         [Fact]
         public void UnknownAnnotatableTargetReturnsDefaultUpdateRestrictionsValues()
         {
             // Arrange
-            UpdateRestrictions update = new UpdateRestrictions();
             EdmEntityType entityType = new EdmEntityType("NS", "Entity");
 
             //  Act
-            bool result = update.Load(EdmCoreModel.Instance, entityType);
+            UpdateRestrictionsType update = EdmCoreModel.Instance.GetRecord<UpdateRestrictionsType>(entityType);
 
             // Assert
-            Assert.False(result);
-            Assert.True(update.IsUpdatable);
-            Assert.Null(update.Updatable);
-            Assert.Null(update.NonUpdatableNavigationProperties);
-            Assert.Null(update.Permission);
-            Assert.Null(update.MaxLevels);
-            Assert.Null(update.QueryOptions);
-            Assert.Null(update.CustomHeaders);
-            Assert.Null(update.CustomQueryOptions);
+            Assert.Null(update);
         }
 
         [Theory]
@@ -64,11 +56,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendar); // guard
 
             // Act
-            UpdateRestrictions update = new UpdateRestrictions();
-            bool result = update.Load(model, calendar);
+            UpdateRestrictionsType update = model.GetRecord<UpdateRestrictionsType>(calendar);
 
             // Assert
-            Assert.True(result);
             VerifyUpdateRestrictions(update);
         }
 
@@ -90,11 +80,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            UpdateRestrictions update = new UpdateRestrictions();
-            bool result = update.Load(model, calendars);
+            UpdateRestrictionsType update = model.GetRecord<UpdateRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
             VerifyUpdateRestrictions(update);
         }
 
@@ -227,7 +215,7 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             }
         }
 
-        private static void VerifyUpdateRestrictions(UpdateRestrictions update)
+        private static void VerifyUpdateRestrictions(UpdateRestrictionsType update)
         {
             Assert.NotNull(update);
 

@@ -51,6 +51,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.SearchRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.SearchRestrictions")]
     internal class SearchRestrictionsType : IRecord
     {
         /// <summary>

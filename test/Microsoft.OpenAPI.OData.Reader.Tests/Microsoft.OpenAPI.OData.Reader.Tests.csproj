@@ -70,4 +70,8 @@
     <ProjectReference Include="..\..\src\Microsoft.OpenApi.OData.Reader\Microsoft.OpenApi.OData.Reader.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Vocabulary\Core\" />
+  </ItemGroup>
+
 </Project>

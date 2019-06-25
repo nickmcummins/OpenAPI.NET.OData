@@ -17,6 +17,12 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Authorization
     /// <summary>
     /// Abstract complex type: 'Org.OData.Authorization.V1.Authorization'
     /// </summary>
+    [Term("Org.OData.Authorization.Authorizations")]
+    [SubType(AuthorizationConstants.OpenIDConnect, typeof(OpenIDConnect))]
+    [SubType(AuthorizationConstants.Http, typeof(Http))]
+    [SubType(AuthorizationConstants.ApiKey, typeof(ApiKey))]
+    [SubType(AuthorizationConstants.OAuth2ClientCredentials, typeof(OAuth2ClientCredentials))]
+
     internal abstract class Authorization : IRecord
     {
         /// <summary>

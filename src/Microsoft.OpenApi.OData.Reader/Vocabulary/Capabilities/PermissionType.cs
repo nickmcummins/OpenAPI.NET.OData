@@ -5,9 +5,9 @@
 
 using System.Collections.Generic;
 using Microsoft.OData.Edm.Vocabularies;
-using Microsoft.OpenApi.OData.Authorizations;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Authorization;
 
 namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
@@ -35,7 +35,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
             Utils.CheckArgumentNull(record, nameof(record));
 
             // Scheme
-            Scheme = record.GetRecord<SecurityScheme>("Scheme", (r, s) => r.Init(s));
+            Scheme = record.GetRecord<SecurityScheme>("Scheme");
 
             // Scopes
             Scopes = record.GetCollection<ScopeType>("Scopes");

@@ -6,39 +6,35 @@
 using System;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
-using Microsoft.OpenApi.OData.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
 
-namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
+namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
-    public class ExpandRestrictionsTests
+    public class ExpandRestrictionsTypeTests
     {
         [Fact]
         public void KindPropertyReturnsExpandRestrictionsEnumMember()
         {
             // Arrange & Act
-            ExpandRestrictions expand = new ExpandRestrictions();
+            ExpandRestrictionsType expand = new ExpandRestrictionsType();
 
             // Assert
-            Assert.Equal(CapabilitesTermKind.ExpandRestrictions, expand.Kind);
+            // Assert.Equal(CapabilitesTermKind.ExpandRestrictions, expand.Kind);
         }
 
         [Fact]
         public void UnknownAnnotatableTargetReturnsDefaultExpandRestrictionsValues()
         {
             // Arrange
-            ExpandRestrictions expand = new ExpandRestrictions();
             EdmEntityType entityType = new EdmEntityType("NS", "Entity");
 
             //  Act
-            bool result = expand.Load(EdmCoreModel.Instance, entityType);
+            ExpandRestrictionsType expand = EdmCoreModel.Instance.GetRecord<ExpandRestrictionsType>(entityType);
 
             // Assert
-            Assert.False(result);
-            Assert.Equal(CapabilitesTermKind.ExpandRestrictions, expand.Kind);
-            Assert.True(expand.IsExpandable);
-            Assert.Null(expand.Expandable);
-            Assert.Null(expand.NonExpandableProperties);
+            Assert.Null(expand);
         }
 
         [Theory]
@@ -59,11 +55,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            ExpandRestrictions expand = new ExpandRestrictions();
-            bool result = expand.Load(model, calendars);
+            ExpandRestrictionsType expand = model.GetRecord<ExpandRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
             VerifyExpandRestrictions(expand);
         }
 
@@ -85,12 +79,9 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             Assert.NotNull(calendars); // guard
 
             // Act
-            // Act
-            ExpandRestrictions expand = new ExpandRestrictions();
-            bool result = expand.Load(model, calendars);
+            ExpandRestrictionsType expand = model.GetRecord<ExpandRestrictionsType>(calendars);
 
             // Assert
-            Assert.True(result);
             VerifyExpandRestrictions(expand);
         }
 
@@ -120,7 +111,7 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             }
         }
 
-        private static void VerifyExpandRestrictions(ExpandRestrictions expand)
+        private static void VerifyExpandRestrictions(ExpandRestrictionsType expand)
         {
             Assert.NotNull(expand);
 

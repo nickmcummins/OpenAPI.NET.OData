@@ -12,10 +12,11 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Validation;
 using Microsoft.OData.Edm.Vocabularies;
-using Microsoft.OpenApi.OData.Authorizations;
+using Microsoft.OpenApi.OData.Edm;
+using Microsoft.OpenApi.OData.Vocabulary.Authorization;
 using Xunit;
 
-namespace Microsoft.OpenApi.OData.Reader.Authorizations.Tests
+namespace Microsoft.OpenApi.OData.Reader.Authorization.Tests
 {
     public class AuthorizationProviderTests
     {
@@ -62,7 +63,7 @@ namespace Microsoft.OpenApi.OData.Reader.Authorizations.Tests
             AuthorizationProvider provider = new AuthorizationProvider(model);
 
             // Act
-            var authorizations = provider.GetAuthorizations(navigationSource as IEdmVocabularyAnnotatable);
+            var authorizations = model.GetAuthorizations(navigationSource as IEdmVocabularyAnnotatable);
 
             // Assert
             Assert.NotEmpty(authorizations);

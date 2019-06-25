@@ -10,6 +10,7 @@ using Xunit;
 
 namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
 {
+#if false
     public class IndexableByKeyTests
     {
         [Fact]
@@ -107,4 +108,5 @@ namespace Microsoft.OpenApi.OData.Reader.Capabilities.Tests
             }
         }
     }
+#endif
 }

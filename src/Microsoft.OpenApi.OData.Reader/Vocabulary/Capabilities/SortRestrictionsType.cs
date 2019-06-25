@@ -14,6 +14,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.SortRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.SortRestrictions")]
     internal class SortRestrictionsType : IRecord
     {
         /// <summary>

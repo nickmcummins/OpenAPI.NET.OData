@@ -66,6 +66,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.ReadRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.ReadRestrictions")]
     internal class ReadRestrictionsType : ReadRestrictionsBase
     {
         public ReadByKeyRestrictions ReadByKeyRestrictions { get; set; }

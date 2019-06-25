@@ -6,7 +6,7 @@
 namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
     /// <summary>
-    /// Constant values for Capabilities Vocabulary
+    /// Term name of the Capabilities Vocabulary
     /// </summary>
     internal class CapabilitiesConstants
     {
@@ -76,9 +76,14 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         public const string SkipSupported = "Org.OData.Capabilities.V1..SkipSupported";
 
         /// <summary>
-        /// Org.OData.Capabilities.V1.BatchSupported
+        /// Term: Org.OData.Capabilities.V1.BatchSupported
         /// </summary>
         public const string BatchSupported = "Org.OData.Capabilities.V1..BatchSupported";
+
+        /// <summary>
+        /// Term: rg.OData.Capabilities.V1.OperationRestrictions
+        /// </summary>
+        public const string OperationRestrictions = "Org.OData.Capabilities.V1.OperationRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.IndexableByKey

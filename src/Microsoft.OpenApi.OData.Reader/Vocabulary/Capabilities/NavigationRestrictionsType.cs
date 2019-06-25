@@ -90,7 +90,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         /// <summary>
         /// Restrictions on insert operations.
         /// </summary>
-        public InsertRestrictions InsertRestrictions { get; set; }
+        public InsertRestrictionsType InsertRestrictions { get; set; }
 
         /// <summary>
         /// Deep Insert Support of the annotated resource (the whole service, an entity set, or a collection-valued resource).
@@ -150,6 +150,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.NavigationRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.NavigationRestrictions")]
     internal class NavigationRestrictionsType : IRecord
     {
         /// <summary>

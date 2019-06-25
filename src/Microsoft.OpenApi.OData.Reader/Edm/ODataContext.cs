@@ -8,13 +8,12 @@ using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.OData.Annotations;
-using Microsoft.OpenApi.OData.Authorizations;
-using Microsoft.OpenApi.OData.Capabilities;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Generator;
 using Microsoft.OpenApi.OData.Operation;
 using Microsoft.OpenApi.OData.PathItem;
+using Microsoft.OpenApi.OData.Vocabulary.Authorization;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 
 namespace Microsoft.OpenApi.OData.Edm
 {
@@ -25,7 +24,6 @@ namespace Microsoft.OpenApi.OData.Edm
     {
         private IEnumerable<ODataPath> _allPaths;
         private IODataPathProvider _pathProvider;
-        private HttpRequestProvider _httpRequestProvider;
         private AuthorizationProvider _authorizationProvider;
 
         /// <summary>
@@ -55,7 +53,6 @@ namespace Microsoft.OpenApi.OData.Edm
             PathItemHanderProvider = new PathItemHandlerProvider();
 
             _authorizationProvider = new AuthorizationProvider(model);
-            _httpRequestProvider = new HttpRequestProvider(model);
             _pathProvider = new ODataPathProvider();
 
             if (settings.EnableKeyAsSegment != null)
@@ -68,10 +65,10 @@ namespace Microsoft.OpenApi.OData.Edm
                 KeyAsSegment = false;
                 if (model.EntityContainer != null)
                 {
-                    var keyAsSegment = model.GetKeyAsSegmentSupported(model.EntityContainer);
+                    var keyAsSegment = model.GetBoolean(model.EntityContainer, CapabilitiesConstants.KeyAsSegmentSupported);
                     if (keyAsSegment != null)
                     {
-                        KeyAsSegment = keyAsSegment.IsSupported;
+                        KeyAsSegment = keyAsSegment.Value;
                     }
                 }
             }
@@ -138,17 +135,6 @@ namespace Microsoft.OpenApi.OData.Edm
         /// Gets all tags.
         /// </summary>
         public IList<OpenApiTag> Tags { get; private set; }
-
-        /// <summary>
-        /// Find the Org.OData.Core.V1.HttpRequest for a given target.
-        /// </summary>
-        /// <param name="target">The target.</param>
-        /// <param name="method">The method name.</param>
-        /// <returns>The <see cref="HttpRequest"/> or null.</returns>
-        public HttpRequest FindRequest(IEdmVocabularyAnnotatable target, string method)
-        {
-            return _httpRequestProvider?.GetHttpRequest(target, method);
-        }
 
         /// <summary>
         /// Gets the <see cref="Authorization"/> collections for a given target in the given Edm model.

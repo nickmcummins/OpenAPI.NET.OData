@@ -4,12 +4,13 @@
 // ------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.OData.Generator;
-using Microsoft.OpenApi.OData.Capabilities;
-using System.Linq;
+using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Operation
 {
@@ -97,7 +98,7 @@ namespace Microsoft.OpenApi.OData.Operation
 
         protected override void SetSecurity(OpenApiOperation operation)
         {
-            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet, CapabilitiesConstants.ReadRestrictions);
             if (read == null)
             {
                 return;
@@ -121,7 +122,7 @@ namespace Microsoft.OpenApi.OData.Operation
 
         protected override void AppendCustomParameters(OpenApiOperation operation)
         {
-            ReadRestrictions read = Context.Model.GetReadRestrictions(EntitySet);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet, CapabilitiesConstants.ReadRestrictions);
             if (read == null)
             {
                 return;
@@ -133,14 +134,14 @@ namespace Microsoft.OpenApi.OData.Operation
                 readBase = read.ReadByKeyRestrictions;
             }
 
-            if (readBase.CustomQueryOptions != null)
-            {
-                AppendCustomParameters(operation.Parameters, readBase.CustomQueryOptions, ParameterLocation.Query);
-            }
-
             if (readBase.CustomHeaders != null)
             {
                 AppendCustomParameters(operation.Parameters, readBase.CustomHeaders, ParameterLocation.Header);
+            }
+
+            if (readBase.CustomQueryOptions != null)
+            {
+                AppendCustomParameters(operation.Parameters, readBase.CustomQueryOptions, ParameterLocation.Query);
             }
         }
     }

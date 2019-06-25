@@ -3,12 +3,11 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-using System;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.OData.Edm;
-using Microsoft.OpenApi.OData.Reader.Capabilities.Tests;
+using Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests;
 using Xunit;
 
 namespace Microsoft.OpenApi.OData.Operation.Tests
