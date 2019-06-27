@@ -6,13 +6,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Generator;
 using Microsoft.OpenApi.OData.Operation;
 using Microsoft.OpenApi.OData.PathItem;
-using Microsoft.OpenApi.OData.Vocabulary.Authorization;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 
 namespace Microsoft.OpenApi.OData.Edm
@@ -24,7 +22,6 @@ namespace Microsoft.OpenApi.OData.Edm
     {
         private IEnumerable<ODataPath> _allPaths;
         private IODataPathProvider _pathProvider;
-        private AuthorizationProvider _authorizationProvider;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ODataContext"/> class.
@@ -52,7 +49,6 @@ namespace Microsoft.OpenApi.OData.Edm
             OperationHanderProvider = new OperationHandlerProvider();
             PathItemHanderProvider = new PathItemHandlerProvider();
 
-            _authorizationProvider = new AuthorizationProvider(model);
             _pathProvider = new ODataPathProvider();
 
             if (settings.EnableKeyAsSegment != null)
@@ -135,16 +131,6 @@ namespace Microsoft.OpenApi.OData.Edm
         /// Gets all tags.
         /// </summary>
         public IList<OpenApiTag> Tags { get; private set; }
-
-        /// <summary>
-        /// Gets the <see cref="Authorization"/> collections for a given target in the given Edm model.
-        /// </summary>
-        /// <param name="target">The Edm target.</param>
-        /// <returns>The <see cref="Authorization"/> collections.</returns>
-        public IEnumerable<Authorization> GetAuthorizations(IEdmVocabularyAnnotatable target)
-        {
-            return _authorizationProvider?.GetAuthorizations(target);
-        }
 
         /// <summary>
         /// Append tag.

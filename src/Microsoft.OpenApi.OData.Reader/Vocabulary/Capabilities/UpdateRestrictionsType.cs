@@ -98,7 +98,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
             // CustomHeaders
             CustomHeaders = record.GetCollection<CustomParameter>("CustomHeaders");
 
-            // CustomHeaders
+            // CustomQueryOptions
             CustomQueryOptions = record.GetCollection<CustomParameter>("CustomQueryOptions");
         }
     }

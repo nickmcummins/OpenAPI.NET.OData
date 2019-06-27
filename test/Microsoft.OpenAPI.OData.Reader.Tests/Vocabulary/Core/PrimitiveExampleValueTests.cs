@@ -4,6 +4,7 @@
 // ------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Microsoft.OData.Edm;
@@ -29,7 +30,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Core.Tests
         }
 
         [Fact]
-        public void InitializeWithNullThrows()
+        public void InitializeWithNullRecordThrows()
         {
             // Arrange & Act
             PrimitiveExampleValue value = new PrimitiveExampleValue();
@@ -39,26 +40,56 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Core.Tests
         }
 
         [Fact]
-        public void InitializeWithNullThrows1()
+        public void InitializeWithPrimitiveValueRecordSuccess()
         {
-            // Arrange & Act
+            // Arrange
+            IEdmRecordExpression record = new EdmRecordExpression(
+                new EdmPropertyConstructor("Description", new EdmStringConstant("HelloWorld!")),
+                new EdmPropertyConstructor("Value", new EdmBooleanConstant(true)));
             PrimitiveExampleValue value = new PrimitiveExampleValue();
-            IEdmRecordExpression record = new EdmRecordExpression();
+            Assert.Null(value.Description);
+            Assert.Null(value.Value);
+
+            // Act
+            value.Initialize(record);
 
             // Assert
-          //  Assert.Throws<ArgumentNullException>("record", () => value.Initialize(record: null));
+            Assert.NotNull(value.Description);
+            Assert.Equal("HelloWorld!", value.Description);
+            Assert.NotNull(value.Value);
+
+            Assert.NotNull(value.Value.Value);
+            Assert.Equal(true, value.Value.Value);
         }
 
+        public static IEnumerable<object[]> PrimitiveData =>
+            new List<object[]>
+            {
+                new object[] { @"String=""Hello World""", "Hello World" },
+                new object[] { @"Int=""42""", (long)42 },
+                new object[] { @"Bool=""true""", true },
+                new object[] { @"Bool=""false""", false },
+                new object[] { @"TimeOfDay=""15:38:25.1090000""", new TimeOfDay(15, 38, 25, 109) },
+                new object[] { @"Date=""2014-10-13""", new Date(2014, 10, 13) },
+                new object[] { @"Duration=""PT0S""", new TimeSpan() },
+                // new object[] { @"Binary=""AQ==""", new byte[] { 1 }, }, has problem in ODL?
+                new object[] { @"Float=""3.14""", 3.14 },
+                new object[] { @"Decimal=""3.14""", 3.14m },
+                new object[] { @"DateTimeOffset=""0001-01-01T00:00:00Z""", new DateTimeOffset() },
+                new object[] { @"Guid=""21EC2020-3AEA-1069-A2DD-08002B30309D""", new Guid("21EC2020-3AEA-1069-A2DD-08002B30309D") },
+            };
+
         [Theory]
-        [InlineData(@"String""=""Hello World""")]
-        public void TargetOnEntityTypeReturnsCorrectTopSupportedValue1(string data)
+        [MemberData(nameof(PrimitiveData))]
+        public void PrimitiveExamplevalueInitializeWorksForPrimitiveData(string data, object except)
         {
             // Arrange
             string annotation = $@"<Annotation Term=""Org.OData.Core.V1.Example"">
                 <Record Type=""Org.OData.Core.V1.PrimitiveExampleValue"">
                   <PropertyValue Property=""Description"" String=""Primitive example value"" />
                   <PropertyValue Property=""Value"" {data} />
-                </Record>";
+                </Record>
+              </Annotation>";
 
             IEdmModel model = GetEdmModel(annotation);
             Assert.NotNull(model); // guard
@@ -75,6 +106,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Core.Tests
             Assert.NotNull(value);
             Assert.Equal("Primitive example value", value.Description);
             Assert.NotNull(value.Value);
+            Assert.Equal(except, value.Value.Value);
         }
 
         private IEdmModel GetEdmModel(string annotation)
@@ -91,12 +123,6 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Core.Tests
           {0}
         </Property>
       </EntityType>
-      <EntityContainer Name =""Default"">
-         <Singleton Name=""Me"" Type=""NS.Customer"" />
-      </EntityContainer>
-      <Annotations Target=""NS.Customer/ID"">
-        {0}
-      </Annotations>
     </Schema>
   </edmx:DataServices>
 </edmx:Edmx>";

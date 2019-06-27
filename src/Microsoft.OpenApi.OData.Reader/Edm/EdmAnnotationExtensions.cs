@@ -25,6 +25,20 @@ namespace Microsoft.OpenApi.OData.Edm
         private static object _objectLock = new object();
 
         /// <summary>
+        /// Get the term qualified name when using the type of <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type of the term.</typeparam>
+        /// <returns>The qualified name.</returns>
+        public static string GetTermQualifiedName<T>()
+        {
+            object[] attributes = typeof(T).GetCustomAttributes(typeof(TermAttribute), false);
+            Debug.Assert(attributes != null && attributes.Length == 1);
+
+            TermAttribute term = (TermAttribute)attributes[0];
+            return term.QualifiedName;
+        }
+
+        /// <summary>
         /// Gets the boolean term value for the given <see cref="IEdmVocabularyAnnotatable"/>.
         /// </summary>
         /// <param name="model">The Edm model.</param>
@@ -197,6 +211,23 @@ namespace Microsoft.OpenApi.OData.Edm
 
                 return value;
             });
+        }
+
+        /// <summary>
+        /// Gets the collection of record value (a complex type) for the given <see cref="IEdmVocabularyAnnotatable"/>.
+        /// </summary>
+        /// <typeparam name="T">The CLR mapping type.</typeparam>
+        /// <param name="model">The Edm model.</param>
+        /// <param name="target">The Edm target.</param>
+        /// <returns>Null or the colllection of record value (a complex type) for this annotation.</returns>
+        public static IEnumerable<T> GetCollection<T>(this IEdmModel model, IEdmVocabularyAnnotatable target)
+            where T : IRecord, new()
+        {
+            Utils.CheckArgumentNull(model, nameof(model));
+            Utils.CheckArgumentNull(target, nameof(target));
+
+            string qualifiedName = GetTermQualifiedName<T>();
+            return GetCollection<T>(model, target, qualifiedName);
         }
 
         /// <summary>
@@ -449,14 +480,7 @@ namespace Microsoft.OpenApi.OData.Edm
             return null;
         }
 
-        private static string GetTermQualifiedName<T>()
-        {
-            object[] attributes = typeof(T).GetCustomAttributes(typeof(TermAttribute), false);
-            Debug.Assert(attributes != null && attributes.Length == 1);
 
-            TermAttribute term = (TermAttribute)attributes[0];
-            return term.QualifiedName;
-        }
 
         private static Type GetTypeInfo<T>(string fullTypeName) where T : IRecord
         {

@@ -148,7 +148,16 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
          <Singleton Name=""Me"" Type=""NS.Customer"" />
       </EntityContainer>
       <Annotations Target=""NS.Default/Me"">
-        {0}
+        <Annotation Term=""Org.OData.Capabilities.V1.UpdateRestrictions"">
+  <Record>
+    <PropertyValue Property=""Updatable"" Bool=""{0}"" />
+  </Record>
+</Annotation>
+<Annotation Term=""Org.OData.Capabilities.V1.afdasf"">
+  <Record>
+    <PropertyValue Property=""Updatable"" Bool=""{0}"" />
+  </Record>
+</Annotation>
       </Annotations>
     </Schema>
   </edmx:DataServices>

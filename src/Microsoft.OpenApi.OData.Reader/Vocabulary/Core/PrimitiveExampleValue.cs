@@ -5,6 +5,7 @@
 
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 
 namespace Microsoft.OpenApi.OData.Vocabulary.Core
 {
@@ -24,6 +25,16 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Core
         /// <param name="record">The input record.</param>
         public override void Initialize(IEdmRecordExpression record)
         {
+            Utils.CheckArgumentNull(record, nameof(record));
+
+            /* Should we throw exception if the input record is not a primitive example value?
+             * Leave the below codes for further decision.
+            if (record.DeclaredType == null || record.DeclaredType.FullName() != "Org.OData.Core.V1.PrimitiveExampleValue")
+            {
+                throw new OpenApiException();
+            }
+            */
+
             // Load ExampleValue
             base.Initialize(record);
 
