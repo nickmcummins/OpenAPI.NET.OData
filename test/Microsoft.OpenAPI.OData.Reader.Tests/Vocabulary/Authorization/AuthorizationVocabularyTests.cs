@@ -24,7 +24,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Authorization.Tests
             EdmEntityContainer container = new EdmEntityContainer("NS", "Container");
             model.AddElement(container);
 
-            // Act & Assert
+            // Act
             var authorizations = model.GetAuthorizations(container);
 
             // Assert

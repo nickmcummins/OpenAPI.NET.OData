@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
@@ -192,39 +193,40 @@ namespace Microsoft.OpenApi.OData.Edm.Tests
             // Assert
             Assert.NotNull(counts1);
             Assert.NotNull(counts2);
-            Assert.Same(counts1, counts2);
 
             Assert.Equal(2, counts1.Count());
 
-            // #1
-            CountRestrictionsType count = counts1.First();
+            foreach (var countItem in new[] { counts1, counts2 })
+            {
+                CountRestrictionsType count = countItem.First();
 
-            // Countable
-            Assert.NotNull(count.Countable);
-            Assert.True(count.Countable.Value);
+                // Countable
+                Assert.NotNull(count.Countable);
+                Assert.True(count.Countable.Value);
 
-            // NonCountableProperties
-            Assert.NotNull(count.NonCountableProperties);
-            Assert.Equal(new[] { "123", "abc" }, count.NonCountableProperties);
+                // NonCountableProperties
+                Assert.NotNull(count.NonCountableProperties);
+                Assert.Equal(new[] { "123", "abc" }, count.NonCountableProperties);
 
-            // NonCountableNavigationProperties
-            Assert.NotNull(count.NonCountableNavigationProperties);
-            Assert.Equal(new[] { "234", "xyz" }, count.NonCountableNavigationProperties);
+                // NonCountableNavigationProperties
+                Assert.NotNull(count.NonCountableNavigationProperties);
+                Assert.Equal(new[] { "234", "xyz" }, count.NonCountableNavigationProperties);
 
-            // #2
-            count = counts1.Last();
+                // #2
+                count = countItem.Last();
 
-            // Countable
-            Assert.NotNull(count.Countable);
-            Assert.False(count.Countable.Value);
+                // Countable
+                Assert.NotNull(count.Countable);
+                Assert.False(count.Countable.Value);
 
-            // NonCountableProperties
-            Assert.NotNull(count.NonCountableProperties);
-            Assert.Equal(new[] { "567", "mij" }, count.NonCountableProperties);
+                // NonCountableProperties
+                Assert.NotNull(count.NonCountableProperties);
+                Assert.Equal(new[] { "567", "mij" }, count.NonCountableProperties);
 
-            // NonCountableNavigationProperties
-            Assert.NotNull(count.NonCountableNavigationProperties);
-            Assert.Equal(new[] { "789", "rst" }, count.NonCountableNavigationProperties);
+                // NonCountableNavigationProperties
+                Assert.NotNull(count.NonCountableNavigationProperties);
+                Assert.Equal(new[] { "789", "rst" }, count.NonCountableNavigationProperties);
+            }
         }
 
         private IEdmModel GetEdmModel(string annotation)

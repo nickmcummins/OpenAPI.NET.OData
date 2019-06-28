@@ -14,6 +14,8 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex type: Org.OData.Capabilities.V1.CustomParameter
     /// </summary>
+    // [Term("Org.OData.Capabilities.V1.CustomHeaders")]
+    // [Term("Org.OData.Capabilities.V1.CustomQueryOptions")]
     internal class CustomParameter : IRecord
     {
         /// <summary>

@@ -5,7 +5,8 @@
 
 using System;
 using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Csdl;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -15,87 +16,41 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class CountRestrictionsTypeTests
     {
         [Fact]
-        public void CountRestrictionsTypeAsTermQualifiedName()
+        public void TermAttributeAttachedOnCountRestrictionsType()
         {
             // Arrange & Act
-            
+            string qualifiedName = Utils.GetTermQualifiedName<CountRestrictionsType>();
+
+            // Assert
+            Assert.Equal("Org.OData.Capabilities.V1.CountRestrictions", qualifiedName);
         }
 
         [Fact]
-        public void PropertiesAsNullForDefaultCountRestrictionsType()
+        public void InitializeCountRestrictionsTypeWithRecordSuccess()
         {
-            // Arrange & Act
+            // Assert
+            IEdmRecordExpression record = new EdmRecordExpression(
+                new EdmPropertyConstructor("Countable", new EdmBooleanConstant(false) ),
+                new EdmPropertyConstructor("NonCountableProperties", new EdmCollectionExpression(
+                    new EdmPropertyPathExpression("Emails"),
+                    new EdmPropertyPathExpression("mij"))),
+                new EdmPropertyConstructor("NonCountableNavigationProperties", new EdmCollectionExpression(
+                    new EdmNavigationPropertyPathExpression("RelatedEvents"),
+                    new EdmNavigationPropertyPathExpression("abc")))
+            );
+
+            // Act
             CountRestrictionsType count = new CountRestrictionsType();
+            count.Initialize(record);
 
             // Assert
-            Assert.Null(count.Countable);
-            Assert.Null(count.NonCountableProperties);
-            Assert.Null(count.NonCountableNavigationProperties);
+            VerifyCountRestrictions(count);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultPropertyValues()
-        {
-            // Arrange & Act
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
-
-            //  Act
-            CountRestrictionsType count = EdmCoreModel.Instance.GetRecord<CountRestrictionsType>(entityType);
-
-            // Assert
-            Assert.Null(count);
-        }
-
-        [Theory]
-        [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline)]
-        [InlineData(EdmVocabularyAnnotationSerializationLocation.OutOfLine)]
-        public void TargetOnEntityTypeReturnsCorrectCountRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
+        public void InitializeCountRestrictionsWorksWithCsdl()
         {
             // Arrange
-            const string template = @"
-                <Annotations Target=""NS.Calendar"">
-                  {0}
-                </Annotations>";
-
-            IEdmModel model = GetEdmModel(template, location);
-            Assert.NotNull(model); // guard
-
-            IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
-            Assert.NotNull(calendars); // guard
-
-            // Act
-            CountRestrictionsType count = model.GetRecord<CountRestrictionsType>(calendars);
-
-            // Assert
-            VerifyCountRestrictions(count);
-        }
-
-        [Theory]
-        [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline)]
-        [InlineData(EdmVocabularyAnnotationSerializationLocation.OutOfLine)]
-        public void TargetOnEntitySetReturnsCorrectCountRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
-        {
-            // Arrange
-            const string template = @"
-                <Annotations Target=""NS.Default/Calendars"">
-                  {0}
-                </Annotations>";
-
-            IEdmModel model = GetEdmModel(template, location);
-            Assert.NotNull(model); // guard
-
-            IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
-            Assert.NotNull(calendars); // guard
-
-            // Act
-            CountRestrictionsType count = model.GetRecord<CountRestrictionsType>(calendars);
-
-            // Assert
-            VerifyCountRestrictions(count);
-        }
-
-        private static IEdmModel GetEdmModel(string template, EdmVocabularyAnnotationSerializationLocation location)
-        {
             string countAnnotation = @"
                 <Annotation Term=""Org.OData.Capabilities.V1.CountRestrictions"" >
                   <Record>
@@ -115,15 +70,17 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
                   </Record>
                 </Annotation>";
 
-            if (location == EdmVocabularyAnnotationSerializationLocation.OutOfLine)
-            {
-                countAnnotation = string.Format(template, countAnnotation);
-                return CapabilitiesModelHelper.GetEdmModelOutline(countAnnotation);
-            }
-            else
-            {
-                return CapabilitiesModelHelper.GetEdmModelTypeInline(countAnnotation);
-            }
+            IEdmModel model = CapabilitiesModelHelper.GetEdmModelSetInline(countAnnotation);
+            Assert.NotNull(model); // guard
+
+            IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
+            Assert.NotNull(calendars); // guard
+
+            // Act
+            CountRestrictionsType count = model.GetRecord<CountRestrictionsType>(calendars);
+
+            // Assert
+            VerifyCountRestrictions(count);
         }
 
         private static void VerifyCountRestrictions(CountRestrictionsType count)

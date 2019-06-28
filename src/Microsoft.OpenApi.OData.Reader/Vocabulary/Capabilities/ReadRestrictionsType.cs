@@ -10,6 +10,9 @@ using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
+    /// <summary>
+    /// Complex Type: Org.OData.Capabilities.V1.ReadRestrictionsBase
+    /// </summary>
     internal abstract class ReadRestrictionsBase : IRecord
     {
         /// <summary>
@@ -38,6 +41,10 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         /// <returns>True/false.</returns>
         public bool IsReadable => Readable == null || Readable.Value;
 
+        /// <summary>
+        /// Init the <see cref="ReadRestrictionsBase"/>.
+        /// </summary>
+        /// <param name="record">The input record.</param>
         public virtual void Initialize(IEdmRecordExpression record)
         {
             Utils.CheckArgumentNull(record, nameof(record));
@@ -57,10 +64,12 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     }
 
     /// <summary>
+    /// Complex Type: Org.OData.Capabilities.V1.ReadByKeyRestrictionsType
     /// Restrictions for retrieving an entity by key
     /// </summary>
     internal class ReadByKeyRestrictions : ReadRestrictionsBase
     {
+        // nothing here
     }
 
     /// <summary>
@@ -69,8 +78,15 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     [Term("Org.OData.Capabilities.V1.ReadRestrictions")]
     internal class ReadRestrictionsType : ReadRestrictionsBase
     {
+        /// <summary>
+        /// Gets the Restrictions for retrieving an entity by key
+        /// </summary>
         public ReadByKeyRestrictions ReadByKeyRestrictions { get; set; }
 
+        /// <summary>
+        /// Init the <see cref="ReadRestrictionsType"/>.
+        /// </summary>
+        /// <param name="record">The input record.</param>
         public override void Initialize(IEdmRecordExpression record)
         {
             // Load base

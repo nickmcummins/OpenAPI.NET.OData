@@ -27,14 +27,14 @@ namespace Microsoft.OpenApi.OData.PathItem
         protected override void SetOperations(OpenApiPathItem item)
         {
             // Retrieve a singleton.
-            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(Singleton, CapabilitiesConstants.ReadRestrictions);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(Singleton);
             if (read == null || read.IsReadable)
             {
                 AddOperation(item, OperationType.Get);
             }
 
             // Update a singleton
-            UpdateRestrictionsType update = Context.Model.GetRecord<UpdateRestrictionsType>(Singleton, CapabilitiesConstants.UpdateRestrictions);
+            UpdateRestrictionsType update = Context.Model.GetRecord<UpdateRestrictionsType>(Singleton);
             if (update == null || update.IsUpdatable)
             {
                 AddOperation(item, OperationType.Patch);

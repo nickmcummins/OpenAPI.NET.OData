@@ -7,9 +7,10 @@ using System;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
-using Microsoft.OpenApi.OData.Tests;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
+using Microsoft.OpenApi.OData.Vocabulary.Core;
 using Xunit;
 
 namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
@@ -17,140 +18,46 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class InsertRestrictionsTypeTests
     {
         [Fact]
-        public void OkEdmModel()
+        public void TermAttributeAttachedOnInsertRestrictionsType()
         {
             // Arrange & Act
-            EdmModel model = new EdmModel();
-            EdmEntityType entity = new EdmEntityType("NS", "Entity");
-            entity.AddKeys(entity.AddStructuralProperty("Id", EdmPrimitiveTypeKind.Int32));
-            model.AddElement(entity);
+            string qualifiedName = Utils.GetTermQualifiedName<InsertRestrictionsType>();
 
-            EdmEntityContainer container = new EdmEntityContainer("NS", "Default");
-            EdmEntitySet set = container.AddEntitySet("Entities", entity);
-            model.AddElement(container);
+            // Assert
+            Assert.Equal("Org.OData.Capabilities.V1.InsertRestrictions", qualifiedName);
+        }
 
-            IEdmComplexType securitySchemeType = model.FindType("Org.OData.Authorization.V1.SecurityScheme") as IEdmComplexType;
-            IEdmRecordExpression securityScheme = new EdmRecordExpression(
-                    new EdmComplexTypeReference(securitySchemeType, false),
-                    new EdmPropertyConstructor("Authorization", new EdmStringConstant("authorizationName")),
-                    new EdmPropertyConstructor("RequiredScopes", new EdmCollectionExpression(new EdmStringConstant("RequiredScopes1"), new EdmStringConstant("RequiredScopes2"))));
-
-            IEdmComplexType scopeType = model.FindType("Org.OData.Capabilities.V1.ScopeType") as IEdmComplexType;
-            IEdmRecordExpression scope1 = new EdmRecordExpression(
-                    new EdmComplexTypeReference(scopeType, false),
-                    new EdmPropertyConstructor("Scope", new EdmStringConstant("scopeName1")),
-                    new EdmPropertyConstructor("RestrictedProperties", new EdmStringConstant("p1,p2")));
-
-            IEdmRecordExpression scope2 = new EdmRecordExpression(
-                    new EdmComplexTypeReference(scopeType, false),
-                    new EdmPropertyConstructor("Scope", new EdmStringConstant("scopeName2")),
-                    new EdmPropertyConstructor("RestrictedProperties", new EdmStringConstant("p3,p4")));
-
-            IEdmComplexType permissionType = model.FindType("Org.OData.Capabilities.V1.PermissionType") as IEdmComplexType;
-            IEdmRecordExpression permission = new EdmRecordExpression(
-                    new EdmComplexTypeReference(permissionType, false),
-                    new EdmPropertyConstructor("Scheme", securityScheme),
-                    new EdmPropertyConstructor("Scopes", new EdmCollectionExpression(scope1, scope2)));
-
-            IEdmComplexType complex = model.FindType("Org.OData.Capabilities.V1.InsertRestrictionsType") as IEdmComplexType;
-
-            IEdmCollectionExpression nonInsertableProperties = new EdmCollectionExpression
-            (
-                new EdmPathExpression("abc"),
-                new EdmPathExpression("xyz")
-            );
-
-            IEdmCollectionExpression nonInsertableNavigationProperties = new EdmCollectionExpression
-            (
-                new EdmNavigationPropertyPathExpression("nvabc"),
-                new EdmNavigationPropertyPathExpression("nvxyz")
-            );
-
-            IEdmRecordExpression queryOptions = new EdmRecordExpression(
-                    new EdmPropertyConstructor("ExpandSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("SelectSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("ComputeSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("FilterSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("SearchSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("SortSupported", new EdmBooleanConstant(false)),
-                    new EdmPropertyConstructor("SortSupported", new EdmBooleanConstant(false)));
-
+        [Fact]
+        public void InitializInsertRestrictionsTypeWithRecordSuccess()
+        {
+            // Assert
             IEdmRecordExpression primitiveExampleValue = new EdmRecordExpression(
-                new EdmPropertyConstructor("Description", new EdmStringConstant("Description23")),
-                new EdmPropertyConstructor("Value", new EdmStringConstant("Value1")));
+                new EdmPropertyConstructor("Description", new EdmStringConstant("example desc")),
+                new EdmPropertyConstructor("Value", new EdmStringConstant("example value")));
 
-            IEdmRecordExpression customHeaders1 = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Name", new EdmStringConstant("HeadName1")),
-                    new EdmPropertyConstructor("Description", new EdmStringConstant("Description1")),
-                    new EdmPropertyConstructor("ComputeSupported", new EdmStringConstant("http://any")),
-                    new EdmPropertyConstructor("Required", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("ExampleValues", new EdmCollectionExpression(primitiveExampleValue)));
-
-            IEdmRecordExpression customHeaders2 = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Name", new EdmStringConstant("HeadName2")),
-                    new EdmPropertyConstructor("Description", new EdmStringConstant("Description2")),
-                    new EdmPropertyConstructor("ComputeSupported", new EdmStringConstant("http://any")),
-                    new EdmPropertyConstructor("Required", new EdmBooleanConstant(false)),
-                    new EdmPropertyConstructor("ExampleValues", new EdmCollectionExpression(primitiveExampleValue)));
-
-            IEdmRecordExpression insertRecord = new EdmRecordExpression(
-                    new EdmComplexTypeReference(complex, false),
+            IEdmRecordExpression record = new EdmRecordExpression(
                     new EdmPropertyConstructor("Insertable", new EdmBooleanConstant(false)),
-                    new EdmPropertyConstructor("NonInsertableProperties", nonInsertableProperties),
-                    new EdmPropertyConstructor("NonInsertableNavigationProperties", nonInsertableNavigationProperties),
+                    new EdmPropertyConstructor("NonInsertableProperties", new EdmCollectionExpression(new EdmPathExpression("abc/xyz"))),
+                    new EdmPropertyConstructor("NonInsertableNavigationProperties", new EdmCollectionExpression(new EdmNavigationPropertyPathExpression("abc"), new EdmNavigationPropertyPathExpression("RelatedEvents"))),
                     new EdmPropertyConstructor("MaxLevels", new EdmIntegerConstant(8)),
-                    new EdmPropertyConstructor("Permission", permission),
-                    new EdmPropertyConstructor("QueryOptions", queryOptions),
-                    new EdmPropertyConstructor("CustomHeaders", new EdmCollectionExpression(customHeaders1, customHeaders2)),
-                    new EdmPropertyConstructor("CustomQueryOptions", new EdmCollectionExpression(customHeaders1, customHeaders2))
+                    new EdmPropertyConstructor("CustomQueryOptions", new EdmCollectionExpression(
+                        new EdmRecordExpression(
+                            new EdmPropertyConstructor("Name", new EdmStringConstant("primitive name")),
+                            new EdmPropertyConstructor("Description", new EdmStringConstant("primitive desc")),
+                            new EdmPropertyConstructor("DocumentationURL", new EdmStringConstant("http://any3")),
+                            new EdmPropertyConstructor("Required", new EdmBooleanConstant(true)),
+                            new EdmPropertyConstructor("ExampleValues", new EdmCollectionExpression(primitiveExampleValue)))))
+                    // QueryOptions
+                    // Permission
+                    // CustomHeaders
                     );
 
-            IEdmTerm term = model.FindTerm("Org.OData.Capabilities.V1.InsertRestrictions");
-            var annotation = new EdmVocabularyAnnotation(set, term, insertRecord);
-
-            annotation.SetSerializationLocation(model, EdmVocabularyAnnotationSerializationLocation.Inline);
-            model.SetVocabularyAnnotation(annotation);
-
-            // Assert
-            string csdl = EdmModelHelper.GetCsdl(model);
-            Assert.Equal("", csdl);
-        }
-
-        [Fact]
-        public void KindPropertyReturnsInsertRestrictionsEnumMember()
-        {
-            // Arrange & Act
-            InsertRestrictionsType insert = new InsertRestrictionsType();
-
-            // Assert
-            // Assert.Equal(CapabilitesTermKind.InsertRestrictions, insert.Kind);
-        }
-
-        [Fact]
-        public void KindPropertyReturnsInsertRestrictionsEnumMember2()
-        {
-            // Arrange
-            IEdmModel model = GetModelWithInsertRestrictions();
-            IEdmEntitySet entitySet = model.EntityContainer.FindEntitySet("Entities");
-
             // Act
-            InsertRestrictionsType insert = model.GetRecord<InsertRestrictionsType>(entitySet);
+            InsertRestrictionsType insert = new InsertRestrictionsType();
+            insert.Initialize(record);
 
             // Assert
-           //Assert.Equal(CapabilitesTermKind.InsertRestrictions, insert.Kind);
-        }
-
-        [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultInsertRestrictionsValues()
-        {
-            // Arrange
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
-
-            //  Act
-            InsertRestrictionsType insert = EdmCoreModel.Instance.GetRecord<InsertRestrictionsType>(entityType);
-
-            // Assert
-            Assert.Null(insert);
+            VerifyInsertRestrictions(insert);
         }
 
         [Theory]
@@ -207,13 +114,36 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
                 <Annotation Term=""Org.OData.Capabilities.V1.InsertRestrictions"" >
                   <Record>
                     <PropertyValue Property=""Insertable"" Bool=""false"" />
+                    <PropertyValue Property=""NonInsertableProperties"" >
+                      <Collection>
+                        <PropertyPath>abc/xyz</PropertyPath>
+                      </Collection>
+                    </PropertyValue>
                     <PropertyValue Property=""NonInsertableNavigationProperties"" >
                       <Collection>
                         <NavigationPropertyPath>abc</NavigationPropertyPath>
                         <NavigationPropertyPath>RelatedEvents</NavigationPropertyPath>
                       </Collection>
                     </PropertyValue>
-                    <PropertyValue Property=""Insertable"" Bool=""false"" />
+                    <PropertyValue Property=""MaxLevels"" Int=""8"" />
+                    <PropertyValue Property=""CustomQueryOptions"" >
+                      <Collection>
+                        <Record>
+                          <PropertyValue Property=""Name"" String=""primitive name"" />
+                          <PropertyValue Property=""Description"" String=""primitive desc"" />
+                          <PropertyValue Property=""DocumentationURL"" String=""http://any3"" />
+                          <PropertyValue Property=""Required"" Bool=""true"" />
+                          <PropertyValue Property=""ExampleValues"">
+                            <Collection>
+                              <Record>
+                                <PropertyValue Property=""Description"" String=""example desc"" />
+                                <PropertyValue Property=""Value"" String=""example value"" />
+                              </Record>
+                            </Collection>
+                          </PropertyValue>
+                        </Record>
+                      </Collection>
+                    </PropertyValue>
                   </Record>
                 </Annotation>";
 
@@ -226,107 +156,6 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             {
                 return CapabilitiesModelHelper.GetEdmModelTypeInline(countAnnotation);
             }
-        }
-
-        public IEdmModel GetModelWithInsertRestrictions()
-        {
-            EdmModel model = new EdmModel();
-
-            IEdmRecordExpression securityScheme = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Authorization", new EdmStringConstant("authorizationName")),
-                    new EdmPropertyConstructor("RequiredScopes", new EdmCollectionExpression(new EdmStringConstant("RequiredScopes1"), new EdmStringConstant("RequiredScopes2"))));
-
-            IEdmRecordExpression scope1 = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Scope", new EdmStringConstant("scopeName1")),
-                    new EdmPropertyConstructor("RestrictedProperties", new EdmStringConstant("p1,p2")));
-
-            IEdmRecordExpression scope2 = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Scope", new EdmStringConstant("scopeName2")),
-                    new EdmPropertyConstructor("RestrictedProperties", new EdmStringConstant("p3,p4")));
-
-            IEdmRecordExpression permission = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Scheme", securityScheme),
-                    new EdmPropertyConstructor("Scopes", new EdmCollectionExpression(scope1, scope2)));
-
-            IEdmCollectionExpression nonInsertableProperties = new EdmCollectionExpression
-            (
-                new EdmPathExpression("abc"),
-                new EdmPathExpression("xyz")
-            );
-
-            IEdmCollectionExpression nonInsertableNavigationProperties = new EdmCollectionExpression
-            (
-                new EdmNavigationPropertyPathExpression("nvabc"),
-                new EdmNavigationPropertyPathExpression("nvxyz")
-            );
-
-            IEdmRecordExpression queryOptions = new EdmRecordExpression(
-                    new EdmPropertyConstructor("ExpandSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("SelectSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("ComputeSupported", new EdmBooleanConstant(false)),
-                    new EdmPropertyConstructor("FilterSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("SearchSupported", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("SortSupported", new EdmBooleanConstant(false)));
-
-            IEdmRecordExpression primitiveExampleValue = new EdmRecordExpression(
-                new EdmPropertyConstructor("Description", new EdmStringConstant("Description23")),
-                new EdmPropertyConstructor("Value", new EdmStringConstant("Value1")));
-
-            IEdmRecordExpression customHeaders1 = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Name", new EdmStringConstant("HeadName1")),
-                    new EdmPropertyConstructor("Description", new EdmStringConstant("Description1")),
-                    new EdmPropertyConstructor("ComputeSupported", new EdmStringConstant("http://any")),
-                    new EdmPropertyConstructor("Required", new EdmBooleanConstant(true)),
-                    new EdmPropertyConstructor("ExampleValues", new EdmCollectionExpression(primitiveExampleValue)));
-
-            IEdmRecordExpression customHeaders2 = new EdmRecordExpression(
-                    new EdmPropertyConstructor("Name", new EdmStringConstant("HeadName2")),
-                    new EdmPropertyConstructor("Description", new EdmStringConstant("Description2")),
-                    new EdmPropertyConstructor("ComputeSupported", new EdmStringConstant("http://any")),
-                    new EdmPropertyConstructor("Required", new EdmBooleanConstant(false)),
-                    new EdmPropertyConstructor("ExampleValues", new EdmCollectionExpression(primitiveExampleValue)));
-
-            /*
-<ComplexType Name="InsertRestrictionsType">
-  <Property Name="Insertable" Type="Edm.Boolean" Nullable="false" DefaultValue="true" />
-  <Property Name="NonInsertableProperties" Type="Collection(Edm.PropertyPath)" Nullable="false" />
-  <Property Name="NonInsertableNavigationProperties" Type="Collection(Edm.NavigationPropertyPath)" Nullable="false" />
-  <Property Name="MaxLevels" Type="Edm.Int32" Nullable="false" DefaultValue="-1" />
-  <Property Name="Permission" Type="Capabilities.PermissionType" Nullable="true" />
-  <Property Name="QueryOptions" Type="Capabilities.ModificationQueryOptionsType" Nullable="true" />
-  <Property Name="CustomHeaders" Type="Collection(Capabilities.CustomParameter)" />
-  <Property Name="CustomQueryOptions" Type="Collection(Capabilities.CustomParameter)" />
-</ComplexType>
-             */
-            IEdmComplexType complex = model.FindType("Org.OData.Capabilities.V1.InsertRestrictionsType") as IEdmComplexType;
-            Assert.NotNull(complex);
-
-            EdmRecordExpression record = new EdmRecordExpression(
-                    new EdmComplexTypeReference(complex, false),
-                    new EdmPropertyConstructor("Insertable", new EdmBooleanConstant(false)),
-                    new EdmPropertyConstructor("NonInsertableProperties", nonInsertableProperties),
-                    new EdmPropertyConstructor("NonInsertableNavigationProperties", nonInsertableNavigationProperties),
-                    new EdmPropertyConstructor("MaxLevels", new EdmIntegerConstant(8)),
-                    new EdmPropertyConstructor("Permission", permission),
-                    new EdmPropertyConstructor("QueryOptions", queryOptions),
-                    new EdmPropertyConstructor("CustomHeaders", new EdmCollectionExpression(customHeaders1, customHeaders2)),
-                    new EdmPropertyConstructor("CustomQueryOptions", new EdmCollectionExpression(customHeaders2)));
-
-            EdmEntityType entity = new EdmEntityType("NS", "Entity");
-            entity.AddKeys(entity.AddStructuralProperty("Id", EdmPrimitiveTypeKind.Int32));
-            model.AddElement(entity);
-            EdmEntityContainer container = new EdmEntityContainer("NS", "Default");
-            EdmEntitySet entities = container.AddEntitySet("Entities", entity);
-            model.AddElement(container);
-
-            IEdmTerm term = model.FindTerm("Org.OData.Capabilities.V1.InsertRestrictions");
-            Assert.NotNull(term);
-
-            var annotation = new EdmVocabularyAnnotation(entities, term, record);
-            annotation.SetSerializationLocation(model, EdmVocabularyAnnotationSerializationLocation.Inline);
-            model.SetVocabularyAnnotation(annotation);
-
-            return model;
         }
 
         private static void VerifyInsertRestrictions(InsertRestrictionsType insert)
@@ -342,6 +171,23 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 
             Assert.True(insert.IsNonInsertableNavigationProperty("RelatedEvents"));
             Assert.False(insert.IsNonInsertableNavigationProperty("MyUnknownNavigationProperty"));
+
+            Assert.Null(insert.QueryOptions);
+            Assert.Null(insert.Permission);
+            Assert.Null(insert.CustomHeaders);
+
+            Assert.NotNull(insert.MaxLevels);
+            Assert.Equal(8, insert.MaxLevels.Value);
+
+            Assert.NotNull(insert.CustomQueryOptions);
+            CustomParameter parameter = Assert.Single(insert.CustomQueryOptions);
+            Assert.Equal("primitive name", parameter.Name);
+            Assert.Equal("http://any3", parameter.DocumentationURL);
+
+            Assert.NotNull(parameter.ExampleValues);
+            PrimitiveExampleValue example = Assert.Single(parameter.ExampleValues);
+            Assert.Equal("example desc", example.Description);
+            Assert.Equal("example value", example.Value.Value);
         }
     }
 }

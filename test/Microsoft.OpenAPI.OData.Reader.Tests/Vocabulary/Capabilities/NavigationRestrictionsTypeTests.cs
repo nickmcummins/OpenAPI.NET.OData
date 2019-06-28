@@ -6,6 +6,8 @@
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -15,26 +17,44 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class NavigationRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsNavigationRestrictionsEnumMember()
+        public void TermAttributeAttachedOnNavigationRestrictionsType()
         {
             // Arrange & Act
-            NavigationRestrictionsType navigation = new NavigationRestrictionsType();
+            string qualifiedName = Utils.GetTermQualifiedName<NavigationRestrictionsType>();
 
             // Assert
-           // Assert.Equal(CapabilitesTermKind.NavigationRestrictions, navigation.Kind);
+            Assert.Equal("Org.OData.Capabilities.V1.NavigationRestrictions", qualifiedName);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultPropertyValues()
+        public void InitializNavigationRestrictionsTypeWithRecordSuccess()
         {
-            // Arrange
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
+            // Assert
+            EdmModel model = new EdmModel();
+            IEdmEnumType navigationType = model.FindType("Org.OData.Capabilities.V1.NavigationType") as IEdmEnumType;
+            Assert.NotNull(navigationType);
+
+            IEdmRecordExpression restriction1 = new EdmRecordExpression(
+                new EdmPropertyConstructor("NavigationProperty", new EdmNavigationPropertyPathExpression("abc")),
+                new EdmPropertyConstructor("Navigability", new EdmEnumMemberExpression(navigationType.Members.First(c => c.Name == "Single"))),
+                new EdmPropertyConstructor("SkipSupported", new EdmBooleanConstant(false)));
+
+            IEdmRecordExpression restriction2 = new EdmRecordExpression(
+                new EdmPropertyConstructor("NavigationProperty", new EdmNavigationPropertyPathExpression("xyz")),
+                new EdmPropertyConstructor("Navigability", new EdmEnumMemberExpression(navigationType.Members.First(c => c.Name == "None"))),
+                new EdmPropertyConstructor("OptimisticConcurrencyControl", new EdmBooleanConstant(true)));
+
+            IEdmRecordExpression record = new EdmRecordExpression(
+                new EdmPropertyConstructor("Navigability", new EdmEnumMemberExpression(navigationType.Members.First(c => c.Name == "Recursive"))),
+                new EdmPropertyConstructor("RestrictedProperties", new EdmCollectionExpression(restriction1, restriction2))
+            );
 
             // Act
-            NavigationRestrictionsType navigation = EdmCoreModel.Instance.GetRecord<NavigationRestrictionsType>(entityType);
+            NavigationRestrictionsType navigation = new NavigationRestrictionsType();
+            navigation.Initialize(record);
 
             // Assert
-            Assert.Null(navigation);
+            VerifyNavigationRestrictions(navigation);
         }
 
         [Theory]
@@ -43,40 +63,13 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
         public void TargetOnEntityTypeReturnsCorrectNavigationRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
         {
             // Arrange
-            const string outOfLineTemplate = @"
+            const string template = @"
                 <Annotations Target=""NS.Calendar"">
                   {0}
                 </Annotations>";
 
-            string navigationAnnotation = @"
-                <Annotation Term=""Org.OData.Capabilities.V1.NavigationRestrictions"" >
-                  <Record>
-                    <PropertyValue Property=""Navigability"" >
-                      <EnumMember>Org.OData.Capabilities.V1.NavigationType/Recursive</EnumMember>
-                    </PropertyValue>
-                    <PropertyValue Property=""RestrictedProperties"" >
-                      <Collection>
-                        <Record>
-                          <PropertyValue Property=""Navigability"" >
-                            <EnumMember>Org.OData.Capabilities.V1.NavigationType/Single</EnumMember>
-                          </PropertyValue>
-                          <PropertyValue Property=""NavigationProperty"" NavigationPropertyPath=""abc"" />
-                         </Record>
-                       </Collection>
-                     </PropertyValue>
-                   </Record>
-                 </Annotation>";
-
-            IEdmModel model;
-            if (location == EdmVocabularyAnnotationSerializationLocation.OutOfLine)
-            {
-                navigationAnnotation = string.Format(outOfLineTemplate, navigationAnnotation);
-                model = CapabilitiesModelHelper.GetEdmModelOutline(navigationAnnotation);
-            }
-            else
-            {
-                model = CapabilitiesModelHelper.GetEdmModelTypeInline(navigationAnnotation);
-            }
+            IEdmModel model = GetEdmModel(template, location);
+            Assert.NotNull(model); // guard
 
             IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
 
@@ -84,14 +77,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             NavigationRestrictionsType navigation = model.GetRecord<NavigationRestrictionsType>(calendars);
 
             // Assert
-            Assert.NotNull(navigation.Navigability);
-            Assert.Equal(NavigationType.Recursive, navigation.Navigability.Value);
-
-            Assert.NotNull(navigation.RestrictedProperties);
-            NavigationPropertyRestriction navRestriction = Assert.Single(navigation.RestrictedProperties);
-            Assert.NotNull(navRestriction.Navigability);
-            Assert.Equal(NavigationType.Single, navRestriction.Navigability.Value);
-            Assert.Equal("abc", navRestriction.NavigationProperty);
+            VerifyNavigationRestrictions(navigation);
         }
 
         [Theory]
@@ -100,46 +86,13 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
         public void TargetOnEntitySetReturnsCorrectNavigationRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
         {
             // Arrange
-            const string outOfLineTemplate = @"
+            const string template = @"
                 <Annotations Target=""NS.Default/Calendars"">
                   {0}
                 </Annotations>";
 
-            string navigationAnnotation = @"
-                <Annotation Term=""Org.OData.Capabilities.V1.NavigationRestrictions"" >
-                  <Record>
-                    <PropertyValue Property=""Navigability"" >
-                      <EnumMember>Org.OData.Capabilities.V1.NavigationType/Recursive</EnumMember>
-                    </PropertyValue>
-                    <PropertyValue Property=""RestrictedProperties"" >
-                      <Collection>
-                        <Record>
-                          <PropertyValue Property=""Navigability"" >
-                            <EnumMember>Org.OData.Capabilities.V1.NavigationType/Single</EnumMember>
-                          </PropertyValue>
-                          <PropertyValue Property=""NavigationProperty"" NavigationPropertyPath=""abc"" />
-                         </Record>
-                         <Record>
-                          <PropertyValue Property=""Navigability"" >
-                            <EnumMember>Org.OData.Capabilities.V1.NavigationType/None</EnumMember>
-                          </PropertyValue>
-                          <PropertyValue Property=""NavigationProperty"" NavigationPropertyPath=""xyz"" />
-                         </Record>
-                       </Collection>
-                     </PropertyValue>
-                   </Record>
-                 </Annotation>";
-
-            IEdmModel model;
-            if (location == EdmVocabularyAnnotationSerializationLocation.OutOfLine)
-            {
-                navigationAnnotation = string.Format(outOfLineTemplate, navigationAnnotation);
-                model = CapabilitiesModelHelper.GetEdmModelOutline(navigationAnnotation);
-            }
-            else
-            {
-                model = CapabilitiesModelHelper.GetEdmModelTypeInline(navigationAnnotation);
-            }
+            IEdmModel model = GetEdmModel(template, location);
+            Assert.NotNull(model); // guard
 
             IEdmEntitySet calendars = model.EntityContainer.FindEntitySet("Calendars");
 
@@ -154,6 +107,46 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             Assert.Equal(NavigationType.None, navRestriction.Navigability.Value);
             Assert.Equal("xyz", navRestriction.NavigationProperty);
             Assert.True(navigation.IsRestrictedProperty("xyz"));
+        }
+
+        private static IEdmModel GetEdmModel(string template, EdmVocabularyAnnotationSerializationLocation location)
+        {
+            string navigationAnnotation = @"
+                <Annotation Term=""Org.OData.Capabilities.V1.NavigationRestrictions"" >
+                  <Record>
+                    <PropertyValue Property=""Navigability"" >
+                      <EnumMember>Org.OData.Capabilities.V1.NavigationType/Recursive</EnumMember>
+                    </PropertyValue>
+                    <PropertyValue Property=""RestrictedProperties"" >
+                      <Collection>
+                        <Record>
+                          <PropertyValue Property=""Navigability"" >
+                             <EnumMember>Org.OData.Capabilities.V1.NavigationType/Single</EnumMember>
+                          </PropertyValue>
+                          <PropertyValue Property=""NavigationProperty"" NavigationPropertyPath=""abc"" />
+                          <PropertyValue Property=""SkipSupported"" Bool=""false"" />
+                         </Record>
+                         <Record>
+                          <PropertyValue Property=""Navigability"" >
+                            <EnumMember>Org.OData.Capabilities.V1.NavigationType/None</EnumMember>
+                          </PropertyValue>
+                          <PropertyValue Property=""NavigationProperty"" NavigationPropertyPath=""xyz"" />
+                          <PropertyValue Property=""OptimisticConcurrencyControl"" Bool=""true"" />
+                         </Record>
+                       </Collection>
+                     </PropertyValue>
+                   </Record>
+                 </Annotation>";
+
+            if (location == EdmVocabularyAnnotationSerializationLocation.OutOfLine)
+            {
+                navigationAnnotation = string.Format(template, navigationAnnotation);
+                return CapabilitiesModelHelper.GetEdmModelOutline(navigationAnnotation);
+            }
+            else
+            {
+                return CapabilitiesModelHelper.GetEdmModelTypeInline(navigationAnnotation);
+            }
         }
 
         [Fact]
@@ -193,11 +186,32 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             Assert.NotNull(navigation.RestrictedProperties);
             Assert.Equal(2, navigation.RestrictedProperties.Count);
 
+            Assert.False(navigation.IsRestrictedProperty("abc"));
+            Assert.True(navigation.IsRestrictedProperty("xyz"));
+
+            // #1
             NavigationPropertyRestriction navRestriction = navigation.RestrictedProperties.First();
             Assert.NotNull(navRestriction.Navigability);
             Assert.Equal(NavigationType.Single, navRestriction.Navigability.Value);
             Assert.Equal("abc", navRestriction.NavigationProperty);
-            Assert.False(navigation.IsRestrictedProperty("abc"));
+
+            Assert.NotNull(navRestriction.SkipSupported);
+            Assert.False(navRestriction.SkipSupported.Value);
+
+            Assert.Null(navRestriction.TopSupported);
+            Assert.Null(navRestriction.OptimisticConcurrencyControl);
+
+            // #2
+            navRestriction = navigation.RestrictedProperties.Last();
+            Assert.NotNull(navRestriction.Navigability);
+            Assert.Equal(NavigationType.None, navRestriction.Navigability.Value);
+            Assert.Equal("xyz", navRestriction.NavigationProperty);
+
+            Assert.Null(navRestriction.SkipSupported);
+            Assert.Null(navRestriction.TopSupported);
+
+            Assert.NotNull(navRestriction.OptimisticConcurrencyControl);
+            Assert.True(navRestriction.OptimisticConcurrencyControl.Value);
         }
     }
 }

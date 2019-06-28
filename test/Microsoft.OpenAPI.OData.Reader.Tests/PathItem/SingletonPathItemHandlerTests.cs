@@ -85,12 +85,12 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateSingletonPathItemWorksForReadRestrictionsCapablities(bool readable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.ReadRestrictions"">
   <Record>
-    <PropertyValue Property=""Readable"" Bool=""{0}"" />
+    <PropertyValue Property=""Readable"" Bool=""{readable}"" />
   </Record>
-</Annotation>", readable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);
@@ -102,12 +102,12 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateSingletonPathItemWorksForUpdateRestrictionsCapablities(bool updatable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.UpdateRestrictions"">
   <Record>
-    <PropertyValue Property=""Updatable"" Bool=""{0}"" />
+    <PropertyValue Property=""Updatable"" Bool=""{updatable}"" />
   </Record>
-</Annotation>", updatable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);
@@ -148,16 +148,7 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
          <Singleton Name=""Me"" Type=""NS.Customer"" />
       </EntityContainer>
       <Annotations Target=""NS.Default/Me"">
-        <Annotation Term=""Org.OData.Capabilities.V1.UpdateRestrictions"">
-  <Record>
-    <PropertyValue Property=""Updatable"" Bool=""{0}"" />
-  </Record>
-</Annotation>
-<Annotation Term=""Org.OData.Capabilities.V1.afdasf"">
-  <Record>
-    <PropertyValue Property=""Updatable"" Bool=""{0}"" />
-  </Record>
-</Annotation>
+        {0}
       </Annotations>
     </Schema>
   </edmx:DataServices>

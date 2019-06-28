@@ -81,16 +81,16 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateEntityPathItemWorksForReadByKeyRestrictionsCapablities(bool readable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.ReadRestrictions"">
   <Record>
     <PropertyValue Property=""ReadByKeyRestrictions"" >
       <Record>
-        <PropertyValue Property=""Readable"" Bool=""{0}"" />
+        <PropertyValue Property=""Readable"" Bool=""{readable}"" />
       </Record>
     </PropertyValue>
   </Record>
-</Annotation>", readable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);
@@ -102,12 +102,12 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateEntityPathItemWorksForReadRestrictionsCapablities(bool readable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.ReadRestrictions"">
   <Record>
-    <PropertyValue Property=""Readable"" Bool=""{0}"" />
+    <PropertyValue Property=""Readable"" Bool=""{readable}"" />
   </Record>
-</Annotation>", readable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);
@@ -119,12 +119,12 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateEntityPathItemWorksForUpdateRestrictionsCapablities(bool updatable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.UpdateRestrictions"">
   <Record>
-    <PropertyValue Property=""Updatable"" Bool=""{0}"" />
+    <PropertyValue Property=""Updatable"" Bool=""{updatable}"" />
   </Record>
-</Annotation>", updatable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);
@@ -136,12 +136,12 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateEntityPathItemWorksForDeleteRestrictionsCapablities(bool deletable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.DeleteRestrictions"">
   <Record>
-    <PropertyValue Property=""Deletable"" Bool=""{0}"" />
+    <PropertyValue Property=""Deletable"" Bool=""{deletable}"" />
   </Record>
-</Annotation>", deletable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);

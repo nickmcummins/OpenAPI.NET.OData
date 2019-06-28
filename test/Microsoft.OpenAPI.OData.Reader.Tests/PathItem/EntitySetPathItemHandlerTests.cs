@@ -85,12 +85,12 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateEntitySetPathItemWorksForReadRestrictionsCapablities(bool readable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.ReadRestrictions"">
   <Record>
-    <PropertyValue Property=""Readable"" Bool=""{0}"" />
+    <PropertyValue Property=""Readable"" Bool=""{readable}"" />
   </Record>
-</Annotation>", readable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);
@@ -102,12 +102,12 @@ namespace Microsoft.OpenApi.OData.PathItem.Tests
         public void CreateEntitySetPathItemWorksForInsertRestrictionsCapablities(bool insertable, OperationType[] expected)
         {
             // Arrange
-            string annotation = String.Format(@"
+            string annotation = $@"
 <Annotation Term=""Org.OData.Capabilities.V1.InsertRestrictions"">
   <Record>
-    <PropertyValue Property=""Insertable"" Bool=""{0}"" />
+    <PropertyValue Property=""Insertable"" Bool=""{insertable}"" />
   </Record>
-</Annotation>", insertable);
+</Annotation>";
 
             // Assert
             VerifyPathItemOperations(annotation, expected);

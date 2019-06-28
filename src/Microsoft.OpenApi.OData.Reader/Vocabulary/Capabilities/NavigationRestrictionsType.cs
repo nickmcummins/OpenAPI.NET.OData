@@ -143,7 +143,43 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
             FilterRestrictions = record.GetRecord<FilterRestrictionsType>("FilterRestrictions");
 
             // SearchRestrictions
-           //SearchRestrictions = record.GetRecord<SearchRestrictions>("SearchRestrictions", (r, t) => r.Init(t));
+            SearchRestrictions = record.GetRecord<SearchRestrictionsType>("SearchRestrictions");
+
+            // SortRestrictions
+            SortRestrictions = record.GetRecord<SortRestrictionsType>("SortRestrictions");
+
+            // TopSupported
+            TopSupported = record.GetBoolean("TopSupported");
+
+            // SkipSupported
+            SkipSupported = record.GetBoolean("SkipSupported");
+
+            // SelectSupport
+            SelectSupport = record.GetRecord<SelectSupportType>("SelectSupport");
+
+            // IndexableByKey
+            IndexableByKey = record.GetBoolean("IndexableByKey");
+
+            // InsertRestrictions
+            InsertRestrictions = record.GetRecord<InsertRestrictionsType>("InsertRestrictions");
+
+            // DeepInsertSupport
+            DeepInsertSupport = record.GetRecord<DeepInsertSupportType>("DeepInsertSupport");
+
+            // UpdateRestrictions
+            UpdateRestrictions = record.GetRecord<UpdateRestrictionsType>("UpdateRestrictions");
+
+            // DeepUpdateSupport
+            DeepUpdateSupport = record.GetRecord<DeepUpdateSupportType>("DeepUpdateSupport");
+
+            // DeleteRestrictions
+            DeleteRestrictions = record.GetRecord<DeleteRestrictionsType>("DeleteRestrictions");
+
+            // IndexableByKey
+            OptimisticConcurrencyControl = record.GetBoolean("OptimisticConcurrencyControl");
+
+            // ReadRestrictions
+            ReadRestrictions = record.GetRecord<ReadRestrictionsType>("ReadRestrictions");
         }
     }
 
@@ -182,7 +218,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         }
 
         /// <summary>
-        /// Init the <see cref="SearchRestrictionsType"/>.
+        /// Init the <see cref="NavigationRestrictionsType"/>.
         /// </summary>
         /// <param name="record">The input record.</param>
         public void Initialize(IEdmRecordExpression record)
@@ -194,36 +230,6 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 
             // RestrictedProperties
             RestrictedProperties = record.GetCollection<NavigationPropertyRestriction>("RestrictedProperties");
-        }
-
-        private static IList<NavigationPropertyRestriction> GetRestrictedProperties(IEdmRecordExpression record)
-        {
-            if (record != null && record.Properties != null)
-            {
-                IEdmPropertyConstructor property = record.Properties.FirstOrDefault(p => p.Name == "RestrictedProperties");
-                if (property != null)
-                {
-                    IEdmCollectionExpression value = property.Value as IEdmCollectionExpression;
-                    if (value != null && value.Elements != null)
-                    {
-                        IList<NavigationPropertyRestriction> restrictedProperties = new List<NavigationPropertyRestriction>();
-                        foreach (var item in value.Elements.OfType<IEdmRecordExpression>())
-                        {
-                            NavigationPropertyRestriction restriction = new NavigationPropertyRestriction();
-                            restriction.Navigability = item.GetEnum<NavigationType>("Navigability");
-                            restriction.NavigationProperty = item.GetPropertyPath("NavigationProperty");
-                            restrictedProperties.Add(restriction);
-                        }
-
-                        if (restrictedProperties.Any())
-                        {
-                            return restrictedProperties;
-                        }
-                    }
-                }
-            }
-
-            return null;
         }
     }
 }

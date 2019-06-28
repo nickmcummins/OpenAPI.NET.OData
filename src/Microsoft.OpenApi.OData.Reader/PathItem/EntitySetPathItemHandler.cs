@@ -26,13 +26,13 @@ namespace Microsoft.OpenApi.OData.PathItem
         /// <inheritdoc/>
         protected override void SetOperations(OpenApiPathItem item)
         {
-            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet, CapabilitiesConstants.ReadRestrictions);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet);
             if (read == null || read.IsReadable)
             {
                 AddOperation(item, OperationType.Get);
             }
 
-            InsertRestrictionsType insert = Context.Model.GetRecord<InsertRestrictionsType>(EntitySet, CapabilitiesConstants.ReadRestrictions);
+            InsertRestrictionsType insert = Context.Model.GetRecord<InsertRestrictionsType>(EntitySet);
             if (insert == null || insert.IsInsertable)
             {
                 AddOperation(item, OperationType.Post);

@@ -6,6 +6,8 @@
 using System;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -15,26 +17,39 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class DeleteRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsDeleteRestrictionsEnumMember()
+        public void TermAttributeAttachedOnDeleteRestrictionsType()
         {
             // Arrange & Act
-            DeleteRestrictionsType delete = new DeleteRestrictionsType();
+            string qualifiedName = Utils.GetTermQualifiedName<DeleteRestrictionsType>();
 
             // Assert
-            // Assert.Equal(CapabilitesTermKind.DeleteRestrictions, delete.Kind);
+            Assert.Equal("Org.OData.Capabilities.V1.DeleteRestrictions", qualifiedName);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultDeleteRestrictionsValues()
+        public void InitializeDeleteRestrictionsTypeWithRecordSuccess()
         {
-            // Arrange
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
+            // Assert
+            IEdmRecordExpression record = new EdmRecordExpression(
+                new EdmPropertyConstructor("Deletable", new EdmBooleanConstant(false)),
+                new EdmPropertyConstructor("NonDeletableNavigationProperties",
+                    new EdmCollectionExpression(new EdmNavigationPropertyPathExpression("abc"), new EdmNavigationPropertyPathExpression("RelatedEvents"))),
+                new EdmPropertyConstructor("MaxLevels", new EdmIntegerConstant(42)),
+                new EdmPropertyConstructor("Permission", new EdmRecordExpression(
+                    new EdmPropertyConstructor("Scheme", new EdmRecordExpression(new EdmPropertyConstructor("Authorization", new EdmStringConstant("schemeName")))))),
+                new EdmPropertyConstructor("CustomQueryOptions", new EdmCollectionExpression(
+                    new EdmRecordExpression(
+                        new EdmPropertyConstructor("Name", new EdmStringConstant("odata-debug")),
+                        new EdmPropertyConstructor("DocumentationURL", new EdmStringConstant("https://debug.html")))))
+                // CustomHeaders
+            );
 
-            //  Act
-            DeleteRestrictionsType delete = EdmCoreModel.Instance.GetRecord<DeleteRestrictionsType>(entityType);
+            // Act
+            DeleteRestrictionsType delete = new DeleteRestrictionsType();
+            delete.Initialize(record);
 
             // Assert
-            Assert.Null(delete);
+            VerifyDeleteRestrictionsType(delete);
         }
 
         [Theory]
@@ -58,7 +73,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             DeleteRestrictionsType delete = model.GetRecord<DeleteRestrictionsType>(calendars);
 
             // Assert
-            VerifyDeleteRestrictions(delete);
+            VerifyDeleteRestrictionsType(delete);
         }
 
         [Theory]
@@ -82,12 +97,12 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             DeleteRestrictionsType delete = model.GetRecord<DeleteRestrictionsType>(calendars);
 
             // Assert
-            VerifyDeleteRestrictions(delete);
+            VerifyDeleteRestrictionsType(delete);
         }
 
         private static IEdmModel GetEdmModel(string template, EdmVocabularyAnnotationSerializationLocation location)
         {
-            string countAnnotation = @"
+            string annotation = @"
                 <Annotation Term=""Org.OData.Capabilities.V1.DeleteRestrictions"" >
                   <Record>
                     <PropertyValue Property=""Deletable"" Bool=""false"" />
@@ -97,21 +112,39 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
                         <NavigationPropertyPath>RelatedEvents</NavigationPropertyPath>
                       </Collection>
                     </PropertyValue>
+                    <PropertyValue Property=""MaxLevels"" Int=""42"" />
+                    <PropertyValue Property=""Permission"">
+                      <Record>
+                        <PropertyValue Property=""Scheme"" >
+                          <Record>
+                              <PropertyValue Property=""Authorization"" String=""schemeName"" />
+                          </Record>
+                        </PropertyValue>
+                      </Record>
+                    </PropertyValue>
+                    <PropertyValue Property=""CustomQueryOptions"" >
+                      <Collection>
+                        <Record>
+                          <PropertyValue Property=""Name"" String=""odata-debug"" />
+                          <PropertyValue Property=""DocumentationURL"" String=""https://debug.html"" />
+                      </Record>
+                      </Collection>
+                    </PropertyValue>
                   </Record>
                 </Annotation>";
 
             if (location == EdmVocabularyAnnotationSerializationLocation.OutOfLine)
             {
-                countAnnotation = string.Format(template, countAnnotation);
-                return CapabilitiesModelHelper.GetEdmModelOutline(countAnnotation);
+                annotation = string.Format(template, annotation);
+                return CapabilitiesModelHelper.GetEdmModelOutline(annotation);
             }
             else
             {
-                return CapabilitiesModelHelper.GetEdmModelTypeInline(countAnnotation);
+                return CapabilitiesModelHelper.GetEdmModelTypeInline(annotation);
             }
         }
 
-        private static void VerifyDeleteRestrictions(DeleteRestrictionsType delete)
+        private static void VerifyDeleteRestrictionsType(DeleteRestrictionsType delete)
         {
             Assert.NotNull(delete);
 
@@ -123,6 +156,16 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             Assert.Equal("abc|RelatedEvents", String.Join("|", delete.NonDeletableNavigationProperties));
 
             Assert.True(delete.IsNonDeletableNavigationProperty("RelatedEvents"));
+
+            Assert.NotNull(delete.Permission);
+            Assert.Equal("schemeName", delete.Permission.Scheme.Authorization);
+
+            Assert.Null(delete.CustomHeaders);
+
+            Assert.NotNull(delete.CustomQueryOptions);
+            CustomParameter parameter = Assert.Single(delete.CustomQueryOptions);
+            Assert.Equal("odata-debug", parameter.Name);
+            Assert.Equal("https://debug.html", parameter.DocumentationURL);
         }
     }
 }

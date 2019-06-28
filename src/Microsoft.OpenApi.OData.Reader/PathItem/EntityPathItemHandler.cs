@@ -20,7 +20,7 @@ namespace Microsoft.OpenApi.OData.PathItem
         /// <inheritdoc/>
         protected override void SetOperations(OpenApiPathItem item)
         {
-            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet, CapabilitiesConstants.ReadRestrictions);
+            ReadRestrictionsType read = Context.Model.GetRecord<ReadRestrictionsType>(EntitySet);
             if (read == null ||
                (read.ReadByKeyRestrictions == null && read.IsReadable) ||
                (read.ReadByKeyRestrictions != null && read.ReadByKeyRestrictions.IsReadable))
@@ -29,13 +29,13 @@ namespace Microsoft.OpenApi.OData.PathItem
                 AddOperation(item, OperationType.Get);
             }
 
-            UpdateRestrictionsType update = Context.Model.GetRecord<UpdateRestrictionsType>(EntitySet, CapabilitiesConstants.UpdateRestrictions);
+            UpdateRestrictionsType update = Context.Model.GetRecord<UpdateRestrictionsType>(EntitySet);
             if (update == null || update.IsUpdatable)
             {
                 AddOperation(item, OperationType.Patch);
             }
 
-            DeleteRestrictionsType delete = Context.Model.GetRecord<DeleteRestrictionsType>(EntitySet, CapabilitiesConstants.DeleteRestrictions);
+            DeleteRestrictionsType delete = Context.Model.GetRecord<DeleteRestrictionsType>(EntitySet);
             if (delete == null || delete.IsDeletable)
             {
                 AddOperation(item, OperationType.Delete);

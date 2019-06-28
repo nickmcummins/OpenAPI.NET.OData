@@ -10,34 +10,35 @@ using Microsoft.OpenApi.OData.Edm;
 namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
     /// <summary>
-    /// Complex Type: Org.OData.Capabilities.V1.DeepInsertSupport
+    /// Complex Type: Org.OData.Capabilities.V1.FilterExpressionRestrictionType
     /// </summary>
-    [Term("Org.OData.Capabilities.V1.DeepInsertSupport")]
-    internal class DeepInsertSupportType : IRecord
+    internal class FilterExpressionRestrictionType : IRecord
     {
         /// <summary>
-        /// Gets Annotation target supports deep inserts
+        /// Gets the Path to the restricted property.
         /// </summary>
-        public bool? Supported { get; private set; }
+        public string Property { get; private set; }
 
         /// <summary>
-        /// Gets Annotation target supports accepting and returning nested entities annotated with the `Core.ContentID` instance annotation.
+        /// Gets the RequiresFilter value.
+        /// <Property Name="AllowedExpressions" Type="Capabilities.FilterExpressionType">
+        /// <TypeDefinition Name="FilterExpressionType" UnderlyingType="Edm.String">
         /// </summary>
-        public bool? ContentIDSupported { get; private set; }
+        public string AllowedExpressions { get; private set; }
 
         /// <summary>
-        /// Init the <see cref="DeepInsertSupportType"/>.
+        /// Init the <see cref="FilterExpressionRestrictionType"/>.
         /// </summary>
         /// <param name="record">The input record.</param>
         public void Initialize(IEdmRecordExpression record)
         {
             Utils.CheckArgumentNull(record, nameof(record));
 
-            // Supported
-            Supported = record.GetBoolean("Supported");
+            // Property
+            Property = record.GetPropertyPath("Property");
 
-            // NonInsertableNavigationProperties
-            ContentIDSupported = record.GetBoolean("ContentIDSupported");
+            // AllowedExpressions
+            AllowedExpressions = record.GetString("AllowedExpressions");
         }
     }
 }

@@ -3,121 +3,77 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-using System.Xml.Linq;
+using System;
 using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Csdl;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.Exceptions;
+using Microsoft.OpenApi.OData.Properties;
 using Microsoft.OpenApi.OData.Vocabulary.Authorization;
 using Xunit;
 
 namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Authorization.Tests
 {
-    public class Authorization1Tests
+    public class AuthorizationTests
     {
         [Fact]
-        public void TermAttributeAttachedOnSecurityScheme()
+        public void CreateAuthorizationReturnsNullWithNullRecord()
         {
-            OData.Vocabulary.Authorization.Authorization a = new Http();
-
             // Arrange & Act
-            string qualifiedName = EdmVocabularyAnnotationExtensions.GetTermQualifiedName<Authorization>();
+            var authorization = OData.Vocabulary.Authorization.Authorization.CreateAuthorization(record: null);
 
             // Assert
-            Assert.Equal("Org.OData.Authorization.V1.SecuritySchemes", qualifiedName);
+            Assert.Null(authorization);
         }
 
         [Fact]
-        public void InitializeSecuritySchemeWithRecordSuccess()
+        public void CreateAuthorizationThrowsForOAuthAuthorizationRecord()
         {
-            // Arrange
-            IEdmRecordExpression record = new EdmRecordExpression(
-                new EdmPropertyConstructor("Authorization", new EdmStringConstant("DelegatedWork")),
-                new EdmPropertyConstructor("RequiredScopes", new EdmCollectionExpression(
-                    new EdmStringConstant("User.ReadAll"),
-                    new EdmStringConstant("User.WriteAll"))));
+            // Arrange & Act
+            IEdmStructuredTypeReference structuredTypeRef = GetType("Org.OData.Authorization.V1.OAuthAuthorization");
+            IEdmRecordExpression record = new EdmRecordExpression(structuredTypeRef,
+                new EdmPropertyConstructor("Name", new EdmStringConstant("temp")));
 
-            SecurityScheme securityScheme = new SecurityScheme();
-            Assert.Null(securityScheme.Authorization);
-            Assert.Null(securityScheme.RequiredScopes);
-
-            // Act
-            securityScheme.Initialize(record);
+            Action test = () => OData.Vocabulary.Authorization.Authorization.CreateAuthorization(record);
 
             // Assert
-            Assert.NotNull(securityScheme.Authorization);
-            Assert.Equal("DelegatedWork", securityScheme.Authorization);
-
-            Assert.NotNull(securityScheme.RequiredScopes);
-            Assert.Equal(2, securityScheme.RequiredScopes.Count);
-            Assert.Equal(new[] { "User.ReadAll", "User.WriteAll" }, securityScheme.RequiredScopes);
+            OpenApiException exception = Assert.Throws<OpenApiException>(test);
+            Assert.Equal(String.Format(SRResource.AuthorizationRecordTypeNameNotCorrect, structuredTypeRef.FullName()), exception.Message);
         }
 
-        [Fact]
-        public void InitializeSecuritySchemeWorksWithCsdl()
+        [Theory]
+        [InlineData(typeof(OpenIDConnect))]
+        [InlineData(typeof(Http))]
+        [InlineData(typeof(ApiKey))]
+        [InlineData(typeof(OAuth2ClientCredentials))]
+        [InlineData(typeof(OAuth2Implicit))]
+        [InlineData(typeof(OAuth2Password))]
+        [InlineData(typeof(OAuth2AuthCode))]
+        public void CreateAuthorizationReturnsOpenIDConnect(Type type)
         {
-            // Arrange
-            string annotation = @"<Annotation Term=""Org.OData.Authorization.V1.SecuritySchemes"">
-                <Collection>
-                  <Record>
-                    <PropertyValue Property=""Authorization"" String=""DelegatedWork"" />
-                    <PropertyValue Property=""RequiredScopes"" >
-                      <Collection>
-                        <String>User.ReadAll</String>
-                        <String>User.WriteAll</String>
-                      </Collection>
-                    </PropertyValue>
-                  </Record>
-                  <Record>
-                    <PropertyValue Property=""Authorization"" String=""DelegatedPersonal"" />
-                    <PropertyValue Property=""RequiredScopes"" >
-                      <Collection>
-                        <String>Directory.ReadAll</String>
-                        <String>Directory.WriteAll</String>
-                      </Collection>
-                    </PropertyValue>
-                  </Record>
-                </Collection>
-              </Annotation>";
-
-            IEdmModel model = GetEdmModel(annotation);
-            Assert.NotNull(model); // guard
-            Assert.NotNull(model.EntityContainer);
-
-            // Act
-            SecurityScheme[] schemes = model.GetCollection<SecurityScheme>(model.EntityContainer).ToArray();
+            // Arrange & Act
+            string qualifiedName = AuthorizationConstants.Namespace + "." + type.Name;
+            IEdmRecordExpression record = new EdmRecordExpression(GetType(qualifiedName),
+                new EdmPropertyConstructor("Name", new EdmStringConstant("temp")));
 
             // Assert
-            Assert.NotNull(schemes);
-            Assert.Equal(2, schemes.Length);
+            var authorization = OData.Vocabulary.Authorization.Authorization.CreateAuthorization(record);
+            Assert.NotNull(authorization);
+            Assert.Equal(type, authorization.GetType());
 
-            // #1
-            Assert.Equal("DelegatedWork", schemes[0].Authorization);
-            Assert.Equal(2, schemes[0].RequiredScopes.Count);
-            Assert.Equal(new[] { "User.ReadAll", "User.WriteAll" }, schemes[0].RequiredScopes);
-
-            // #2
-            Assert.Equal("DelegatedPersonal", schemes[1].Authorization);
-            Assert.Equal(2, schemes[1].RequiredScopes.Count);
-            Assert.Equal(new[] { "Directory.ReadAll", "Directory.WriteAll" }, schemes[1].RequiredScopes);
+            Assert.Equal("temp", authorization.Name);
+            Assert.Null(authorization.Description);
         }
 
-        private IEdmModel GetEdmModel(string annotation)
+        private static IEdmStructuredTypeReference GetType(string qualifiedName)
         {
-            const string template = @"<edmx:Edmx Version=""4.0"" xmlns:edmx=""http://docs.oasis-open.org/odata/ns/edmx"">
-  <edmx:DataServices>
-    <Schema Namespace=""NS"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
-      <EntityContainer Name=""Container"">
-        {0}
-      </EntityContainer>
-    </Schema>
-  </edmx:DataServices>
-</edmx:Edmx>";
-            string modelText = string.Format(template, annotation);
+            EdmModel model = new EdmModel();
+            IEdmType edmType = model.FindType(qualifiedName);
+            Assert.NotNull(edmType);
 
-            IEdmModel model;
+            IEdmComplexType complexType = edmType as IEdmComplexType;
+            Assert.NotNull(complexType);
 
-            bool result = CsdlReader.TryParse(XElement.Parse(modelText).CreateReader(), out model, out _);
-            Assert.True(result);
-            return model;
+            return new EdmComplexTypeReference(complexType, true);
         }
     }
 }

@@ -25,20 +25,6 @@ namespace Microsoft.OpenApi.OData.Edm
         private static object _objectLock = new object();
 
         /// <summary>
-        /// Get the term qualified name when using the type of <typeparamref name="T"/>
-        /// </summary>
-        /// <typeparam name="T">The type of the term.</typeparam>
-        /// <returns>The qualified name.</returns>
-        public static string GetTermQualifiedName<T>()
-        {
-            object[] attributes = typeof(T).GetCustomAttributes(typeof(TermAttribute), false);
-            Debug.Assert(attributes != null && attributes.Length == 1);
-
-            TermAttribute term = (TermAttribute)attributes[0];
-            return term.QualifiedName;
-        }
-
-        /// <summary>
         /// Gets the boolean term value for the given <see cref="IEdmVocabularyAnnotatable"/>.
         /// </summary>
         /// <param name="model">The Edm model.</param>
@@ -129,7 +115,7 @@ namespace Microsoft.OpenApi.OData.Edm
         public static T GetRecord<T>(this IEdmModel model, IEdmVocabularyAnnotatable target)
             where T : IRecord, new()
         {
-            string qualifiedName = GetTermQualifiedName<T>();
+            string qualifiedName = Utils.GetTermQualifiedName<T>();
             return model.GetRecord<T>(target, qualifiedName);
         }
 
@@ -226,7 +212,7 @@ namespace Microsoft.OpenApi.OData.Edm
             Utils.CheckArgumentNull(model, nameof(model));
             Utils.CheckArgumentNull(target, nameof(target));
 
-            string qualifiedName = GetTermQualifiedName<T>();
+            string qualifiedName = Utils.GetTermQualifiedName<T>();
             return GetCollection<T>(model, target, qualifiedName);
         }
 
@@ -386,7 +372,7 @@ namespace Microsoft.OpenApi.OData.Edm
             Debug.Assert(term != null);
 
             IEdmVocabularyAnnotation annotation = model.FindVocabularyAnnotations<IEdmVocabularyAnnotation>(target, term).FirstOrDefault();
-            if (annotation != null && annotation.Value != null && annotation.Value.ExpressionKind == EdmExpressionKind.StringConstant)
+            if (annotation != null && annotation.Value != null && annotation.Value.ExpressionKind == EdmExpressionKind.BooleanConstant)
             {
                 IEdmBooleanConstantExpression boolConstant = (IEdmBooleanConstantExpression)annotation.Value;
                 if (boolConstant != null)
@@ -479,7 +465,6 @@ namespace Microsoft.OpenApi.OData.Edm
 
             return null;
         }
-
 
 
         private static Type GetTypeInfo<T>(string fullTypeName) where T : IRecord

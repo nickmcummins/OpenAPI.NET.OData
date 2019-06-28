@@ -5,12 +5,14 @@
 
 using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OpenApi.OData.Common;
+using Microsoft.OpenApi.OData.Edm;
 
 namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
     /// <summary>
     /// Complex type: Org.OData.Capabilities.V1.SelectSupportType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.SelectSupport")]
     internal class SelectSupportType : IRecord
     {
         /// <summary>
@@ -66,6 +68,32 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         {
             Utils.CheckArgumentNull(record, nameof(record));
 
+            // Supported
+            Supported = record.GetBoolean("Supported");
+
+            // Expandable
+            Expandable = record.GetBoolean("Expandable");
+
+            // Filterable
+            Filterable = record.GetBoolean("Filterable");
+
+            // Searchable
+            Searchable = record.GetBoolean("Searchable");
+
+            // TopSupported
+            TopSupported = record.GetBoolean("TopSupported");
+
+            // SkipSupported
+            SkipSupported = record.GetBoolean("SkipSupported");
+
+            // ComputeSupported
+            ComputeSupported = record.GetBoolean("ComputeSupported");
+
+            // Countable
+            Countable = record.GetBoolean("Countable");
+
+            // Sortable
+            Sortable = record.GetBoolean("Sortable");
         }
     }
 }

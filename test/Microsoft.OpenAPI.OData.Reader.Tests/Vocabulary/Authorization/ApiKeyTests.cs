@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Authorization;
 using Xunit;
@@ -17,6 +18,16 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Authorization.Tests
 {
     public class ApiKeyTests
     {
+        [Fact]
+        public void SchemeTypeKindSetCorrectly()
+        {
+            // Arrange
+            ApiKey apiKey = new ApiKey();
+
+            // Act & Assert
+            Assert.Equal(SecuritySchemeType.ApiKey, apiKey.SchemeType);
+        }
+
         [Fact]
         public void InitializeThrowArgumentNullRecord()
         {

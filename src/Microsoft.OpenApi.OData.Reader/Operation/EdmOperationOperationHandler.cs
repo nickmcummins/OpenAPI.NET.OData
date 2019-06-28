@@ -154,14 +154,14 @@ namespace Microsoft.OpenApi.OData.Operation
         /// <inheritdoc/>
         protected override void SetSecurity(OpenApiOperation operation)
         {
-            IEnumerable<OperationRestriction> restrictions = Context.Model.GetCollection<OperationRestriction>(EdmOperation, CapabilitiesConstants.OperationRestrictions);
+            IEnumerable<OperationRestrictionType> restrictions = Context.Model.GetCollection<OperationRestrictionType>(EdmOperation, CapabilitiesConstants.OperationRestrictions);
             if (restrictions == null || !restrictions.Any())
             {
                 return;
             }
 
             // TODO: how to use the collection?
-            OperationRestriction operationRestriction = restrictions.First();
+            OperationRestrictionType operationRestriction = restrictions.First();
 
             // the Permission should be collection, however current ODL supports the single permission.
             // Will update after ODL change.
@@ -171,14 +171,14 @@ namespace Microsoft.OpenApi.OData.Operation
         /// <inheritdoc/>
         protected override void AppendCustomParameters(OpenApiOperation operation)
         {
-            IEnumerable<OperationRestriction> restrictions = Context.Model.GetCollection<OperationRestriction>(EdmOperation, CapabilitiesConstants.OperationRestrictions);
+            IEnumerable<OperationRestrictionType> restrictions = Context.Model.GetCollection<OperationRestrictionType>(EdmOperation, CapabilitiesConstants.OperationRestrictions);
             if (restrictions == null || !restrictions.Any())
             {
                 return;
             }
 
             // TODO: how to use the collection?
-            OperationRestriction operationRestriction = restrictions.First();
+            OperationRestrictionType operationRestriction = restrictions.First();
 
             if (operationRestriction.CustomHeaders != null)
             {

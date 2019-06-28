@@ -11,9 +11,11 @@ using Microsoft.OpenApi.OData.Edm;
 namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 {
     /// <summary>
-    /// Complex Type: Org.OData.Capabilities.V1.OperationRestriction
+    /// Complex Type: Org.OData.Capabilities.V1.OperationRestrictionType
+    /// Be note: in ODL 7.6, it's named as "OperationRestriction", after that, it will be changed as "OperationRestrictionType"
     /// </summary>
-    internal class OperationRestriction : IRecord
+    [Term("Org.OData.Capabilities.V1.OperationRestrictions")]
+    internal class OperationRestrictionType : IRecord
     {
         /// <summary>
         /// Gets the List of required scopes to invoke an action or function.

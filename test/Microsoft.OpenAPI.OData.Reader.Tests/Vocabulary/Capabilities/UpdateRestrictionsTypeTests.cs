@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -16,13 +17,13 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class UpdateRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsUpdateRestrictionsEnumMember()
+        public void TermAttributeAttachedOnUpdateRestrictionsType()
         {
             // Arrange & Act
-            UpdateRestrictionsType update = new UpdateRestrictionsType();
+            string qualifiedName = Utils.GetTermQualifiedName<UpdateRestrictionsType>();
 
             // Assert
-           // Assert.Equal(CapabilitesTermKind.UpdateRestrictions, update.Kind);
+            Assert.Equal("Org.OData.Capabilities.V1.UpdateRestrictions", qualifiedName);
         }
 
         [Fact]

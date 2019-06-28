@@ -5,6 +5,8 @@
 
 using System.Linq;
 using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -14,26 +16,38 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class SearchRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsSearchRestrictionsEnumMember()
+        public void TermAttributeAttachedOnSearchRestrictionsType()
         {
             // Arrange & Act
-            SearchRestrictionsType search = new SearchRestrictionsType();
+            string qualifiedName = Utils.GetTermQualifiedName<SearchRestrictionsType>();
 
             // Assert
-           // Assert.Equal(CapabilitesTermKind.SearchRestrictions, search.Kind);
+            Assert.Equal("Org.OData.Capabilities.V1.SearchRestrictions", qualifiedName);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultPropertyValues()
+        public void InitializSearchRestrictionsTypeWithRecordSuccess()
         {
-            // Arrange
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
+            // Assert
+            EdmModel model = new EdmModel();
+            IEdmEnumType searchExpressions = model.FindType("Org.OData.Capabilities.V1.SearchExpressions") as IEdmEnumType;
+            Assert.NotNull(searchExpressions);
 
-            //  Act
-            SearchRestrictionsType search = EdmCoreModel.Instance.GetRecord<SearchRestrictionsType>(entityType);
+            IEdmRecordExpression record = new EdmRecordExpression(
+                    new EdmPropertyConstructor("Searchable", new EdmBooleanConstant(false)),
+                    new EdmPropertyConstructor("UnsupportedExpressions", new EdmEnumMemberExpression(
+                        searchExpressions.Members.First(c => c.Name == "AND"),
+                        searchExpressions.Members.First(c => c.Name == "OR")))
+                    );
+
+            // Act
+            SearchRestrictionsType search = new SearchRestrictionsType();
+            search.Initialize(record);
 
             // Assert
-            Assert.Null(search);
+            Assert.False(search.Searchable);
+            Assert.NotNull(search.UnsupportedExpressions);
+            Assert.Equal(SearchExpressions.AND | SearchExpressions.OR, search.UnsupportedExpressions.Value);
         }
 
         [Fact]

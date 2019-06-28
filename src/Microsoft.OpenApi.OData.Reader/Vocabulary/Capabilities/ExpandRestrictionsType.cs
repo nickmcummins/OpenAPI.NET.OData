@@ -14,7 +14,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Org.OData.Capabilities.V1.ExpandRestrictions
     /// </summary>
-    [Term("Org.OData.Capabilities.V1.DeleteRestrictions")]
+    [Term("Org.OData.Capabilities.V1.ExpandRestrictions")]
     internal class ExpandRestrictionsType : IRecord
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         /// <summary>
         /// Gets the maximum number of levels that can be expanded in a expand expression.
         /// </summary>
-        public int? MaxLevles { get; private set; }
+        public long? MaxLevels { get; private set; }
 
         /// <summary>
         /// Test the target supports $expand.
@@ -57,6 +57,9 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 
             // NonExpandableProperties
             NonExpandableProperties = record.GetCollectionPropertyPath("NonExpandableProperties");
+
+            // MaxLevels
+            MaxLevels = record.GetInteger("MaxLevels");
         }
     }
 }

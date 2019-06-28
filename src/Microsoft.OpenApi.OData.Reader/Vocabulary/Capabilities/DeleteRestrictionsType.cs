@@ -43,7 +43,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         public IList<CustomParameter> CustomHeaders { get; private set; }
 
         /// <summary>
-        /// Gets the Supported or required custom headers.
+        /// Gets the Supported or required custom query options.
         /// </summary>
         public IList<CustomParameter> CustomQueryOptions { get; private set; }
 
@@ -76,11 +76,20 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
             // Deletable
             Deletable = record.GetBoolean("Deletable");
 
+            // NonDeletableNavigationProperties
+            NonDeletableNavigationProperties = record.GetCollectionPropertyPath("NonDeletableNavigationProperties");
+
             // MaxLevels
             MaxLevels = (int?)record.GetInteger("MaxLevels");
 
-            // NonDeletableNavigationProperties
-            NonDeletableNavigationProperties = record.GetCollectionPropertyPath("NonDeletableNavigationProperties");
+            // Permission
+            Permission = record.GetRecord<PermissionType>("Permission");
+
+            // CustomHeaders
+            CustomHeaders = record.GetCollection<CustomParameter>("CustomHeaders");
+
+            // CustomQueryOptions
+            CustomQueryOptions = record.GetCollection<CustomParameter>("CustomQueryOptions");
         }
     }
 }

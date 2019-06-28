@@ -6,6 +6,7 @@
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -14,6 +15,16 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 {
     public class SortRestrictionsTypeTests
     {
+        [Fact]
+        public void TermAttributeAttachedOnSortRestrictionsType()
+        {
+            // Arrange & Act
+            string qualifiedName = Utils.GetTermQualifiedName<SortRestrictionsType>();
+
+            // Assert
+            Assert.Equal("Org.OData.Capabilities.V1.SortRestrictions", qualifiedName);
+        }
+
         [Fact]
         public void UnknownAnnotatableTargetReturnsDefaultSortRestrictionsValues()
         {

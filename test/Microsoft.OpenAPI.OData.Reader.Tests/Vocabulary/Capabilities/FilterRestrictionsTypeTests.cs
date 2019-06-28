@@ -6,6 +6,8 @@
 using System.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -15,32 +17,41 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class FilterRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsFilterRestrictionsEnumMember()
+        public void TermAttributeAttachedOnFilterRestrictionsType()
         {
             // Arrange & Act
-            FilterRestrictionsType filter = new FilterRestrictionsType();
+            string qualifiedName = Utils.GetTermQualifiedName<FilterRestrictionsType>();
 
             // Assert
-            // Assert.Equal(CapabilitesTermKind.FilterRestrictions, filter.Kind);
+            Assert.Equal("Org.OData.Capabilities.V1.FilterRestrictions", qualifiedName);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultFilterRestrictionsValues()
+        public void InitializFilterRestrictionsTypeWithRecordSuccess()
         {
-            // Arrange
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
+            // Assert
+            IEdmRecordExpression record = new EdmRecordExpression(
+                new EdmPropertyConstructor("Filterable", new EdmBooleanConstant(false)),
+                new EdmPropertyConstructor("RequiresFilter", new EdmBooleanConstant(false)),
+                new EdmPropertyConstructor("RequiredProperties", new EdmCollectionExpression(new EdmPropertyPathExpression("Id"))),
+                new EdmPropertyConstructor("NonFilterableProperties", new EdmCollectionExpression(new EdmPropertyPathExpression("Emails"))),
+                new EdmPropertyConstructor("FilterExpressionRestrictions", new EdmCollectionExpression(
+                    new EdmRecordExpression(new EdmPropertyConstructor("Property", new EdmPropertyPathExpression("RelatedProperty"))))),
+                new EdmPropertyConstructor("MaxLevels", new EdmIntegerConstant(42))
+            );
 
-            //  Act
-            FilterRestrictionsType filter = EdmCoreModel.Instance.GetRecord<FilterRestrictionsType>(entityType);
+            // Act
+            FilterRestrictionsType filter = new FilterRestrictionsType();
+            filter.Initialize(record);
 
             // Assert
-            Assert.Null(filter);
+            VerifyFilterRestrictions(filter);
         }
 
         [Theory]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.Inline)]
         [InlineData(EdmVocabularyAnnotationSerializationLocation.OutOfLine)]
-        public void TargetOnEntityTypeReturnsCorrectfilterRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
+        public void TargetOnEntityTypeReturnsCorrectFilterRestrictionsValue(EdmVocabularyAnnotationSerializationLocation location)
         {
             // Arrange
             const string template = @"
@@ -92,6 +103,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
                   <Record>
                     <PropertyValue Property=""Filterable"" Bool=""false"" />
                     <PropertyValue Property=""RequiresFilter"" Bool=""false"" />
+                    <PropertyValue Property=""MaxLevels"" Int=""42"" />
                     <PropertyValue Property=""RequiredProperties"" >
                       <Collection>
                         <PropertyPath>Id</PropertyPath>
@@ -100,6 +112,13 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
                     <PropertyValue Property=""NonFilterableProperties"" >
                       <Collection>
                         <PropertyPath>Emails</PropertyPath>
+                      </Collection>
+                    </PropertyValue>
+                    <PropertyValue Property=""FilterExpressionRestrictions"" >
+                      <Collection>
+                        <Record>
+                          <PropertyValue Property=""Property"" PropertyPath=""RelatedProperty"" />
+                        </Record>
                       </Collection>
                     </PropertyValue>
                   </Record>
@@ -133,6 +152,13 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
             Assert.NotNull(filter.NonFilterableProperties);
             Assert.Single(filter.NonFilterableProperties);
             Assert.Equal("Emails", filter.NonFilterableProperties.First());
+
+            Assert.NotNull(filter.MaxLevels);
+            Assert.Equal(42, filter.MaxLevels.Value);
+
+            Assert.NotNull(filter.FilterExpressionRestrictions);
+            FilterExpressionRestrictionType express = Assert.Single(filter.FilterExpressionRestrictions);
+            Assert.Equal("RelatedProperty", express.Property);
 
             Assert.True(filter.IsRequiredProperty("Id"));
             Assert.False(filter.IsRequiredProperty("ID"));

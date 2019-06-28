@@ -6,6 +6,8 @@
 using System;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
+using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Capabilities;
 using Xunit;
@@ -15,26 +17,32 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
     public class ExpandRestrictionsTypeTests
     {
         [Fact]
-        public void KindPropertyReturnsExpandRestrictionsEnumMember()
+        public void TermAttributeAttachedOnExpandRestrictionsType()
         {
             // Arrange & Act
-            ExpandRestrictionsType expand = new ExpandRestrictionsType();
+            string qualifiedName = Utils.GetTermQualifiedName<ExpandRestrictionsType>();
 
             // Assert
-            // Assert.Equal(CapabilitesTermKind.ExpandRestrictions, expand.Kind);
+            Assert.Equal("Org.OData.Capabilities.V1.ExpandRestrictions", qualifiedName);
         }
 
         [Fact]
-        public void UnknownAnnotatableTargetReturnsDefaultExpandRestrictionsValues()
+        public void InitializeExpandRestrictionsTypeWithRecordSuccess()
         {
-            // Arrange
-            EdmEntityType entityType = new EdmEntityType("NS", "Entity");
+            // Assert
+            IEdmRecordExpression record = new EdmRecordExpression(
+                new EdmPropertyConstructor("Expandable", new EdmBooleanConstant(false)),
+                new EdmPropertyConstructor("NonExpandableProperties",
+                    new EdmCollectionExpression(new EdmNavigationPropertyPathExpression("abc"), new EdmNavigationPropertyPathExpression("RelatedEvents"))),
+                new EdmPropertyConstructor("MaxLevels", new EdmIntegerConstant(42))
+            );
 
-            //  Act
-            ExpandRestrictionsType expand = EdmCoreModel.Instance.GetRecord<ExpandRestrictionsType>(entityType);
+            // Act
+            ExpandRestrictionsType expand = new ExpandRestrictionsType();
+            expand.Initialize(record);
 
             // Assert
-            Assert.Null(expand);
+            VerifyExpandRestrictions(expand);
         }
 
         [Theory]
@@ -91,6 +99,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
                 <Annotation Term=""Org.OData.Capabilities.V1.ExpandRestrictions"" >
                   <Record>
                     <PropertyValue Property=""Expandable"" Bool=""false"" />
+                    <PropertyValue Property=""MaxLevels"" Int=""42"" />
                     <PropertyValue Property=""NonExpandableProperties"" >
                       <Collection>
                         <NavigationPropertyPath>abc</NavigationPropertyPath>
@@ -117,6 +126,9 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Capabilities.Tests
 
             Assert.NotNull(expand.Expandable);
             Assert.False(expand.Expandable.Value);
+
+            Assert.NotNull(expand.MaxLevels);
+            Assert.Equal(42, expand.MaxLevels.Value);
 
             Assert.NotNull(expand.NonExpandableProperties);
             Assert.Equal(2, expand.NonExpandableProperties.Count);

@@ -38,6 +38,17 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         public IList<string> NonFilterableProperties { get; private set; }
 
         /// <summary>
+        /// Gets The maximum number of levels (including recursion) that can be traversed in a filter expression. A value of -1 indicates there is no restriction.
+        /// </summary>
+        public long? MaxLevels { get; private set; }
+
+        /// <summary>
+        /// Gets These properties only allow a subset of filter expressions.
+        /// A valid filter expression for a single property can be enclosed in parentheses and combined by `and` with valid expressions for other properties.
+        /// </summary>
+        public IList<FilterExpressionRestrictionType> FilterExpressionRestrictions { get; private set; }
+
+        /// <summary>
         /// Test the target supports filter.
         /// </summary>
         /// <returns>True/false.</returns>
@@ -82,6 +93,12 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
 
             // NonFilterableProperties
             NonFilterableProperties = record.GetCollectionPropertyPath("NonFilterableProperties");
+
+            // MaxLevels
+            MaxLevels = record.GetInteger("MaxLevels");
+
+            // FilterExpressionRestrictions
+            FilterExpressionRestrictions = record.GetCollection<FilterExpressionRestrictionType>("FilterExpressionRestrictions");
         }
     }
 }

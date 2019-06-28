@@ -13,6 +13,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.CollectionPropertyRestrictionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.CollectionPropertyRestrictions")]
     internal class CollectionPropertyRestrictionsType : IRecord
     {
         /// <summary>
@@ -70,13 +71,46 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         /// </summary>
         public bool? Deletable { get; private set; }
 
+        /// <summary>
+        /// Init the <see cref="CollectionPropertyRestrictionsType"/>.
+        /// </summary>
+        /// <param name="record">The input record.</param>
         public virtual void Initialize(IEdmRecordExpression record)
         {
             Utils.CheckArgumentNull(record, nameof(record));
 
+            // CollectionProperty
+            CollectionProperty = record.GetPropertyPath("CollectionProperty");
+
+            // FilterFunctions
+            FilterFunctions = record.GetCollection("FilterFunctions");
+
+            // FilterRestrictions
+            FilterRestrictions = record.GetRecord<FilterRestrictionsType>("FilterRestrictions");
+
+            // SearchRestrictions
+            SearchRestrictions = record.GetRecord<SearchRestrictionsType>("SearchRestrictions");
+
+            // SortRestrictions
+            SortRestrictions = record.GetRecord<SortRestrictionsType>("SortRestrictions");
+
+            // TopSupported
+            TopSupported = record.GetBoolean("TopSupported");
+
+            // SkipSupported
+            SkipSupported = record.GetBoolean("SkipSupported");
+
+            // SelectSupport
+            SelectSupport = record.GetRecord<SelectSupportType>("SelectSupport");
+
+            // Insertable
+            Insertable = record.GetBoolean("Insertable");
+
+            // Updatable
+            Updatable = record.GetBoolean("Updatable");
+
             // Deletable
             Deletable = record.GetBoolean("Deletable");
-
         }
     }
 }

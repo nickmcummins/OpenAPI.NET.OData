@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Vocabularies;
+using Microsoft.OpenApi.OData.Common;
 using Microsoft.OpenApi.OData.Edm;
 using Microsoft.OpenApi.OData.Vocabulary.Authorization;
 using Xunit;
@@ -28,7 +29,7 @@ namespace Microsoft.OpenApi.OData.Reader.Vocabulary.Authorization.Tests
         public void TermAttributeAttachedOnSecurityScheme()
         {
             // Arrange & Act
-            string qualifiedName = EdmVocabularyAnnotationExtensions.GetTermQualifiedName<SecurityScheme>();
+            string qualifiedName = Utils.GetTermQualifiedName<SecurityScheme>();
 
             // Assert
             Assert.Equal("Org.OData.Authorization.V1.SecuritySchemes", qualifiedName);

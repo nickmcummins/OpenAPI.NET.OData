@@ -12,6 +12,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex type: Org.OData.Capabilities.V1.ModificationQueryOptionsType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.ModificationQueryOptions")]
     internal class ModificationQueryOptionsType : IRecord
     {
         /// <summary>

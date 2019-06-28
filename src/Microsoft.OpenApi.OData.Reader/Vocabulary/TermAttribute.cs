@@ -3,7 +3,6 @@
 //  Licensed under the MIT License (MIT). See LICENSE in the repo root for license information.
 // ------------------------------------------------------------
 
-using Microsoft.OData.Edm.Vocabularies;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +11,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary
     /// <summary>
     /// 
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     internal class TermAttribute : Attribute
     {
         public TermAttribute(string qualifiedName)

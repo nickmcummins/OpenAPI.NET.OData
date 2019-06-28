@@ -23,62 +23,62 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         /// <summary>
         /// Org.OData.Capabilities.V1.FilterRestrictions
         /// </summary>
-        public const string FilterRestrictions = "Org.OData.Capabilities.V1..FilterRestrictions";
+        public const string FilterRestrictions = "Org.OData.Capabilities.V1.FilterRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.SortRestrictions
         /// </summary>
-        public const string SortRestrictions = "Org.OData.Capabilities.V1..SortRestrictions";
+        public const string SortRestrictions = "Org.OData.Capabilities.V1.SortRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.NavigationRestrictions
         /// </summary>
-        public const string NavigationRestrictions = "Org.OData.Capabilities.V1..NavigationRestrictions";
+        public const string NavigationRestrictions = "Org.OData.Capabilities.V1.NavigationRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.SearchRestrictions
         /// </summary>
-        public const string SearchRestrictions = "Org.OData.Capabilities.V1..SearchRestrictions";
+        public const string SearchRestrictions = "Org.OData.Capabilities.V1.SearchRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.CountRestrictions
         /// </summary>
-        public const string CountRestrictions = "Org.OData.Capabilities.V1..CountRestrictions";
+        public const string CountRestrictions = "Org.OData.Capabilities.V1.CountRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.ExpandRestrictions
         /// </summary>
-        public const string ExpandRestrictions = "Org.OData.Capabilities.V1..ExpandRestrictions";
+        public const string ExpandRestrictions = "Org.OData.Capabilities.V1.ExpandRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.DeleteRestrictions
         /// </summary>
-        public const string DeleteRestrictions = "Org.OData.Capabilities.V1..DeleteRestrictions";
+        public const string DeleteRestrictions = "Org.OData.Capabilities.V1.DeleteRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.DeleteRestrictions
         /// </summary>
-        public const string UpdateRestrictions = "Org.OData.Capabilities.V1..UpdateRestrictions";
+        public const string UpdateRestrictions = "Org.OData.Capabilities.V1.UpdateRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.InsertRestrictions
         /// </summary>
-        public const string InsertRestrictions = "Org.OData.Capabilities.V1..InsertRestrictions";
+        public const string InsertRestrictions = "Org.OData.Capabilities.V1.InsertRestrictions";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.TopSupported
         /// </summary>
-        public const string TopSupported = "Org.OData.Capabilities.V1..TopSupported";
+        public const string TopSupported = "Org.OData.Capabilities.V1.TopSupported";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.SkipSupported
         /// </summary>
-        public const string SkipSupported = "Org.OData.Capabilities.V1..SkipSupported";
+        public const string SkipSupported = "Org.OData.Capabilities.V1.SkipSupported";
 
         /// <summary>
         /// Term: Org.OData.Capabilities.V1.BatchSupported
         /// </summary>
-        public const string BatchSupported = "Org.OData.Capabilities.V1..BatchSupported";
+        public const string BatchSupported = "Org.OData.Capabilities.V1.BatchSupported";
 
         /// <summary>
         /// Term: rg.OData.Capabilities.V1.OperationRestrictions
@@ -88,11 +88,11 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
         /// <summary>
         /// Org.OData.Capabilities.V1.IndexableByKey
         /// </summary>
-        public const string IndexableByKey = "Org.OData.Capabilities.V1..IndexableByKey";
+        public const string IndexableByKey = "Org.OData.Capabilities.V1.IndexableByKey";
 
         /// <summary>
         /// Org.OData.Capabilities.V1.KeyAsSegmentSupported
         /// </summary>
-        public const string KeyAsSegmentSupported = "Org.OData.Capabilities.V1..KeyAsSegmentSupported";
+        public const string KeyAsSegmentSupported = "Org.OData.Capabilities.V1.KeyAsSegmentSupported";
     }
 }

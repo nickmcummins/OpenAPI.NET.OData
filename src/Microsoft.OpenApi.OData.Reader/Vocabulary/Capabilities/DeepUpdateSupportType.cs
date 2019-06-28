@@ -12,6 +12,7 @@ namespace Microsoft.OpenApi.OData.Vocabulary.Capabilities
     /// <summary>
     /// Complex Type: Org.OData.Capabilities.V1.DeepUpdateSupportType
     /// </summary>
+    [Term("Org.OData.Capabilities.V1.DeepUpdateSupport")]
     internal class DeepUpdateSupportType : IRecord
     {
         /// <summary>
