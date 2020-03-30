@@ -76,10 +76,10 @@ steps:
 
 # Run the Unit test
 - task: DotNetCoreCLI@2
-  displayName: 'Unit Tests (Microsoft.OData.ModelBuilder.Tests.csproj) '
+  displayName: 'Run Microsoft.OpenApi.OData.Reader.Tests.csproj'
   inputs:
     command: test
-    projects: '$(Build.SourcesDirectory)\test\Microsoft.OData.ModelBuilder.Tests\Microsoft.OData.ModelBuilder.Tests.csproj'
+    projects: '$(Build.SourcesDirectory)\test\Microsoft.OpenAPI.OData.Reader.Tests\Microsoft.OpenApi.OData.Reader.Tests.csproj'
     arguments: '--configuration $(BuildConfiguration) --no-build'
 
 
