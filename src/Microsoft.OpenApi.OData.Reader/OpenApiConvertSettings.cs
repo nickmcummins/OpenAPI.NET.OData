@@ -189,9 +189,14 @@ namespace Microsoft.OpenApi.OData
         public bool EnableDollarCountPath { get; set; } = true;
 
         /// <summary>
-        /// Gets/sets a value indicating whether or not to include the OData type cast segments on entity sets.
+        /// Gets/sets a value indicating whether or not to include the OData type cast segments.
         /// </summary>
         public bool EnableODataTypeCast { get; set; } = true;
+
+        /// <summary>
+        /// Gets/sets a value indicating whether or not to require a derived types constraint to include the OData type cast segments.
+        /// </summary>
+        public bool RequireDerivedTypesConstraintForODataTypeCastSegments { get; set; } = true;
 
         internal OpenApiConvertSettings Clone()
         {
@@ -225,6 +230,7 @@ namespace Microsoft.OpenApi.OData
                 PathProvider = this.PathProvider,
                 EnableDollarCountPath = this.EnableDollarCountPath,
                 EnableODataTypeCast = this.EnableODataTypeCast,
+                RequireDerivedTypesConstraintForODataTypeCastSegments = this.RequireDerivedTypesConstraintForODataTypeCastSegments,
             };
 
             return newSettings;
