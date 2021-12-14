@@ -170,6 +170,7 @@ namespace Microsoft.OpenApi.OData.Edm
             }
         }
 
+        /// <inheritdoc />
 		public override IEnumerable<IEdmVocabularyAnnotatable> GetAnnotables()
 		{
 			return new IEdmVocabularyAnnotatable[] { Operation };
