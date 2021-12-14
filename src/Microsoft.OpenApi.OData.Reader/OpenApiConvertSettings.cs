@@ -188,6 +188,11 @@ namespace Microsoft.OpenApi.OData
         /// </summary>
         public bool EnableDollarCountPath { get; set; } = true;
 
+        /// <summary>
+        /// Gets/sets a value indicating whether or not to set the deprecated tag for the operation when a revision is present as well as the "x-ms-deprecation" extension with additional information.
+        /// </summary>
+        public bool EnableDeprecationInformation { get; set; } = true;
+
         internal OpenApiConvertSettings Clone()
         {
             var newSettings = new OpenApiConvertSettings
@@ -219,6 +224,7 @@ namespace Microsoft.OpenApi.OData
                 ShowRootPath = this.ShowRootPath,
                 PathProvider = this.PathProvider,
                 EnableDollarCountPath = this.EnableDollarCountPath,
+                EnableDeprecationInformation = this.EnableDeprecationInformation,
             };
 
             return newSettings;
