@@ -12,6 +12,7 @@
   ],
   "paths": {
     "/Airlines": {
+      "description": "Provides operations to manage the collection of Airline entities.",
       "get": {
         "tags": [
           "Airlines.Airline"
@@ -151,6 +152,7 @@
       }
     },
     "/Airlines/{AirlineCode}": {
+      "description": "Provides operations to manage the collection of Airline entities.",
       "get": {
         "tags": [
           "Airlines.Airline"
@@ -298,6 +300,7 @@
       }
     },
     "/Airlines/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Airlines",
@@ -319,6 +322,7 @@
       }
     },
     "/Airports": {
+      "description": "Provides operations to manage the collection of Airport entities.",
       "get": {
         "tags": [
           "Airports.Airport"
@@ -464,6 +468,7 @@
       }
     },
     "/Airports/{IcaoCode}": {
+      "description": "Provides operations to manage the collection of Airport entities.",
       "get": {
         "tags": [
           "Airports.Airport"
@@ -613,6 +618,7 @@
       }
     },
     "/Airports/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Airports",
@@ -634,6 +640,7 @@
       }
     },
     "/GetNearestAirport(lat={lat},lon={lon})": {
+      "description": "Provides operations to call the GetNearestAirport method.",
       "get": {
         "tags": [
           "Airports"
@@ -712,6 +719,7 @@
       }
     },
     "/GetPersonWithMostFriends()": {
+      "description": "Provides operations to call the GetPersonWithMostFriends method.",
       "get": {
         "tags": [
           "People"
@@ -743,6 +751,7 @@
       }
     },
     "/Me": {
+      "description": "Provides operations to manage the Person singleton.",
       "get": {
         "tags": [
           "Me.Person"
@@ -847,6 +856,7 @@
       }
     },
     "/Me/BestFriend": {
+      "description": "Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "Me.Person"
@@ -925,6 +935,7 @@
       }
     },
     "/Me/BestFriend/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "Me.Person"
@@ -1009,6 +1020,7 @@
       }
     },
     "/Me/Friends": {
+      "description": "Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "Me.Person"
@@ -1148,6 +1160,7 @@
       }
     },
     "/Me/Friends/{UserName}/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "delete": {
         "tags": [
           "Me.Person"
@@ -1194,6 +1207,7 @@
       }
     },
     "/Me/Friends/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Friends",
@@ -1215,6 +1229,7 @@
       }
     },
     "/Me/Friends/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "Me.Person"
@@ -1341,6 +1356,7 @@
       }
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()": {
+      "description": "Provides operations to call the GetFavoriteAirline method.",
       "get": {
         "tags": [
           "Me.Functions"
@@ -1371,6 +1387,7 @@
       }
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})": {
+      "description": "Provides operations to call the GetFriendsTrips method.",
       "get": {
         "tags": [
           "Me.Functions"
@@ -1421,6 +1438,7 @@
       }
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip": {
+      "description": "Provides operations to call the GetPeersForTrip method.",
       "post": {
         "tags": [
           "Me.Actions"
@@ -1482,6 +1500,7 @@
       }
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip": {
+      "description": "Provides operations to call the ShareTrip method.",
       "post": {
         "tags": [
           "Me.Actions"
@@ -1523,6 +1542,7 @@
       }
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})": {
+      "description": "Provides operations to call the UpdatePersonLastName method.",
       "get": {
         "tags": [
           "Me.Functions"
@@ -1565,6 +1585,7 @@
       }
     },
     "/Me/Trips": {
+      "description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "Me.Trip"
@@ -1727,6 +1748,7 @@
       }
     },
     "/Me/Trips/{TripId}": {
+      "description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "Me.Trip"
@@ -1894,6 +1916,7 @@
       }
     },
     "/Me/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()": {
+      "description": "Provides operations to call the GetInvolvedPeople method.",
       "get": {
         "tags": [
           "Me.Functions"
@@ -1948,6 +1971,7 @@
       }
     },
     "/Me/Trips/{TripId}/PlanItems": {
+      "description": "Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity.",
       "get": {
         "tags": [
           "Me.Trips.PlanItem"
@@ -2076,6 +2100,7 @@
       }
     },
     "/Me/Trips/{TripId}/PlanItems/{PlanItemId}/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "delete": {
         "tags": [
           "Me.Trips.PlanItem"
@@ -2138,6 +2163,7 @@
       }
     },
     "/Me/Trips/{TripId}/PlanItems/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.PlanItems",
@@ -2174,6 +2200,7 @@
       }
     },
     "/Me/Trips/{TripId}/PlanItems/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "Me.Trips.PlanItem"
@@ -2316,6 +2343,7 @@
       }
     },
     "/Me/Trips/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Trips",
@@ -2337,6 +2365,7 @@
       }
     },
     "/NewComePeople": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "NewComePeople.Person"
@@ -2509,6 +2538,7 @@
       }
     },
     "/NewComePeople/{UserName}": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "NewComePeople.Person"
@@ -2671,6 +2701,7 @@
       }
     },
     "/NewComePeople/{UserName}/BestFriend": {
+      "description": "Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "NewComePeople.Person"
@@ -2759,6 +2790,7 @@
       }
     },
     "/NewComePeople/{UserName}/BestFriend/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "NewComePeople.Person"
@@ -2877,6 +2909,7 @@
       }
     },
     "/NewComePeople/{UserName}/Friends": {
+      "description": "Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "NewComePeople.Person"
@@ -3026,6 +3059,7 @@
       }
     },
     "/NewComePeople/{UserName}/Friends/{UserName1}/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "delete": {
         "tags": [
           "NewComePeople.Person"
@@ -3082,6 +3116,7 @@
       }
     },
     "/NewComePeople/{UserName}/Friends/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Friends",
@@ -3115,6 +3150,7 @@
       }
     },
     "/NewComePeople/{UserName}/Friends/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "NewComePeople.Person"
@@ -3263,6 +3299,7 @@
       }
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()": {
+      "description": "Provides operations to call the GetFavoriteAirline method.",
       "get": {
         "tags": [
           "NewComePeople.Functions"
@@ -3305,6 +3342,7 @@
       }
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})": {
+      "description": "Provides operations to call the GetFriendsTrips method.",
       "get": {
         "tags": [
           "NewComePeople.Functions"
@@ -3365,6 +3403,7 @@
       }
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip": {
+      "description": "Provides operations to call the GetPeersForTrip method.",
       "post": {
         "tags": [
           "NewComePeople.Actions"
@@ -3438,6 +3477,7 @@
       }
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip": {
+      "description": "Provides operations to call the ShareTrip method.",
       "post": {
         "tags": [
           "NewComePeople.Actions"
@@ -3491,6 +3531,7 @@
       }
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})": {
+      "description": "Provides operations to call the UpdatePersonLastName method.",
       "get": {
         "tags": [
           "NewComePeople.Functions"
@@ -3543,6 +3584,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips": {
+      "description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "NewComePeople.Trip"
@@ -3727,6 +3769,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips/{TripId}": {
+      "description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "NewComePeople.Trip"
@@ -3924,6 +3967,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()": {
+      "description": "Provides operations to call the GetInvolvedPeople method.",
       "get": {
         "tags": [
           "NewComePeople.Functions"
@@ -3988,6 +4032,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems": {
+      "description": "Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity.",
       "get": {
         "tags": [
           "NewComePeople.Trips.PlanItem"
@@ -4126,6 +4171,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/{PlanItemId}/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "delete": {
         "tags": [
           "NewComePeople.Trips.PlanItem"
@@ -4198,6 +4244,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.PlanItems",
@@ -4244,6 +4291,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "NewComePeople.Trips.PlanItem"
@@ -4406,6 +4454,7 @@
       }
     },
     "/NewComePeople/{UserName}/Trips/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Trips",
@@ -4439,6 +4488,7 @@
       }
     },
     "/NewComePeople/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.NewComePeople",
@@ -4460,6 +4510,7 @@
       }
     },
     "/People": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "People.Person"
@@ -4632,6 +4683,7 @@
       }
     },
     "/People/{UserName}": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "People.Person"
@@ -4794,6 +4846,7 @@
       }
     },
     "/People/{UserName}/BestFriend": {
+      "description": "Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "People.Person"
@@ -4882,6 +4935,7 @@
       }
     },
     "/People/{UserName}/BestFriend/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "People.Person"
@@ -5000,6 +5054,7 @@
       }
     },
     "/People/{UserName}/Friends": {
+      "description": "Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "People.Person"
@@ -5149,6 +5204,7 @@
       }
     },
     "/People/{UserName}/Friends/{UserName1}/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "delete": {
         "tags": [
           "People.Person"
@@ -5205,6 +5261,7 @@
       }
     },
     "/People/{UserName}/Friends/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Friends",
@@ -5238,6 +5295,7 @@
       }
     },
     "/People/{UserName}/Friends/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "People.Person"
@@ -5386,6 +5444,7 @@
       }
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()": {
+      "description": "Provides operations to call the GetFavoriteAirline method.",
       "get": {
         "tags": [
           "People.Functions"
@@ -5428,6 +5487,7 @@
       }
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})": {
+      "description": "Provides operations to call the GetFriendsTrips method.",
       "get": {
         "tags": [
           "People.Functions"
@@ -5488,6 +5548,7 @@
       }
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip": {
+      "description": "Provides operations to call the GetPeersForTrip method.",
       "post": {
         "tags": [
           "People.Actions"
@@ -5561,6 +5622,7 @@
       }
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip": {
+      "description": "Provides operations to call the ShareTrip method.",
       "post": {
         "tags": [
           "People.Actions"
@@ -5614,6 +5676,7 @@
       }
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})": {
+      "description": "Provides operations to call the UpdatePersonLastName method.",
       "get": {
         "tags": [
           "People.Functions"
@@ -5666,6 +5729,7 @@
       }
     },
     "/People/{UserName}/Trips": {
+      "description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "People.Trip"
@@ -5850,6 +5914,7 @@
       }
     },
     "/People/{UserName}/Trips/{TripId}": {
+      "description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.",
       "get": {
         "tags": [
           "People.Trip"
@@ -6047,6 +6112,7 @@
       }
     },
     "/People/{UserName}/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()": {
+      "description": "Provides operations to call the GetInvolvedPeople method.",
       "get": {
         "tags": [
           "People.Functions"
@@ -6111,6 +6177,7 @@
       }
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems": {
+      "description": "Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity.",
       "get": {
         "tags": [
           "People.Trips.PlanItem"
@@ -6249,6 +6316,7 @@
       }
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems/{PlanItemId}/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "delete": {
         "tags": [
           "People.Trips.PlanItem"
@@ -6321,6 +6389,7 @@
       }
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.PlanItems",
@@ -6367,6 +6436,7 @@
       }
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems/$ref": {
+      "description": "Provides operations to manage the collection of Person entities.",
       "get": {
         "tags": [
           "People.Trips.PlanItem"
@@ -6529,6 +6599,7 @@
       }
     },
     "/People/{UserName}/Trips/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.Trips",
@@ -6562,6 +6633,7 @@
       }
     },
     "/People/$count": {
+      "description": "Provides operations to count the resources in the collection.",
       "get": {
         "summary": "Get the number of the resource",
         "operationId": "Get.Count.People",
@@ -6583,6 +6655,7 @@
       }
     },
     "/ResetDataSource": {
+      "description": "Provides operations to call the ResetDataSource method.",
       "post": {
         "tags": [
           "ResetDataSource"

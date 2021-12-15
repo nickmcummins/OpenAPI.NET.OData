@@ -87,6 +87,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Airline entities.
   '/Airlines/{AirlineCode}':
     get:
       tags:
@@ -175,6 +176,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Airline entities.
   /Airlines/$count:
     get:
       summary: Get the number of the resource
@@ -188,6 +190,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   /Airports:
     get:
       tags:
@@ -273,6 +276,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Airport entities.
   '/Airports/{IcaoCode}':
     get:
       tags:
@@ -363,6 +367,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Airport entities.
   /Airports/$count:
     get:
       summary: Get the number of the resource
@@ -376,6 +381,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   '/GetNearestAirport(lat={lat},lon={lon})':
     get:
       tags:
@@ -401,6 +407,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: functionImport
+    x-description: Provides operations to call the GetNearestAirport method.
   /GetPersonWithMostFriends():
     get:
       tags:
@@ -418,6 +425,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: functionImport
+    x-description: Provides operations to call the GetPersonWithMostFriends method.
   /Me:
     get:
       tags:
@@ -487,6 +495,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Person singleton.
   /Me/BestFriend:
     get:
       tags:
@@ -537,6 +546,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   /Me/BestFriend/$ref:
     get:
       tags:
@@ -594,6 +604,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   /Me/Friends:
     get:
       tags:
@@ -683,6 +694,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/Me/Friends/{UserName}/$ref':
     delete:
       tags:
@@ -710,6 +722,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   /Me/Friends/$count:
     get:
       summary: Get the number of the resource
@@ -723,6 +736,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   /Me/Friends/$ref:
     get:
       tags:
@@ -806,6 +820,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   /Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline():
     get:
       tags:
@@ -822,6 +837,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetFavoriteAirline method.
   '/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})':
     get:
       tags:
@@ -850,6 +866,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetFriendsTrips method.
   /Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip:
     post:
       tags:
@@ -889,6 +906,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: action
+    x-description: Provides operations to call the GetPeersForTrip method.
   /Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip:
     post:
       tags:
@@ -919,6 +937,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: action
+    x-description: Provides operations to call the ShareTrip method.
   '/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})':
     get:
       tags:
@@ -945,6 +964,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the UpdatePersonLastName method.
   /Me/Trips:
     get:
       tags:
@@ -1047,6 +1067,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/Me/Trips/{TripId}':
     get:
       tags:
@@ -1155,6 +1176,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/Me/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()':
     get:
       tags:
@@ -1187,6 +1209,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetInvolvedPeople method.
   '/Me/Trips/{TripId}/PlanItems':
     get:
       tags:
@@ -1261,6 +1284,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity.
   '/Me/Trips/{TripId}/PlanItems/{PlanItemId}/$ref':
     delete:
       tags:
@@ -1300,6 +1324,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/Me/Trips/{TripId}/PlanItems/$count':
     get:
       summary: Get the number of the resource
@@ -1323,6 +1348,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   '/Me/Trips/{TripId}/PlanItems/$ref':
     get:
       tags:
@@ -1412,6 +1438,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   /Me/Trips/$count:
     get:
       summary: Get the number of the resource
@@ -1425,6 +1452,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   /NewComePeople:
     get:
       tags:
@@ -1537,6 +1565,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/NewComePeople/{UserName}':
     get:
       tags:
@@ -1640,6 +1669,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/NewComePeople/{UserName}/BestFriend':
     get:
       tags:
@@ -1696,6 +1726,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/NewComePeople/{UserName}/BestFriend/$ref':
     get:
       tags:
@@ -1772,6 +1803,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/NewComePeople/{UserName}/Friends':
     get:
       tags:
@@ -1867,6 +1899,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/NewComePeople/{UserName}/Friends/{UserName1}/$ref':
     delete:
       tags:
@@ -1900,6 +1933,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/NewComePeople/{UserName}/Friends/$count':
     get:
       summary: Get the number of the resource
@@ -1920,6 +1954,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   '/NewComePeople/{UserName}/Friends/$ref':
     get:
       tags:
@@ -2015,6 +2050,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()':
     get:
       tags:
@@ -2038,6 +2074,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetFavoriteAirline method.
   '/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})':
     get:
       tags:
@@ -2072,6 +2109,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetFriendsTrips method.
   '/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip':
     post:
       tags:
@@ -2117,6 +2155,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: action
+    x-description: Provides operations to call the GetPeersForTrip method.
   '/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip':
     post:
       tags:
@@ -2153,6 +2192,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: action
+    x-description: Provides operations to call the ShareTrip method.
   '/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})':
     get:
       tags:
@@ -2185,6 +2225,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the UpdatePersonLastName method.
   '/NewComePeople/{UserName}/Trips':
     get:
       tags:
@@ -2299,6 +2340,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/NewComePeople/{UserName}/Trips/{TripId}':
     get:
       tags:
@@ -2425,6 +2467,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/NewComePeople/{UserName}/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()':
     get:
       tags:
@@ -2463,6 +2506,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetInvolvedPeople method.
   '/NewComePeople/{UserName}/Trips/{TripId}/PlanItems':
     get:
       tags:
@@ -2543,6 +2587,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity.
   '/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/{PlanItemId}/$ref':
     delete:
       tags:
@@ -2588,6 +2633,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/$count':
     get:
       summary: Get the number of the resource
@@ -2617,6 +2663,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   '/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/$ref':
     get:
       tags:
@@ -2718,6 +2765,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/NewComePeople/{UserName}/Trips/$count':
     get:
       summary: Get the number of the resource
@@ -2738,6 +2786,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   /NewComePeople/$count:
     get:
       summary: Get the number of the resource
@@ -2751,6 +2800,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   /People:
     get:
       tags:
@@ -2863,6 +2913,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/People/{UserName}':
     get:
       tags:
@@ -2966,6 +3017,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/People/{UserName}/BestFriend':
     get:
       tags:
@@ -3022,6 +3074,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/People/{UserName}/BestFriend/$ref':
     get:
       tags:
@@ -3098,6 +3151,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/People/{UserName}/Friends':
     get:
       tags:
@@ -3193,6 +3247,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/People/{UserName}/Friends/{UserName1}/$ref':
     delete:
       tags:
@@ -3226,6 +3281,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/People/{UserName}/Friends/$count':
     get:
       summary: Get the number of the resource
@@ -3246,6 +3302,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   '/People/{UserName}/Friends/$ref':
     get:
       tags:
@@ -3341,6 +3398,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()':
     get:
       tags:
@@ -3364,6 +3422,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetFavoriteAirline method.
   '/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})':
     get:
       tags:
@@ -3398,6 +3457,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetFriendsTrips method.
   '/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip':
     post:
       tags:
@@ -3443,6 +3503,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: action
+    x-description: Provides operations to call the GetPeersForTrip method.
   '/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip':
     post:
       tags:
@@ -3479,6 +3540,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: action
+    x-description: Provides operations to call the ShareTrip method.
   '/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})':
     get:
       tags:
@@ -3511,6 +3573,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the UpdatePersonLastName method.
   '/People/{UserName}/Trips':
     get:
       tags:
@@ -3625,6 +3688,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/People/{UserName}/Trips/{TripId}':
     get:
       tags:
@@ -3751,6 +3815,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity.
   '/People/{UserName}/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()':
     get:
       tags:
@@ -3789,6 +3854,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: function
+    x-description: Provides operations to call the GetInvolvedPeople method.
   '/People/{UserName}/Trips/{TripId}/PlanItems':
     get:
       tags:
@@ -3869,6 +3935,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity.
   '/People/{UserName}/Trips/{TripId}/PlanItems/{PlanItemId}/$ref':
     delete:
       tags:
@@ -3914,6 +3981,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/People/{UserName}/Trips/{TripId}/PlanItems/$count':
     get:
       summary: Get the number of the resource
@@ -3943,6 +4011,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   '/People/{UserName}/Trips/{TripId}/PlanItems/$ref':
     get:
       tags:
@@ -4044,6 +4113,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: operation
+    x-description: Provides operations to manage the collection of Person entities.
   '/People/{UserName}/Trips/$count':
     get:
       summary: Get the number of the resource
@@ -4064,6 +4134,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   /People/$count:
     get:
       summary: Get the number of the resource
@@ -4077,6 +4148,7 @@ paths:
             $ref: '#/definitions/ODataCountResponse'
         default:
           $ref: '#/responses/error'
+    x-description: Provides operations to count the resources in the collection.
   /ResetDataSource:
     post:
       tags:
@@ -4090,6 +4162,7 @@ paths:
         default:
           $ref: '#/responses/error'
       x-ms-docs-operation-type: actionImport
+    x-description: Provides operations to call the ResetDataSource method.
 definitions:
   Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person:
     title: Person

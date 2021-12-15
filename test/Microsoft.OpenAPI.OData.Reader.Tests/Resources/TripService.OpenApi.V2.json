@@ -134,7 +134,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Airline entities."
     },
     "/Airlines/{AirlineCode}": {
       "get": {
@@ -263,7 +264,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Airline entities."
     },
     "/Airlines/$count": {
       "get": {
@@ -283,7 +285,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/Airports": {
       "get": {
@@ -414,7 +417,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Airport entities."
     },
     "/Airports/{IcaoCode}": {
       "get": {
@@ -545,7 +549,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Airport entities."
     },
     "/Airports/$count": {
       "get": {
@@ -565,7 +570,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/GetNearestAirport(lat={lat},lon={lon})": {
       "get": {
@@ -603,7 +609,8 @@
           }
         },
         "x-ms-docs-operation-type": "functionImport"
-      }
+      },
+      "x-description": "Provides operations to call the GetNearestAirport method."
     },
     "/GetPersonWithMostFriends()": {
       "get": {
@@ -628,7 +635,8 @@
           }
         },
         "x-ms-docs-operation-type": "functionImport"
-      }
+      },
+      "x-description": "Provides operations to call the GetPersonWithMostFriends method."
     },
     "/Me": {
       "get": {
@@ -724,7 +732,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Person singleton."
     },
     "/Me/BestFriend": {
       "get": {
@@ -791,7 +800,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/Me/BestFriend/$ref": {
       "get": {
@@ -875,7 +885,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/Me/Friends": {
       "get": {
@@ -998,7 +1009,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/Me/Friends/{UserName}/$ref": {
       "delete": {
@@ -1038,7 +1050,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/Me/Friends/$count": {
       "get": {
@@ -1058,7 +1071,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/Me/Friends/$ref": {
       "get": {
@@ -1180,7 +1194,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()": {
       "get": {
@@ -1204,7 +1219,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetFavoriteAirline method."
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})": {
       "get": {
@@ -1246,7 +1262,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetFriendsTrips method."
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip": {
       "post": {
@@ -1304,7 +1321,8 @@
           }
         },
         "x-ms-docs-operation-type": "action"
-      }
+      },
+      "x-description": "Provides operations to call the GetPeersForTrip method."
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip": {
       "post": {
@@ -1348,7 +1366,8 @@
           }
         },
         "x-ms-docs-operation-type": "action"
-      }
+      },
+      "x-description": "Provides operations to call the ShareTrip method."
     },
     "/Me/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})": {
       "get": {
@@ -1387,7 +1406,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the UpdatePersonLastName method."
     },
     "/Me/Trips": {
       "get": {
@@ -1535,7 +1555,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/Me/Trips/{TripId}": {
       "get": {
@@ -1684,7 +1705,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/Me/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()": {
       "get": {
@@ -1730,7 +1752,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetInvolvedPeople method."
     },
     "/Me/Trips/{TripId}/PlanItems": {
       "get": {
@@ -1840,7 +1863,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity."
     },
     "/Me/Trips/{TripId}/PlanItems/{PlanItemId}/$ref": {
       "delete": {
@@ -1894,7 +1918,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/Me/Trips/{TripId}/PlanItems/$count": {
       "get": {
@@ -1927,7 +1952,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/Me/Trips/{TripId}/PlanItems/$ref": {
       "get": {
@@ -2059,7 +2085,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/Me/Trips/$count": {
       "get": {
@@ -2079,7 +2106,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/NewComePeople": {
       "get": {
@@ -2237,7 +2265,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/NewComePeople/{UserName}": {
       "get": {
@@ -2381,7 +2410,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/NewComePeople/{UserName}/BestFriend": {
       "get": {
@@ -2456,7 +2486,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/NewComePeople/{UserName}/BestFriend/$ref": {
       "get": {
@@ -2566,7 +2597,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/NewComePeople/{UserName}/Friends": {
       "get": {
@@ -2697,7 +2729,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/NewComePeople/{UserName}/Friends/{UserName1}/$ref": {
       "delete": {
@@ -2745,7 +2778,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/NewComePeople/{UserName}/Friends/$count": {
       "get": {
@@ -2775,7 +2809,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/NewComePeople/{UserName}/Friends/$ref": {
       "get": {
@@ -2913,7 +2948,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()": {
       "get": {
@@ -2947,7 +2983,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetFavoriteAirline method."
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})": {
       "get": {
@@ -2997,7 +3034,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetFriendsTrips method."
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip": {
       "post": {
@@ -3063,7 +3101,8 @@
           }
         },
         "x-ms-docs-operation-type": "action"
-      }
+      },
+      "x-description": "Provides operations to call the GetPeersForTrip method."
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip": {
       "post": {
@@ -3115,7 +3154,8 @@
           }
         },
         "x-ms-docs-operation-type": "action"
-      }
+      },
+      "x-description": "Provides operations to call the ShareTrip method."
     },
     "/NewComePeople/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})": {
       "get": {
@@ -3162,7 +3202,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the UpdatePersonLastName method."
     },
     "/NewComePeople/{UserName}/Trips": {
       "get": {
@@ -3326,7 +3367,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/NewComePeople/{UserName}/Trips/{TripId}": {
       "get": {
@@ -3499,7 +3541,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()": {
       "get": {
@@ -3553,7 +3596,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetInvolvedPeople method."
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems": {
       "get": {
@@ -3671,7 +3715,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity."
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/{PlanItemId}/$ref": {
       "delete": {
@@ -3733,7 +3778,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/$count": {
       "get": {
@@ -3774,7 +3820,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/NewComePeople/{UserName}/Trips/{TripId}/PlanItems/$ref": {
       "get": {
@@ -3922,7 +3969,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/NewComePeople/{UserName}/Trips/$count": {
       "get": {
@@ -3952,7 +4000,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/NewComePeople/$count": {
       "get": {
@@ -3972,7 +4021,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/People": {
       "get": {
@@ -4130,7 +4180,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/People/{UserName}": {
       "get": {
@@ -4274,7 +4325,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/People/{UserName}/BestFriend": {
       "get": {
@@ -4349,7 +4401,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the BestFriend property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/People/{UserName}/BestFriend/$ref": {
       "get": {
@@ -4459,7 +4512,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/People/{UserName}/Friends": {
       "get": {
@@ -4590,7 +4644,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Friends property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/People/{UserName}/Friends/{UserName1}/$ref": {
       "delete": {
@@ -4638,7 +4693,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/People/{UserName}/Friends/$count": {
       "get": {
@@ -4668,7 +4724,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/People/{UserName}/Friends/$ref": {
       "get": {
@@ -4806,7 +4863,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFavoriteAirline()": {
       "get": {
@@ -4840,7 +4898,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetFavoriteAirline method."
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetFriendsTrips(userName={userName})": {
       "get": {
@@ -4890,7 +4949,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetFriendsTrips method."
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetPeersForTrip": {
       "post": {
@@ -4956,7 +5016,8 @@
           }
         },
         "x-ms-docs-operation-type": "action"
-      }
+      },
+      "x-description": "Provides operations to call the GetPeersForTrip method."
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.ShareTrip": {
       "post": {
@@ -5008,7 +5069,8 @@
           }
         },
         "x-ms-docs-operation-type": "action"
-      }
+      },
+      "x-description": "Provides operations to call the ShareTrip method."
     },
     "/People/{UserName}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.UpdatePersonLastName(lastName={lastName})": {
       "get": {
@@ -5055,7 +5117,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the UpdatePersonLastName method."
     },
     "/People/{UserName}/Trips": {
       "get": {
@@ -5219,7 +5282,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/People/{UserName}/Trips/{TripId}": {
       "get": {
@@ -5392,7 +5456,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the Trips property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Person entity."
     },
     "/People/{UserName}/Trips/{TripId}/Microsoft.OData.Service.Sample.TrippinInMemory.Models.GetInvolvedPeople()": {
       "get": {
@@ -5446,7 +5511,8 @@
           }
         },
         "x-ms-docs-operation-type": "function"
-      }
+      },
+      "x-description": "Provides operations to call the GetInvolvedPeople method."
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems": {
       "get": {
@@ -5564,7 +5630,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the PlanItems property of the Microsoft.OData.Service.Sample.TrippinInMemory.Models.Trip entity."
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems/{PlanItemId}/$ref": {
       "delete": {
@@ -5626,7 +5693,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems/$count": {
       "get": {
@@ -5667,7 +5735,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/People/{UserName}/Trips/{TripId}/PlanItems/$ref": {
       "get": {
@@ -5815,7 +5884,8 @@
           }
         },
         "x-ms-docs-operation-type": "operation"
-      }
+      },
+      "x-description": "Provides operations to manage the collection of Person entities."
     },
     "/People/{UserName}/Trips/$count": {
       "get": {
@@ -5845,7 +5915,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/People/$count": {
       "get": {
@@ -5865,7 +5936,8 @@
             "$ref": "#/responses/error"
           }
         }
-      }
+      },
+      "x-description": "Provides operations to count the resources in the collection."
     },
     "/ResetDataSource": {
       "post": {
@@ -5884,7 +5956,8 @@
           }
         },
         "x-ms-docs-operation-type": "actionImport"
-      }
+      },
+      "x-description": "Provides operations to call the ResetDataSource method."
     }
   },
   "definitions": {
