@@ -816,6 +816,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "patch": {
@@ -842,6 +849,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -921,6 +935,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -946,6 +967,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "operation"
       },
@@ -978,6 +1006,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "delete": {
@@ -1004,6 +1039,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -1144,6 +1186,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -1190,6 +1239,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -1211,6 +1267,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         }
       }
     },
@@ -1300,6 +1363,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "post": {
@@ -1337,6 +1407,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -1366,6 +1443,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -1416,6 +1500,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -1478,6 +1569,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "action"
       }
     },
@@ -1518,6 +1616,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "action"
       }
@@ -1560,6 +1665,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -1688,6 +1800,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "post": {
@@ -1722,6 +1841,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -1807,6 +1933,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "patch": {
@@ -1850,6 +1983,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "delete": {
@@ -1889,6 +2029,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -1943,6 +2090,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -2072,6 +2226,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -2134,6 +2295,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -2170,6 +2338,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         }
       }
     },
@@ -2260,6 +2435,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "post": {
@@ -2312,6 +2494,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -2333,6 +2522,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/me",
+          "description": "The Me API is deprecated and will stop returning data on March 2023. Please use the new me2 API."
         }
       }
     },
@@ -2755,6 +2951,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/bestfriend",
+          "description": "The bestfriend API is deprecated and will stop returning data on March 2023. Please use the new friends API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -2792,6 +2995,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/bestfriend",
+          "description": "The bestfriend API is deprecated and will stop returning data on March 2023. Please use the new friends API."
         },
         "x-ms-docs-operation-type": "operation"
       },
@@ -2836,6 +3046,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/bestfriend",
+          "description": "The bestfriend API is deprecated and will stop returning data on March 2023. Please use the new friends API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "delete": {
@@ -2872,6 +3089,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/bestfriend",
+          "description": "The bestfriend API is deprecated and will stop returning data on March 2023. Please use the new friends API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -3360,6 +3584,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/trips",
+          "description": "The GetFriendsTrips API is deprecated and will stop returning data on March 2023. Please use the new trips API on friends."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -4594,6 +4825,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         }
       },
       "post": {
@@ -4627,6 +4865,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -4715,6 +4960,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "patch": {
@@ -4754,6 +5006,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "delete": {
@@ -4789,6 +5048,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -4878,6 +5144,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -4915,6 +5188,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "operation"
       },
@@ -4959,6 +5239,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "delete": {
@@ -4995,6 +5282,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -5145,6 +5439,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -5201,6 +5502,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -5234,6 +5542,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         }
       }
     },
@@ -5333,6 +5648,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "post": {
@@ -5382,6 +5704,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -5423,6 +5752,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -5483,6 +5819,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -5557,6 +5900,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "action"
       }
     },
@@ -5610,6 +5960,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "action"
       }
     },
@@ -5661,6 +6018,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -5799,6 +6163,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "post": {
@@ -5845,6 +6216,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -5940,6 +6318,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "patch": {
@@ -5993,6 +6378,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "delete": {
@@ -6042,6 +6434,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "operation"
       }
@@ -6106,6 +6505,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         },
         "x-ms-docs-operation-type": "function"
       }
@@ -6245,6 +6651,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -6317,6 +6730,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -6363,6 +6783,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         }
       }
     },
@@ -6463,6 +6890,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       },
       "post": {
@@ -6525,6 +6959,13 @@
             "$ref": "#/components/responses/error"
           }
         },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
+        },
         "x-ms-docs-operation-type": "operation"
       }
     },
@@ -6558,6 +6999,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         }
       }
     },
@@ -6579,6 +7027,13 @@
           "default": {
             "$ref": "#/components/responses/error"
           }
+        },
+        "deprecated": true,
+        "x-ms-deprecation": {
+          "removalDate": "2023-03-15T00:00:00.0000000",
+          "date": "2021-08-24T00:00:00.0000000",
+          "version": "2021-05/people",
+          "description": "The People API is deprecated and will stop returning data on March 2023. Please use the new newPeople API."
         }
       }
     },

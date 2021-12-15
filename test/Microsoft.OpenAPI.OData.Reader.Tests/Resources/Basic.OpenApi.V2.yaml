@@ -1,4 +1,4 @@
-﻿swagger: '2.0'
+swagger: '2.0'
 info:
   title: OData Service for namespace DefaultNs
   description: This OData service is located at http://localhost
